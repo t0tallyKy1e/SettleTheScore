@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "962965520290",
+    "firebase_url": "https://settle-the-score-0.firebaseio.com",
+    "project_id": "settle-the-score-0",
+    "storage_bucket": "settle-the-score-0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962965520290:android:293eb30e4eac4a1b",
+        "android_client_info": {
+          "package_name": "com.ckm.settlethescore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962965520290-jgfes7uihomf9s9e30fstljmabsj2qnp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ckm.settlethescore",
+            "certificate_hash": "8f0bac218e5f2d7b3cb271d6e2a228e19d9a3964"
+          }
+        },
+        {
+          "client_id": "962965520290-4rsrug4cpc2c89tgfkqieotdn7f1lk2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrZY6qcBi8PdZy4iASeUZPjZ12Mqx9V1I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962965520290-4rsrug4cpc2c89tgfkqieotdn7f1lk2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
