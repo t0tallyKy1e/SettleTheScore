@@ -1,4 +1,4 @@
-package com.t0tallyky1e.settlethescore;
+package com.ckm.settlethescore;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +43,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // if signed in already, don't show
+        Button signInButton = (Button) findViewById(R.id.btnSignIn);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // firebase ui sign-in
+                Intent signInIntent = new Intent(getApplicationContext(), FirebaseUIActivity.class);
+                startActivity(signInIntent);
+            }
+        });
     }
 
     @Override

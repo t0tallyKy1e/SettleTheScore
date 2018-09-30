@@ -1,4 +1,4 @@
-package com.t0tallyky1e.settlethescore;
+package com.ckm.settlethescore;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.t0tallyky1e.settlethescore", appContext.getPackageName());
+        assertEquals("com.ckm.settlethescore", appContext.getPackageName());
     }
 }

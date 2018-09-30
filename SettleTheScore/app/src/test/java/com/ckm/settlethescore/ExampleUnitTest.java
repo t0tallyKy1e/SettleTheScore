@@ -1,4 +1,4 @@
-package com.t0tallyky1e.settlethescore;
+package com.ckm.settlethescore;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.t0tallyky1e.settlethescore">
+    package="com.ckm.settlethescore">
 
     <application
         android:allowBackup="true"
@@ -19,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".FirebaseUIActivity"></activity>
     </application>
 
 </manifest>
