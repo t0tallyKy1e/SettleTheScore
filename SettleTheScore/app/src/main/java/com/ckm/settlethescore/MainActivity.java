@@ -1,6 +1,7 @@
 package com.ckm.settlethescore;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -15,12 +16,30 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import android.content.Intent;
+import android.widget.TextView;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FirebaseAuth firebaseAuthentication;
+    private FirebaseUser firebaseUser;
+
+    private Player activePlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // database reference
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,14 +63,62 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // if signed in already, don't show
-        Button signInButton = (Button) findViewById(R.id.btnSignIn);
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        // firebase
+        firebaseAuthentication = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuthentication.getCurrentUser();
+        String userID = firebaseUser.getUid();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
+
+        firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View view) {
-                // firebase ui sign-in
-                Intent signInIntent = new Intent(getApplicationContext(), FirebaseUIActivity.class);
-                startActivity(signInIntent);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseUser == null) {
+                    // User somehow got here without signing in... make sure they sign in
+                    findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
+                    findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
+                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+                    startActivity(startupIntent);
+                } else {
+                    activePlayer = Player.generatePlayerFromFirebaseUser(firebaseUser); // used in register activity
+
+                    findViewById(R.id.txtNotSignedIn).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.txtSignedIn).setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                dataSnapshot.child("display_name").getValue();
+
+                TextView txtUserNameDisplay = (TextView) findViewById(R.id.txtUserNameDisplay);
+                TextView txtUserEmailDisplay = (TextView) findViewById(R.id.txtUserEmailDisplay);
+
+                txtUserNameDisplay.setText(dataSnapshot.child("display_name").getValue().toString().trim());
+                txtUserEmailDisplay.setText(dataSnapshot.child("email").getValue().toString().trim());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // unused
+            }
+        });
+
+        Button btnSignOut = findViewById(R.id.btnSignOut);
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = database.getReference().child("Players").child(user.getUid());
+
+                databaseReference.child("status").setValue(0);
+
+                AuthUI.getInstance().signOut(MainActivity.this);
+
+                Intent signOutIntent = new Intent(MainActivity.this, StartupActivity.class);
+                startActivity(signOutIntent);
             }
         });
     }
