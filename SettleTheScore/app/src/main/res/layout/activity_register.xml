@@ -177,7 +177,7 @@
         android:layout_marginRight="8dp"
         android:text="@string/register_full_name_label"
         app:layout_constraintEnd_toStartOf="@+id/txtRegisterFullNameField"
-        app:layout_constraintHorizontal_bias="0.614"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRegisterDisplayNameLabel" />
 
@@ -192,12 +192,29 @@
         android:layout_marginRight="160dp"
         android:layout_marginBottom="8dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/default_profile_picture"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/txtRegisterPhotoUpload"
         app:layout_constraintTop_toBottomOf="@+id/txtRegisterEmailField"
-        app:layout_constraintVertical_bias="0.208"
-        tools:srcCompat="@tools:sample/avatars[8]" />
+        app:layout_constraintVertical_bias="0.208" />
+
+    <TextView
+        android:id="@+id/txtProfilePictureUri"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/register_inv_profile_picture_uri"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegisterSubmit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgRegisterProfilePhoto"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegisterEmailField" />
 
 </android.support.constraint.ConstraintLayout>

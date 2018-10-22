@@ -43,4 +43,11 @@ public class StartupActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        // Don't allow user to press back if the last activity was the register / sign-in process
+        // Send back to startup activity or do nothing
+        super.onBackPressed();
+    }
 }

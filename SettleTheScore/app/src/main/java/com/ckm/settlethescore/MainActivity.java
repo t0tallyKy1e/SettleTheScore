@@ -1,9 +1,12 @@
 package com.ckm.settlethescore;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,9 +19,13 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import android.content.Intent;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,12 +33,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth firebaseAuthentication;
     private FirebaseUser firebaseUser;
+    private StorageReference profilePhotoReference;
 
     private Player activePlayer;
 
@@ -66,7 +80,12 @@ public class MainActivity extends AppCompatActivity
         // firebase
         firebaseAuthentication = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuthentication.getCurrentUser();
-        String userID = firebaseUser.getUid();
+        final String userID = firebaseUser.getUid();
+
+
+        final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture);
+        profilePhotoReference = FirebaseStorage.getInstance().getReference("profile_pictures/" + userID);
+
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
 
         firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
@@ -94,9 +113,17 @@ public class MainActivity extends AppCompatActivity
 
                 TextView txtUserNameDisplay = (TextView) findViewById(R.id.txtUserNameDisplay);
                 TextView txtUserEmailDisplay = (TextView) findViewById(R.id.txtUserEmailDisplay);
+                TextView txtUserPhoneDisplay = (TextView) findViewById(R.id.txtUserPhoneDisplay);
+                TextView txtUserIDDisplay = (TextView) findViewById(R.id.txtUserIDDisplay);
 
                 txtUserNameDisplay.setText(dataSnapshot.child("display_name").getValue().toString().trim());
                 txtUserEmailDisplay.setText(dataSnapshot.child("email").getValue().toString().trim());
+
+                activePlayer.setPhoneNumber(dataSnapshot.child("phone_number").getValue().toString().trim());
+                txtUserPhoneDisplay.setText(activePlayer.getPhoneNumber().toString().trim());
+
+                activePlayer.setPhoneNumber(dataSnapshot.child("user_id").getValue().toString().trim());
+                txtUserIDDisplay.setText(activePlayer.getUserId().toString().trim());
             }
 
             @Override
@@ -104,6 +131,22 @@ public class MainActivity extends AppCompatActivity
                 // unused
             }
         });
+
+        // download profile picture
+        try {
+            final File profilePictureDownload = File.createTempFile("profile_photos", userID.toString());
+
+            FileDownloadTask profilePictureDownloadTask = profilePhotoReference.getFile(profilePictureDownload);
+            profilePictureDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    imgProfilePictureField.setImageURI(Uri.fromFile(profilePictureDownload));
+                }
+            });
+
+        } catch (Exception e) {
+
+        }
 
         Button btnSignOut = findViewById(R.id.btnSignOut);
         btnSignOut.setOnClickListener(new View.OnClickListener() {
