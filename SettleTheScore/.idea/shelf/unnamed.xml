@@ -1,0 +1,94 @@
+<changelist name="unnamed" date="1541368571760" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/shelved.patch" />
+  <option name="DESCRIPTION" value="" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-hdpi/ic_launcher.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher_round.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-mdpi/ic_launcher.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher1.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher_round1.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-xhdpi/ic_launcher.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher2.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher_round2.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher3.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher_round3.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher4.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/ic_launcher_round4.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../ResumeApp_ChrisBerns/gradle/wrapper/gradle-wrapper.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/gradle-wrapper.jar" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable/dice.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/dice.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable/hearts.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/hearts.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable/paper.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/paper.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable/paper_yellow.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/paper_yellow.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable/rock_blue.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/rock_blue.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable/scissors_red.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/scissors_red.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/font/rubik_mono_one.ttf" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/unnamed/rubik_mono_one.ttf" />
+  </binary>
+</changelist>

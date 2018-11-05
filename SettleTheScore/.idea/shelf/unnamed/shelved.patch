@@ -1,0 +1,1727 @@
+Index: ../ResumeApp_ChrisBerns/app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/AndroidManifest.xml	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/AndroidManifest.xml	(date 1540217698000)
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++  package="com.cberns.resumeapp_chrisberns">
++
++  <application
++    android:allowBackup="true"
++    android:icon="@mipmap/ic_launcher"
++    android:label="@string/app_name"
++    android:roundIcon="@mipmap/ic_launcher_round"
++    android:supportsRtl="true"
++    android:theme="@style/AppTheme">
++    <activity android:name=".MainActivity">
++      <intent-filter>
++        <action android:name="android.intent.action.MAIN" />
++
++        <category android:name="android.intent.category.LAUNCHER" />
++      </intent-filter>
++    </activity>
++  </application>
++
++</manifest>
+Index: app/src/main/res/menu/main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\n    <item\n        android:id=\"@+id/action_settings\"\n        android:orderInCategory=\"100\"\n        android:title=\"@string/action_settings\"\n        app:showAsAction=\"never\" />\n</menu>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/main.xml	(date 1538341654000)
++++ app/src/main/res/menu/main.xml	(date 1540168212000)
+@@ -2,8 +2,20 @@
+ <menu xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto">
+     <item
+-        android:id="@+id/action_settings"
++        android:id="@+id/home_btn"
+         android:orderInCategory="100"
++        android:title="@string/home" />
++    <item
++        android:id="@+id/action_settings"
++        android:orderInCategory="103"
+         android:title="@string/action_settings"
+         app:showAsAction="never" />
++    <item
++        android:id="@+id/friend_menu_btn"
++        android:orderInCategory="101"
++        android:title="@string/friends" />
++    <item
++        android:id="@+id/scores_menu_btn"
++        android:orderInCategory="102"
++        android:title="@string/scores" />
+ </menu>
+Index: ../ResumeApp_ChrisBerns/app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/build.gradle	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/app/build.gradle	(date 1540217685000)
+@@ -0,0 +1,28 @@
++apply plugin: 'com.android.application'
++
++android {
++    compileSdkVersion 28
++    defaultConfig {
++        applicationId "com.cberns.resumeapp_chrisberns"
++        minSdkVersion 22
++        targetSdkVersion 28
++        versionCode 1
++        versionName "1.0"
++        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
++    }
++    buildTypes {
++        release {
++            minifyEnabled false
++            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
++        }
++    }
++}
++
++dependencies {
++    implementation fileTree(dir: 'libs', include: ['*.jar'])
++    implementation 'com.android.support:appcompat-v7:28.0.0'
++    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
++    testImplementation 'junit:junit:4.12'
++    androidTestImplementation 'com.android.support.test:runner:1.0.2'
++    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
++}
+Index: app/src/main/res/menu/activity_main_drawer.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    tools:showIn=\"navigation_view\">\n\n    <group android:checkableBehavior=\"single\">\n        <item\n            android:id=\"@+id/nav_camera\"\n            android:icon=\"@drawable/ic_menu_camera\"\n            android:title=\"Import\" />\n        <item\n            android:id=\"@+id/nav_gallery\"\n            android:icon=\"@drawable/ic_menu_gallery\"\n            android:title=\"Gallery\" />\n        <item\n            android:id=\"@+id/nav_slideshow\"\n            android:icon=\"@drawable/ic_menu_slideshow\"\n            android:title=\"Slideshow\" />\n        <item\n            android:id=\"@+id/nav_manage\"\n            android:icon=\"@drawable/ic_menu_manage\"\n            android:title=\"Tools\" />\n    </group>\n\n    <item android:title=\"Communicate\">\n        <menu>\n            <item\n                android:id=\"@+id/nav_share\"\n                android:icon=\"@drawable/ic_menu_share\"\n                android:title=\"Share\" />\n            <item\n                android:id=\"@+id/nav_send\"\n                android:icon=\"@drawable/ic_menu_send\"\n                android:title=\"Send\" />\n        </menu>\n    </item>\n\n</menu>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/activity_main_drawer.xml	(date 1538341654000)
++++ app/src/main/res/menu/activity_main_drawer.xml	(date 1538346291000)
+@@ -32,6 +32,10 @@
+                 android:id="@+id/nav_send"
+                 android:icon="@drawable/ic_menu_send"
+                 android:title="Send" />
++            <item
++                android:id="@+id/nav_logout"
++                android:icon="@android:drawable/btn_dialog"
++                android:title="@string/logout" />
+         </menu>
+     </item>
+ 
+Index: app/src/main/res/layout/nav_header_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"@dimen/nav_header_height\"\n    android:background=\"@drawable/side_nav_bar\"\n    android:gravity=\"bottom\"\n    android:orientation=\"vertical\"\n    android:paddingLeft=\"@dimen/activity_horizontal_margin\"\n    android:paddingTop=\"@dimen/activity_vertical_margin\"\n    android:paddingRight=\"@dimen/activity_horizontal_margin\"\n    android:paddingBottom=\"@dimen/activity_vertical_margin\"\n    android:theme=\"@style/ThemeOverlay.AppCompat.Dark\">\n\n    <ImageView\n        android:id=\"@+id/imageView\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:contentDescription=\"@string/nav_header_desc\"\n        android:paddingTop=\"@dimen/nav_header_vertical_spacing\"\n        app:srcCompat=\"@mipmap/ic_launcher_round\" />\n\n    <TextView\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:paddingTop=\"@dimen/nav_header_vertical_spacing\"\n        android:text=\"@string/nav_header_title\"\n        android:textAppearance=\"@style/TextAppearance.AppCompat.Body1\" />\n\n    <TextView\n        android:id=\"@+id/textView\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:text=\"@string/nav_header_subtitle\" />\n\n</LinearLayout>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/nav_header_main.xml	(date 1538341654000)
++++ app/src/main/res/layout/nav_header_main.xml	(date 1540169163000)
+@@ -3,7 +3,7 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="@dimen/nav_header_height"
+-    android:background="@drawable/side_nav_bar"
++    android:background="@drawable/main_gradient"
+     android:gravity="bottom"
+     android:orientation="vertical"
+     android:paddingLeft="@dimen/activity_horizontal_margin"
+Index: app/src/main/res/layout/app_bar_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<android.support.design.widget.CoordinatorLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    tools:context=\".MainActivity\">\n\n    <android.support.design.widget.AppBarLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:theme=\"@style/AppTheme.AppBarOverlay\">\n\n        <android.support.v7.widget.Toolbar\n            android:id=\"@+id/toolbar\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"?attr/actionBarSize\"\n            android:background=\"?attr/colorPrimary\"\n            app:popupTheme=\"@style/AppTheme.PopupOverlay\" />\n\n    </android.support.design.widget.AppBarLayout>\n\n    <include layout=\"@layout/content_main\" />\n\n    <android.support.design.widget.FloatingActionButton\n        android:id=\"@+id/fab\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_gravity=\"bottom|end\"\n        android:layout_margin=\"@dimen/fab_margin\"\n        app:srcCompat=\"@android:drawable/ic_dialog_email\" />\n\n</android.support.design.widget.CoordinatorLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/app_bar_main.xml	(date 1538341654000)
++++ app/src/main/res/layout/app_bar_main.xml	(date 1540169163000)
+@@ -4,6 +4,8 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:background="@drawable/main_gradient"
++    android:visibility="visible"
+     tools:context=".MainActivity">
+ 
+     <android.support.design.widget.AppBarLayout
+@@ -15,7 +17,8 @@
+             android:id="@+id/toolbar"
+             android:layout_width="match_parent"
+             android:layout_height="?attr/actionBarSize"
+-            android:background="?attr/colorPrimary"
++            android:background="@drawable/main_gradient"
++            android:theme="@style/AppTheme"
+             app:popupTheme="@style/AppTheme.PopupOverlay" />
+ 
+     </android.support.design.widget.AppBarLayout>
+@@ -28,6 +31,7 @@
+         android:layout_height="wrap_content"
+         android:layout_gravity="bottom|end"
+         android:layout_margin="@dimen/fab_margin"
++        app:backgroundTint="@color/primaryColor"
+         app:srcCompat="@android:drawable/ic_dialog_email" />
+ 
+ </android.support.design.widget.CoordinatorLayout>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/.idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/.idea/gradle.xml	(date 1540217692000)
++++ ../ResumeApp_ChrisBerns/.idea/gradle.xml	(date 1540217692000)
+@@ -0,0 +1,18 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GradleSettings">
++    <option name="linkedExternalProjectsSettings">
++      <GradleProjectSettings>
++        <option name="distributionType" value="DEFAULT_WRAPPED" />
++        <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++          </set>
++        </option>
++        <option name="resolveModulePerSourceSet" value="false" />
++      </GradleProjectSettings>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/layout/content_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<android.support.constraint.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    app:layout_behavior=\"@string/appbar_scrolling_view_behavior\"\n    tools:context=\".MainActivity\"\n    tools:showIn=\"@layout/app_bar_main\">\n\n    <Button\n        android:id=\"@+id/btnSignIn\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"8dp\"\n        android:layout_marginLeft=\"8dp\"\n        android:layout_marginTop=\"8dp\"\n        android:layout_marginEnd=\"8dp\"\n        android:layout_marginRight=\"8dp\"\n        android:layout_marginBottom=\"8dp\"\n        android:text=\"Sign In\"\n        app:layout_constraintBottom_toBottomOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        app:layout_constraintVertical_bias=\"0.498\" />\n\n</android.support.constraint.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/content_main.xml	(date 1538341654000)
++++ app/src/main/res/layout/content_main.xml	(date 1540064523000)
+@@ -25,4 +25,5 @@
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.498" />
+ 
++
+ </android.support.constraint.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<android.support.v4.widget.DrawerLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:id=\"@+id/drawer_layout\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    android:fitsSystemWindows=\"true\"\n    tools:openDrawer=\"start\">\n\n    <include\n        layout=\"@layout/app_bar_main\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\" />\n\n    <android.support.design.widget.NavigationView\n        android:id=\"@+id/nav_view\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"match_parent\"\n        android:layout_gravity=\"start\"\n        android:fitsSystemWindows=\"true\"\n        app:headerLayout=\"@layout/nav_header_main\"\n        app:menu=\"@menu/activity_main_drawer\" />\n\n</android.support.v4.widget.DrawerLayout>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main.xml	(date 1538341654000)
++++ app/src/main/res/layout/activity_main.xml	(date 1541367804000)
+@@ -5,7 +5,8 @@
+     android:id="@+id/drawer_layout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:fitsSystemWindows="true"
++    android:background="@drawable/main_gradient"
++    android:fitsSystemWindows="false"
+     tools:openDrawer="start">
+ 
+     <include
+@@ -19,7 +20,7 @@
+         android:layout_height="match_parent"
+         android:layout_gravity="start"
+         android:fitsSystemWindows="true"
+-        app:headerLayout="@layout/nav_header_main"
++        app:headerLayout="@color/common_google_signin_btn_text_light_default"
+         app:menu="@menu/activity_main_drawer" />
+ 
+ </android.support.v4.widget.DrawerLayout>
+Index: ../ResumeApp_ChrisBerns/gradlew
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/gradlew	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/gradlew	(date 1540217685000)
+@@ -0,0 +1,172 @@
++#!/usr/bin/env sh
++
++##############################################################################
++##
++##  Gradle start up script for UN*X
++##
++##############################################################################
++
++# Attempt to set APP_HOME
++# Resolve links: $0 may be a link
++PRG="$0"
++# Need this for relative symlinks.
++while [ -h "$PRG" ] ; do
++    ls=`ls -ld "$PRG"`
++    link=`expr "$ls" : '.*-> \(.*\)$'`
++    if expr "$link" : '/.*' > /dev/null; then
++        PRG="$link"
++    else
++        PRG=`dirname "$PRG"`"/$link"
++    fi
++done
++SAVED="`pwd`"
++cd "`dirname \"$PRG\"`/" >/dev/null
++APP_HOME="`pwd -P`"
++cd "$SAVED" >/dev/null
++
++APP_NAME="Gradle"
++APP_BASE_NAME=`basename "$0"`
++
++# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++DEFAULT_JVM_OPTS=""
++
++# Use the maximum available, or set MAX_FD != -1 to use that value.
++MAX_FD="maximum"
++
++warn () {
++    echo "$*"
++}
++
++die () {
++    echo
++    echo "$*"
++    echo
++    exit 1
++}
++
++# OS specific support (must be 'true' or 'false').
++cygwin=false
++msys=false
++darwin=false
++nonstop=false
++case "`uname`" in
++  CYGWIN* )
++    cygwin=true
++    ;;
++  Darwin* )
++    darwin=true
++    ;;
++  MINGW* )
++    msys=true
++    ;;
++  NONSTOP* )
++    nonstop=true
++    ;;
++esac
++
++CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
++
++# Determine the Java command to use to start the JVM.
++if [ -n "$JAVA_HOME" ] ; then
++    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
++        # IBM's JDK on AIX uses strange locations for the executables
++        JAVACMD="$JAVA_HOME/jre/sh/java"
++    else
++        JAVACMD="$JAVA_HOME/bin/java"
++    fi
++    if [ ! -x "$JAVACMD" ] ; then
++        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++    fi
++else
++    JAVACMD="java"
++    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++fi
++
++# Increase the maximum file descriptors if we can.
++if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
++    MAX_FD_LIMIT=`ulimit -H -n`
++    if [ $? -eq 0 ] ; then
++        if [ "$MAX_FD" = "maximum" -o "$MAX_FD" = "max" ] ; then
++            MAX_FD="$MAX_FD_LIMIT"
++        fi
++        ulimit -n $MAX_FD
++        if [ $? -ne 0 ] ; then
++            warn "Could not set maximum file descriptor limit: $MAX_FD"
++        fi
++    else
++        warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
++    fi
++fi
++
++# For Darwin, add options to specify how the application appears in the dock
++if $darwin; then
++    GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
++fi
++
++# For Cygwin, switch paths to Windows format before running java
++if $cygwin ; then
++    APP_HOME=`cygpath --path --mixed "$APP_HOME"`
++    CLASSPATH=`cygpath --path --mixed "$CLASSPATH"`
++    JAVACMD=`cygpath --unix "$JAVACMD"`
++
++    # We build the pattern for arguments to be converted via cygpath
++    ROOTDIRSRAW=`find -L / -maxdepth 1 -mindepth 1 -type d 2>/dev/null`
++    SEP=""
++    for dir in $ROOTDIRSRAW ; do
++        ROOTDIRS="$ROOTDIRS$SEP$dir"
++        SEP="|"
++    done
++    OURCYGPATTERN="(^($ROOTDIRS))"
++    # Add a user-defined pattern to the cygpath arguments
++    if [ "$GRADLE_CYGPATTERN" != "" ] ; then
++        OURCYGPATTERN="$OURCYGPATTERN|($GRADLE_CYGPATTERN)"
++    fi
++    # Now convert the arguments - kludge to limit ourselves to /bin/sh
++    i=0
++    for arg in "$@" ; do
++        CHECK=`echo "$arg"|egrep -c "$OURCYGPATTERN" -`
++        CHECK2=`echo "$arg"|egrep -c "^-"`                                 ### Determine if an option
++
++        if [ $CHECK -ne 0 ] && [ $CHECK2 -eq 0 ] ; then                    ### Added a condition
++            eval `echo args$i`=`cygpath --path --ignore --mixed "$arg"`
++        else
++            eval `echo args$i`="\"$arg\""
++        fi
++        i=$((i+1))
++    done
++    case $i in
++        (0) set -- ;;
++        (1) set -- "$args0" ;;
++        (2) set -- "$args0" "$args1" ;;
++        (3) set -- "$args0" "$args1" "$args2" ;;
++        (4) set -- "$args0" "$args1" "$args2" "$args3" ;;
++        (5) set -- "$args0" "$args1" "$args2" "$args3" "$args4" ;;
++        (6) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" ;;
++        (7) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" ;;
++        (8) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" ;;
++        (9) set -- "$args0" "$args1" "$args2" "$args3" "$args4" "$args5" "$args6" "$args7" "$args8" ;;
++    esac
++fi
++
++# Escape application args
++save () {
++    for i do printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/" ; done
++    echo " "
++}
++APP_ARGS=$(save "$@")
++
++# Collect all arguments for the java command, following the shell quoting and substitution rules
++eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"
++
++# by default we should be in the correct project dir, but when run from Finder on Mac, the cwd is wrong
++if [ "$(uname)" = "Darwin" ] && [ "$HOME" = "$PWD" ]; then
++  cd "$(dirname "$0")"
++fi
++
++exec "$JAVACMD" "$@"
+Index: ../ResumeApp_ChrisBerns/gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/gradle/wrapper/gradle-wrapper.properties	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/gradle/wrapper/gradle-wrapper.properties	(date 1540217685000)
+@@ -0,0 +1,5 @@
++distributionBase=GRADLE_USER_HOME
++distributionPath=wrapper/dists
++distributionUrl=https\://services.gradle.org/distributions/gradle-4.6-all.zip
++zipStoreBase=GRADLE_USER_HOME
++zipStorePath=wrapper/dists
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <color name=\"colorPrimary\">#008577</color>\n    <color name=\"colorPrimaryDark\">#00574B</color>\n    <color name=\"colorAccent\">#D81B60</color>\n</resources>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(date 1538341654000)
++++ app/src/main/res/values/colors.xml	(date 1538344388000)
+@@ -1,6 +1,13 @@
+-<?xml version="1.0" encoding="utf-8"?>
++<!--?xml version="1.0" encoding="UTF-8"?-->
+ <resources>
+-    <color name="colorPrimary">#008577</color>
+-    <color name="colorPrimaryDark">#00574B</color>
+-    <color name="colorAccent">#D81B60</color>
+-</resources>
++    <color name="primaryColor">#4ab8b8</color>
++    <color name="primaryLightColor">#80ebea</color>
++    <color name="primaryDarkColor">#008888</color>
++    <color name="secondaryColor">#efa35c</color>
++    <color name="secondaryLightColor">#ffd48b</color>
++    <color name="secondaryDarkColor">#b9742f</color>
++    <color name="primaryTextColor">#000000</color>
++    <color name="secondaryTextColor">#000000</color>
++
++    <color name="black_overlay">#66000000</color>
++</resources>
+\ No newline at end of file
+Index: app/src/main/res/drawable-v24/main_gradient.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable-v24/main_gradient.xml	(date 1540069350000)
++++ app/src/main/res/drawable-v24/main_gradient.xml	(date 1540069350000)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item>
++        <shape>
++            <gradient
++                android:angle="90"
++                android:startColor="@color/secondaryColor"
++                android:endColor="@color/secondaryLightColor"
++                android:type="linear" />
++        </shape>
++    </item>
++</selector>
+Index: app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\n\n    <!-- Base application theme. -->\n    <style name=\"AppTheme\" parent=\"Theme.AppCompat.Light.DarkActionBar\">\n        <!-- Customize your theme here. -->\n        <item name=\"colorPrimary\">@color/colorPrimary</item>\n        <item name=\"colorPrimaryDark\">@color/colorPrimaryDark</item>\n        <item name=\"colorAccent\">@color/colorAccent</item>\n    </style>\n\n    <style name=\"AppTheme.NoActionBar\">\n        <item name=\"windowActionBar\">false</item>\n        <item name=\"windowNoTitle\">true</item>\n    </style>\n\n    <style name=\"AppTheme.AppBarOverlay\" parent=\"ThemeOverlay.AppCompat.Dark.ActionBar\" />\n\n    <style name=\"AppTheme.PopupOverlay\" parent=\"ThemeOverlay.AppCompat.Light\" />\n\n</resources>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/styles.xml	(date 1538341654000)
++++ app/src/main/res/values/styles.xml	(date 1538344431000)
+@@ -3,9 +3,9 @@
+     <!-- Base application theme. -->
+     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+         <!-- Customize your theme here. -->
+-        <item name="colorPrimary">@color/colorPrimary</item>
+-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+-        <item name="colorAccent">@color/colorAccent</item>
++        <item name="colorPrimary">@color/primaryColor</item>
++        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
++        <item name="colorAccent">@color/secondaryColor</item>
+     </style>
+ 
+     <style name="AppTheme.NoActionBar">
+Index: ../ResumeApp_ChrisBerns/gradlew.bat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/gradlew.bat	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/gradlew.bat	(date 1540217685000)
+@@ -0,0 +1,84 @@
++@if "%DEBUG%" == "" @echo off
++@rem ##########################################################################
++@rem
++@rem  Gradle startup script for Windows
++@rem
++@rem ##########################################################################
++
++@rem Set local scope for the variables with windows NT shell
++if "%OS%"=="Windows_NT" setlocal
++
++set DIRNAME=%~dp0
++if "%DIRNAME%" == "" set DIRNAME=.
++set APP_BASE_NAME=%~n0
++set APP_HOME=%DIRNAME%
++
++@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++set DEFAULT_JVM_OPTS=
++
++@rem Find java.exe
++if defined JAVA_HOME goto findJavaFromJavaHome
++
++set JAVA_EXE=java.exe
++%JAVA_EXE% -version >NUL 2>&1
++if "%ERRORLEVEL%" == "0" goto init
++
++echo.
++echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:findJavaFromJavaHome
++set JAVA_HOME=%JAVA_HOME:"=%
++set JAVA_EXE=%JAVA_HOME%/bin/java.exe
++
++if exist "%JAVA_EXE%" goto init
++
++echo.
++echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
++echo.
++echo Please set the JAVA_HOME variable in your environment to match the
++echo location of your Java installation.
++
++goto fail
++
++:init
++@rem Get command-line arguments, handling Windows variants
++
++if not "%OS%" == "Windows_NT" goto win9xME_args
++
++:win9xME_args
++@rem Slurp the command line arguments.
++set CMD_LINE_ARGS=
++set _SKIP=2
++
++:win9xME_args_slurp
++if "x%~1" == "x" goto execute
++
++set CMD_LINE_ARGS=%*
++
++:execute
++@rem Setup the command line
++
++set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
++
++@rem Execute Gradle
++"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%
++
++:end
++@rem End local scope for the variables with windows NT shell
++if "%ERRORLEVEL%"=="0" goto mainEnd
++
++:fail
++rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
++rem the _cmd.exe /c_ return code!
++if  not "" == "%GRADLE_EXIT_CONSOLE%" exit 1
++exit /b 1
++
++:mainEnd
++if "%OS%"=="Windows_NT" endlocal
++
++:omega
+Index: app/src/main/res/values/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\n    <!-- Default screen margins, per the Android Design guidelines. -->\n    <dimen name=\"activity_horizontal_margin\">16dp</dimen>\n    <dimen name=\"activity_vertical_margin\">16dp</dimen>\n    <dimen name=\"nav_header_vertical_spacing\">8dp</dimen>\n    <dimen name=\"nav_header_height\">176dp</dimen>\n    <dimen name=\"fab_margin\">16dp</dimen>\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/dimens.xml	(date 1538341654000)
++++ app/src/main/res/values/dimens.xml	(date 1541260620000)
+@@ -5,4 +5,8 @@
+     <dimen name="nav_header_vertical_spacing">8dp</dimen>
+     <dimen name="nav_header_height">176dp</dimen>
+     <dimen name="fab_margin">16dp</dimen>
++    <dimen name="rps_icon_size">150dip</dimen>
++    <dimen name="avatar_size">80dp</dimen>
++    <dimen name="game_title">50sp</dimen>
++    <dimen name="game_home_icon_sz">200sp</dimen>
+ </resources>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/gradle.properties	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/gradle.properties	(date 1540217698000)
+@@ -0,0 +1,14 @@
++# Project-wide Gradle settings.
++# IDE (e.g. Android Studio) users:
++# Gradle settings configured through the IDE *will override*
++# any settings specified in this file.
++# For more details on how to configure your build environment visit
++# http://www.gradle.org/docs/current/userguide/build_environment.html
++# Specifies the JVM arguments used for the daemon process.
++# The setting is particularly useful for tweaking memory settings.
++org.gradle.jvmargs=-Xmx1536m
++# When configured, Gradle will run in incubating parallel mode.
++# This option should only be used with decoupled projects. More details, visit
++# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
++# org.gradle.parallel=true
++
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\n    <string name=\"app_name\">SettleTheScore</string>\n    <string name=\"navigation_drawer_open\">Open navigation drawer</string>\n    <string name=\"navigation_drawer_close\">Close navigation drawer</string>\n    <string name=\"nav_header_title\">Android Studio</string>\n    <string name=\"nav_header_subtitle\">android.studio@android.com</string>\n    <string name=\"nav_header_desc\">Navigation header</string>\n    <string name=\"action_settings\">Settings</string>\n</resources>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(date 1538341654000)
++++ app/src/main/res/values/strings.xml	(date 1541367662000)
+@@ -6,4 +6,14 @@
+     <string name="nav_header_subtitle">android.studio@android.com</string>
+     <string name="nav_header_desc">Navigation header</string>
+     <string name="action_settings">Settings</string>
++    <string name="logout">Logout</string>
++
++    <!-- TODO: Remove or change this placeholder text -->
++    <string name="hello_blank_fragment">Hello blank fragment</string>
++    <string name="home">Home</string>
++    <string name="friends">Friends</string>
++    <string name="scores">Scores</string>
++    <string name="rps">RPS</string>
++    <string name="start">Start</string>
++    <string name="life_counter">Life</string>
+ </resources>
+Index: ../ResumeApp_ChrisBerns/.idea/runConfigurations.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/.idea/runConfigurations.xml	(date 1540217686000)
++++ ../ResumeApp_ChrisBerns/.idea/runConfigurations.xml	(date 1540217686000)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RunConfigurationProducerService">
++    <option name="ignoredProducers">
++      <set>
++        <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
++        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
++        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
++      </set>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/.idea/codeStyles/Project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/.idea/codeStyles/Project.xml	(date 1540217686000)
++++ ../ResumeApp_ChrisBerns/.idea/codeStyles/Project.xml	(date 1540217686000)
+@@ -0,0 +1,29 @@
++<component name="ProjectCodeStyleConfiguration">
++  <code_scheme name="Project" version="173">
++    <Objective-C-extensions>
++      <file>
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Import" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Macro" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Typedef" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Enum" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Constant" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Global" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Struct" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="FunctionPredecl" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Function" />
++      </file>
++      <class>
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Property" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Synthesize" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="InitMethod" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="StaticMethod" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="InstanceMethod" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="DeallocMethod" />
++      </class>
++      <extensions>
++        <pair source="cpp" header="h" fileNamingConvention="NONE" />
++        <pair source="c" header="h" fileNamingConvention="NONE" />
++      </extensions>
++    </Objective-C-extensions>
++  </code_scheme>
++</component>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/app/src/main/java/com/cberns/resumeapp_chrisberns/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/java/com/cberns/resumeapp_chrisberns/MainActivity.java	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/java/com/cberns/resumeapp_chrisberns/MainActivity.java	(date 1540217698000)
+@@ -0,0 +1,13 @@
++package com.cberns.resumeapp_chrisberns;
++
++import android.support.v7.app.AppCompatActivity;
++import android.os.Bundle;
++
++public class MainActivity extends AppCompatActivity {
++
++  @Override
++  protected void onCreate(Bundle savedInstanceState) {
++    super.onCreate(savedInstanceState);
++    setContentView(R.layout.activity_main);
++  }
++}
+Index: ../ResumeApp_ChrisBerns/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/build.gradle	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/build.gradle	(date 1540217685000)
+@@ -0,0 +1,27 @@
++// Top-level build file where you can add configuration options common to all sub-projects/modules.
++
++buildscript {
++    
++    repositories {
++        google()
++        jcenter()
++    }
++    dependencies {
++        classpath 'com.android.tools.build:gradle:3.2.0'
++        
++
++        // NOTE: Do not place your application dependencies here; they belong
++        // in the individual module build.gradle files
++    }
++}
++
++allprojects {
++    repositories {
++        google()
++        jcenter()
++    }
++}
++
++task clean(type: Delete) {
++    delete rootProject.buildDir
++}
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/layout/activity_main.xml	(date 1540392449000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/layout/activity_main.xml	(date 1540392449000)
+@@ -0,0 +1,86 @@
++<?xml version="1.0" encoding="utf-8"?>
++<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++  xmlns:app="http://schemas.android.com/apk/res-auto"
++  xmlns:tools="http://schemas.android.com/tools"
++  android:layout_width="match_parent"
++  android:layout_height="match_parent"
++  android:background="@android:color/background_light"
++  tools:context=".MainActivity">
++
++  <ImageView
++      android:id="@+id/imageView"
++      android:layout_width="200dp"
++      android:layout_height="180dp"
++      app:layout_constraintEnd_toEndOf="parent"
++      app:layout_constraintStart_toStartOf="parent"
++      app:layout_constraintTop_toBottomOf="@+id/textView2"
++      app:srcCompat="@drawable/profile" />
++
++  <TextView
++    android:id="@+id/textView2"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_marginTop="8dp"
++    android:text="@string/name"
++    android:textSize="30sp"
++    app:layout_constraintBottom_toTopOf="@+id/imageView"
++    app:layout_constraintEnd_toEndOf="parent"
++    app:layout_constraintHorizontal_bias="0.504"
++    app:layout_constraintStart_toStartOf="parent"
++    app:layout_constraintTop_toTopOf="parent" />
++
++  <TextView
++      android:id="@+id/textView3"
++      android:layout_width="wrap_content"
++      android:layout_height="23dp"
++      android:layout_marginTop="8dp"
++      android:text="@string/contact"
++      android:textSize="16sp"
++      app:layout_constraintEnd_toEndOf="parent"
++      app:layout_constraintStart_toStartOf="parent"
++      app:layout_constraintTop_toBottomOf="@+id/textView4" />
++
++  <TextView
++    android:id="@+id/textView4"
++    android:layout_width="0dp"
++    android:layout_height="wrap_content"
++    android:layout_marginStart="32dp"
++    android:layout_marginTop="8dp"
++    android:layout_marginEnd="32dp"
++    android:text="@string/highlight"
++    android:textAlignment="center"
++    android:textSize="18sp"
++    app:layout_constraintEnd_toEndOf="parent"
++    app:layout_constraintStart_toStartOf="parent"
++    app:layout_constraintTop_toBottomOf="@+id/imageView" />
++
++  <TextView
++      android:id="@+id/textView5"
++      android:layout_width="wrap_content"
++      android:layout_height="wrap_content"
++      android:layout_marginStart="8dp"
++      android:layout_marginTop="8dp"
++      android:layout_marginEnd="8dp"
++      android:text="@string/education"
++      android:textSize="18sp"
++      android:textStyle="bold"
++      app:layout_constraintEnd_toEndOf="parent"
++      app:layout_constraintHorizontal_bias="0.083"
++      app:layout_constraintStart_toStartOf="parent"
++      app:layout_constraintTop_toBottomOf="@+id/textView3" />
++
++  <TextView
++      android:id="@+id/textView6"
++      android:layout_width="0dp"
++      android:layout_height="wrap_content"
++      android:layout_marginStart="32dp"
++      android:layout_marginTop="8dp"
++      android:layout_marginEnd="32dp"
++      android:text="UMASS Lowell, Lowell MA – CS Major 3.66 GPA Concentration on HCI and GUI development. Study of CS fundamentals, including data structures, programming language theory, and the analysis of algorithms.	"
++      android:textSize="16sp"
++      app:layout_constraintEnd_toEndOf="parent"
++      app:layout_constraintHorizontal_bias="1.0"
++      app:layout_constraintStart_toStartOf="parent"
++      app:layout_constraintTop_toBottomOf="@+id/textView5" />
++
++</android.support.constraint.ConstraintLayout>
+Index: ../ResumeApp_ChrisBerns/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/.idea/misc.xml	(date 1540421339000)
++++ ../ResumeApp_ChrisBerns/.idea/misc.xml	(date 1540421339000)
+@@ -0,0 +1,38 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="NullableNotNullManager">
++    <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
++    <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
++    <option name="myNullables">
++      <value>
++        <list size="7">
++          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
++          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
++          <item index="2" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
++          <item index="3" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.Nullable" />
++          <item index="4" class="java.lang.String" itemvalue="android.support.annotation.Nullable" />
++          <item index="5" class="java.lang.String" itemvalue="androidx.annotation.Nullable" />
++          <item index="6" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNullable" />
++        </list>
++      </value>
++    </option>
++    <option name="myNotNulls">
++      <value>
++        <list size="6">
++          <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
++          <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
++          <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
++          <item index="3" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
++          <item index="4" class="java.lang.String" itemvalue="androidx.annotation.NonNull" />
++          <item index="5" class="java.lang.String" itemvalue="androidx.annotation.RecentlyNonNull" />
++        </list>
++      </value>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/build/classes" />
++  </component>
++  <component name="ProjectType">
++    <option name="id" value="Android" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/settings.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/settings.gradle	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/settings.gradle	(date 1540217685000)
+@@ -0,0 +1,1 @@
++include ':app'
+Index: app/src/main/res/drawable/home_btn_outline.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/home_btn_outline.xml	(date 1541260949000)
++++ app/src/main/res/drawable/home_btn_outline.xml	(date 1541260949000)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <stroke android:width="5px" android:color="@color/primaryLightColor" />
++</shape>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/.gitignore	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/.gitignore	(date 1540217685000)
+@@ -0,0 +1,11 @@
++*.iml
++.gradle
++/local.properties
++/.idea/caches/build_file_checksums.ser
++/.idea/libraries
++/.idea/modules.xml
++/.idea/workspace.xml
++.DS_Store
++/build
++/captures
++.externalNativeBuild
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/values/styles.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/values/styles.xml	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/values/styles.xml	(date 1540217698000)
+@@ -0,0 +1,11 @@
++<resources>
++
++  <!-- Base application theme. -->
++  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
++    <!-- Customize your theme here. -->
++    <item name="colorPrimary">@color/colorPrimary</item>
++    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
++    <item name="colorAccent">@color/colorAccent</item>
++  </style>
++
++</resources>
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/values/colors.xml	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/values/colors.xml	(date 1540217698000)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++  <color name="colorPrimary">#008577</color>
++  <color name="colorPrimaryDark">#00574B</color>
++  <color name="colorAccent">#D81B60</color>
++</resources>
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml	(date 1540217698000)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
++  <background android:drawable="@drawable/ic_launcher_background" />
++  <foreground android:drawable="@drawable/ic_launcher_foreground" />
++</adaptive-icon>
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/drawable-v24/ic_launcher_foreground.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/drawable-v24/ic_launcher_foreground.xml	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/drawable-v24/ic_launcher_foreground.xml	(date 1540217698000)
+@@ -0,0 +1,34 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++  xmlns:aapt="http://schemas.android.com/aapt"
++  android:width="108dp"
++  android:height="108dp"
++  android:viewportWidth="108"
++  android:viewportHeight="108">
++  <path
++    android:fillType="evenOdd"
++    android:pathData="M32,64C32,64 38.39,52.99 44.13,50.95C51.37,48.37 70.14,49.57 70.14,49.57L108.26,87.69L108,109.01L75.97,107.97L32,64Z"
++    android:strokeWidth="1"
++    android:strokeColor="#00000000">
++    <aapt:attr name="android:fillColor">
++      <gradient
++        android:endX="78.5885"
++        android:endY="90.9159"
++        android:startX="48.7653"
++        android:startY="61.0927"
++        android:type="linear">
++        <item
++          android:color="#44000000"
++          android:offset="0.0" />
++        <item
++          android:color="#00000000"
++          android:offset="1.0" />
++      </gradient>
++    </aapt:attr>
++  </path>
++  <path
++    android:fillColor="#FFFFFF"
++    android:fillType="nonZero"
++    android:pathData="M66.94,46.02L66.94,46.02C72.44,50.07 76,56.61 76,64L32,64C32,56.61 35.56,50.11 40.98,46.06L36.18,41.19C35.45,40.45 35.45,39.3 36.18,38.56C36.91,37.81 38.05,37.81 38.78,38.56L44.25,44.05C47.18,42.57 50.48,41.71 54,41.71C57.48,41.71 60.78,42.57 63.68,44.05L69.11,38.56C69.84,37.81 70.98,37.81 71.71,38.56C72.44,39.3 72.44,40.45 71.71,41.19L66.94,46.02ZM62.94,56.92C64.08,56.92 65,56.01 65,54.88C65,53.76 64.08,52.85 62.94,52.85C61.8,52.85 60.88,53.76 60.88,54.88C60.88,56.01 61.8,56.92 62.94,56.92ZM45.06,56.92C46.2,56.92 47.13,56.01 47.13,54.88C47.13,53.76 46.2,52.85 45.06,52.85C43.92,52.85 43,53.76 43,54.88C43,56.01 43.92,56.92 45.06,56.92Z"
++    android:strokeWidth="1"
++    android:strokeColor="#00000000" />
++</vector>
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml	(date 1540217698000)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
++  <background android:drawable="@drawable/ic_launcher_background" />
++  <foreground android:drawable="@drawable/ic_launcher_foreground" />
++</adaptive-icon>
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/drawable/ic_launcher_background.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/drawable/ic_launcher_background.xml	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/drawable/ic_launcher_background.xml	(date 1540217698000)
+@@ -0,0 +1,170 @@
++<?xml version="1.0" encoding="utf-8"?>
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++  android:width="108dp"
++  android:height="108dp"
++  android:viewportWidth="108"
++  android:viewportHeight="108">
++  <path
++    android:fillColor="#008577"
++    android:pathData="M0,0h108v108h-108z" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M9,0L9,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M19,0L19,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M29,0L29,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M39,0L39,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M49,0L49,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M59,0L59,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M69,0L69,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M79,0L79,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M89,0L89,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M99,0L99,108"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,9L108,9"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,19L108,19"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,29L108,29"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,39L108,39"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,49L108,49"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,59L108,59"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,69L108,69"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,79L108,79"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,89L108,89"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M0,99L108,99"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M19,29L89,29"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M19,39L89,39"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M19,49L89,49"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M19,59L89,59"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M19,69L89,69"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M19,79L89,79"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M29,19L29,89"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M39,19L39,89"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M49,19L49,89"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M59,19L59,89"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M69,19L69,89"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++  <path
++    android:fillColor="#00000000"
++    android:pathData="M79,19L79,89"
++    android:strokeWidth="0.8"
++    android:strokeColor="#33FFFFFF" />
++</vector>
+Index: ../ResumeApp_ChrisBerns/app/proguard-rules.pro
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/proguard-rules.pro	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/app/proguard-rules.pro	(date 1540217685000)
+@@ -0,0 +1,21 @@
++# Add project specific ProGuard rules here.
++# You can control the set of applied configuration files using the
++# proguardFiles setting in build.gradle.
++#
++# For more details, see
++#   http://developer.android.com/guide/developing/tools/proguard.html
++
++# If your project uses WebView with JS, uncomment the following
++# and specify the fully qualified class name to the JavaScript interface
++# class:
++#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
++#   public *;
++#}
++
++# Uncomment this to preserve the line number information for
++# debugging stack traces.
++#-keepattributes SourceFile,LineNumberTable
++
++# If you keep the line number information, uncomment this to
++# hide the original source file name.
++#-renamesourcefileattribute SourceFile
+Index: ../ResumeApp_ChrisBerns/app/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/.gitignore	(date 1540217685000)
++++ ../ResumeApp_ChrisBerns/app/.gitignore	(date 1540217685000)
+@@ -0,0 +1,1 @@
++/build
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\n\nandroid {\n    compileSdkVersion 28\n    defaultConfig {\n        applicationId \"com.ckm.settlethescore\"\n        minSdkVersion 16\n        targetSdkVersion 28\n        versionCode 1\n        versionName \"1.0\"\n        testInstrumentationRunner \"android.support.test.runner.AndroidJUnitRunner\"\n    }\n    buildTypes {\n        release {\n            minifyEnabled false\n            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'\n        }\n    }\n}\n\ndependencies {\n    implementation fileTree(dir: 'libs', include: ['*.jar'])\n    implementation 'com.android.support:appcompat-v7:28.0.0'\n    implementation 'com.android.support:design:28.0.0'\n    implementation 'com.android.support.constraint:constraint-layout:1.1.3'\n    testImplementation 'junit:junit:4.12'\n    androidTestImplementation 'com.android.support.test:runner:1.0.2'\n    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'\n\n    // firebase\n    implementation 'com.google.firebase:firebase-core:16.0.1'\n    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'\n}\n\n// firebase\napply plugin: 'com.google.gms.google-services'\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(date 1538341654000)
++++ app/build.gradle	(date 1538349015000)
+@@ -23,6 +23,7 @@
+     implementation 'com.android.support:appcompat-v7:28.0.0'
+     implementation 'com.android.support:design:28.0.0'
+     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
++    implementation 'com.android.support:support-v4:28.0.0'
+     testImplementation 'junit:junit:4.12'
+     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+Index: ../ResumeApp_ChrisBerns/app/src/test/java/com/cberns/resumeapp_chrisberns/ExampleUnitTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/test/java/com/cberns/resumeapp_chrisberns/ExampleUnitTest.java	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/test/java/com/cberns/resumeapp_chrisberns/ExampleUnitTest.java	(date 1540217698000)
+@@ -0,0 +1,17 @@
++package com.cberns.resumeapp_chrisberns;
++
++import org.junit.Test;
++
++import static org.junit.Assert.*;
++
++/**
++ * Example local unit test, which will execute on the development machine (host).
++ *
++ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
++ */
++public class ExampleUnitTest {
++  @Test
++  public void addition_isCorrect() {
++    assertEquals(4, 2 + 2);
++  }
++}
+Index: app/src/main/java/com/ckm/settlethescore/BlankFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/ckm/settlethescore/BlankFragment.java	(date 1541260672000)
++++ app/src/main/java/com/ckm/settlethescore/BlankFragment.java	(date 1541260672000)
+@@ -0,0 +1,108 @@
++package com.ckm.settlethescore;
++
++import android.content.Context;
++import android.net.Uri;
++import android.os.Bundle;
++import android.support.v4.app.Fragment;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++
++/**
++ * A simple {@link Fragment} subclass.
++ * Activities that contain this fragment must implement the
++ * {@link BlankFragment.OnFragmentInteractionListener} interface
++ * to handle interaction events.
++ * Use the {@link BlankFragment#newInstance} factory method to
++ * create an instance of this fragment.
++ */
++public class BlankFragment extends Fragment {
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    private OnFragmentInteractionListener mListener;
++
++    public BlankFragment() {
++        // Required empty public constructor
++    }
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment BlankFragment.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static BlankFragment newInstance(String param1, String param2) {
++        BlankFragment fragment = new BlankFragment();
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_rps_main, container, false);
++    }
++
++    // TODO: Rename method, update argument and hook method into UI event
++    public void onButtonPressed(Uri uri) {
++        if (mListener != null) {
++            mListener.onFragmentInteraction(uri);
++        }
++    }
++
++    @Override
++    public void onAttach(Context context) {
++        super.onAttach(context);
++        if (context instanceof OnFragmentInteractionListener) {
++            mListener = (OnFragmentInteractionListener) context;
++        } else {
++            throw new RuntimeException(context.toString()
++                    + " must implement OnFragmentInteractionListener");
++        }
++    }
++
++    @Override
++    public void onDetach() {
++        super.onDetach();
++        mListener = null;
++    }
++
++    /**
++     * This interface must be implemented by activities that contain this
++     * fragment to allow an interaction in this fragment to be communicated
++     * to the activity and potentially other fragments contained in that
++     * activity.
++     * <p>
++     * See the Android Training lesson <a href=
++     * "http://developer.android.com/training/basics/fragments/communicating.html"
++     * >Communicating with Other Fragments</a> for more information.
++     */
++    public interface OnFragmentInteractionListener {
++        // TODO: Update argument type and name
++        void onFragmentInteraction(Uri uri);
++    }
++}
+Index: app/src/main/res/layout/fragment_rps_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_rps_main.xml	(date 1541368354000)
++++ app/src/main/res/layout/fragment_rps_main.xml	(date 1541368354000)
+@@ -0,0 +1,57 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".BlankFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++
++    <android.support.constraint.ConstraintLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++
++        <TextView
++            android:id="@+id/textView2"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:fontFamily="@font/rubik_mono_one"
++            android:shadowColor="@color/black_overlay"
++            android:text="@string/rps"
++            android:textAllCaps="false"
++            android:textColor="@color/primaryLightColor"
++            android:textSize="@dimen/game_title"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <ImageButton
++            android:id="@+id/imageButton"
++            android:layout_width="@dimen/game_home_icon_sz"
++            android:layout_height="@dimen/game_home_icon_sz"
++            android:layout_marginTop="40dp"
++            android:background="@color/fui_transparent"
++            android:scaleType="fitXY"
++            android:src="@drawable/paper"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/textView2" />
++
++        <Button
++            android:id="@+id/button2"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="40dp"
++            android:background="@drawable/home_btn_outline"
++            android:padding="@dimen/fui_heading_padding_bottom"
++            android:textColor="@color/primaryLightColor"
++            android:textSize="30sp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.501"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/imageButton"
++            tools:text="@string/start" />
++    </android.support.constraint.ConstraintLayout>
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    package=\"com.ckm.settlethescore\">\n\n    <application\n        android:allowBackup=\"true\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/AppTheme\">\n        <activity\n            android:name=\".MainActivity\"\n            android:label=\"@string/app_name\"\n            android:theme=\"@style/AppTheme.NoActionBar\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n        <activity android:name=\".FirebaseUIActivity\"></activity>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(date 1538341654000)
++++ app/src/main/AndroidManifest.xml	(date 1538345372000)
+@@ -19,7 +19,11 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity android:name=".FirebaseUIActivity"></activity>
++        <activity
++            android:name=".FirebaseUIActivity"
++            android:label="home"
++            android:theme="@style/AppTheme">
++        </activity>
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+Index: .idea/assetWizardSettings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/assetWizardSettings.xml	(date 1541367396000)
++++ .idea/assetWizardSettings.xml	(date 1541367396000)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="WizardSettings">
++    <option name="children">
++      <map>
++        <entry key="imageWizard">
++          <value>
++            <PersistentState />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/ckm/settlethescore/FirebaseUIActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ckm.settlethescore;\n\nimport android.support.annotation.NonNull;\nimport android.support.v7.app.AppCompatActivity;\nimport android.os.Bundle;\nimport android.content.Intent;\n\nimport com.firebase.ui.auth.AuthUI;\nimport com.firebase.ui.auth.IdpResponse;\nimport com.google.android.gms.tasks.OnCompleteListener;\nimport com.google.android.gms.tasks.Task;\nimport com.google.firebase.auth.FirebaseAuth;\nimport com.google.firebase.auth.FirebaseUser;\n\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class FirebaseUIActivity extends AppCompatActivity {\n    private int RC_SIGN_IN = 1;\n\n    @Override\n    protected void onActivityResult(int requestCode, int resultCode, Intent data) {\n        super.onActivityResult(requestCode, resultCode, data);\n\n        if(requestCode == RC_SIGN_IN) {\n            IdpResponse response = IdpResponse.fromResultIntent(data);\n\n            if(resultCode == RESULT_OK) {\n                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();\n\n                // successful sign-in go to main menu\n                Intent successfulSignInIntent = new Intent(this, MainActivity.class);\n                startActivity(successfulSignInIntent);\n            } else {\n                // if sign in failed\n            }\n        }\n    }\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_firebase_ui);\n        createSignInIntent();\n    }\n\n    public void createSignInIntent() {\n        // Choose authentication providers\n        List<AuthUI.IdpConfig> providers = Arrays.asList(\n                new AuthUI.IdpConfig.EmailBuilder().build(),\n                new AuthUI.IdpConfig.GoogleBuilder().build());\n\n        // Create and launch sign-in intent\n        startActivityForResult(\n                AuthUI.getInstance()\n                        .createSignInIntentBuilder()\n                        .setAvailableProviders(providers)\n                        .build(),\n                RC_SIGN_IN);\n    }\n\n    public void signOut() {\n        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {\n            @Override\n            public void onComplete(@NonNull Task<Void> task) {\n                // decide what to do after sign out\n            }\n        });\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/ckm/settlethescore/FirebaseUIActivity.java	(date 1538341654000)
++++ app/src/main/java/com/ckm/settlethescore/FirebaseUIActivity.java	(date 1538346129000)
+@@ -57,6 +57,9 @@
+                         .setAvailableProviders(providers)
+                         .build(),
+                 RC_SIGN_IN);
++
++        Intent singedInInt = new Intent(getApplicationContext(), MainActivity.class);
++        startActivity(singedInInt);
+     }
+ 
+     public void signOut() {
+Index: app/src/main/res/layout/fragment_lives_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_lives_main.xml	(date 1541368368000)
++++ app/src/main/res/layout/fragment_lives_main.xml	(date 1541368368000)
+@@ -0,0 +1,64 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++    <!-- TODO: Update blank fragment layout -->
++    <android.support.constraint.ConstraintLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++
++        <TextView
++            android:id="@+id/textView3"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginStart="121dp"
++            android:layout_marginLeft="121dp"
++            android:layout_marginTop="24dp"
++            android:layout_marginEnd="93dp"
++            android:layout_marginRight="93dp"
++            android:fontFamily="@font/rubik_mono_one"
++            android:shadowColor="@color/black_overlay"
++            android:text="@string/life_counter"
++            android:textAllCaps="false"
++            android:textColor="@color/primaryLightColor"
++            android:textSize="@dimen/game_title"
++            app:layout_constraintBottom_toTopOf="@+id/imageButton2"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.0"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <ImageButton
++            android:id="@+id/imageButton2"
++            android:layout_width="@dimen/game_home_icon_sz"
++            android:layout_height="@dimen/game_home_icon_sz"
++            android:layout_marginTop="32dp"
++            android:background="@color/fui_transparent"
++            android:scaleType="fitXY"
++            android:src="@drawable/paper"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.494"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/textView3"
++            tools:src="@drawable/hearts" />
++
++        <Button
++            android:id="@+id/button"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="32dp"
++            android:background="@drawable/home_btn_outline"
++            android:padding="@dimen/fui_heading_padding_bottom"
++            android:textColor="@color/primaryLightColor"
++            android:textSize="30sp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.501"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/imageButton2"
++            tools:text="@string/start" />
++    </android.support.constraint.ConstraintLayout>
++
++</FrameLayout>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/app/src/androidTest/java/com/cberns/resumeapp_chrisberns/ExampleInstrumentedTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/androidTest/java/com/cberns/resumeapp_chrisberns/ExampleInstrumentedTest.java	(date 1540217698000)
++++ ../ResumeApp_ChrisBerns/app/src/androidTest/java/com/cberns/resumeapp_chrisberns/ExampleInstrumentedTest.java	(date 1540217698000)
+@@ -0,0 +1,26 @@
++package com.cberns.resumeapp_chrisberns;
++
++import android.content.Context;
++import android.support.test.InstrumentationRegistry;
++import android.support.test.runner.AndroidJUnit4;
++
++import org.junit.Test;
++import org.junit.runner.RunWith;
++
++import static org.junit.Assert.*;
++
++/**
++ * Instrumented test, which will execute on an Android device.
++ *
++ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
++ */
++@RunWith(AndroidJUnit4.class)
++public class ExampleInstrumentedTest {
++  @Test
++  public void useAppContext() {
++    // Context of the app under test.
++    Context appContext = InstrumentationRegistry.getTargetContext();
++
++    assertEquals("com.cberns.resumeapp_chrisberns", appContext.getPackageName());
++  }
++}
+Index: ../.idea/codeStyles/Project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../.idea/codeStyles/Project.xml	(date 1538341180000)
++++ ../.idea/codeStyles/Project.xml	(date 1538341180000)
+@@ -0,0 +1,29 @@
++<component name="ProjectCodeStyleConfiguration">
++  <code_scheme name="Project" version="173">
++    <Objective-C-extensions>
++      <file>
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Import" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Macro" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Typedef" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Enum" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Constant" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Global" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Struct" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="FunctionPredecl" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Function" />
++      </file>
++      <class>
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Property" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Synthesize" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="InitMethod" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="StaticMethod" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="InstanceMethod" />
++        <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="DeallocMethod" />
++      </class>
++      <extensions>
++        <pair source="cpp" header="h" fileNamingConvention="NONE" />
++        <pair source="c" header="h" fileNamingConvention="NONE" />
++      </extensions>
++    </Objective-C-extensions>
++  </code_scheme>
++</component>
+\ No newline at end of file
+Index: ../ResumeApp_ChrisBerns/app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../ResumeApp_ChrisBerns/app/src/main/res/values/strings.xml	(date 1540218383000)
++++ ../ResumeApp_ChrisBerns/app/src/main/res/values/strings.xml	(date 1540218383000)
+@@ -0,0 +1,7 @@
++<resources>
++  <string name="app_name">ResumeApp_ChrisBerns</string>
++  <string name="name">Christopher A. Berns</string>
++  <string name="highlight">Passionate programmer dedicated to making people love computers.</string>
++  <string name="contact">Email: chris@chrisberns.com Phone: 978-992-1608</string>
++  <string name="education">Education:</string>
++</resources>
