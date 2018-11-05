@@ -1,8 +1,12 @@
 package com.ckm.settlethescore;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,12 +19,41 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import android.content.Intent;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private FirebaseAuth firebaseAuthentication;
+    private FirebaseUser firebaseUser;
+    private StorageReference profilePhotoReference;
+
+    private Player activePlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // database reference
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,14 +77,91 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // if signed in already, don't show
-        Button signInButton = (Button) findViewById(R.id.btnSignIn);
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        // firebase
+        firebaseAuthentication = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuthentication.getCurrentUser();
+        final String userID = firebaseUser.getUid();
+
+
+        final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture);
+        profilePhotoReference = FirebaseStorage.getInstance().getReference("profile_pictures/" + userID);
+
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
+
+        firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View view) {
-                // firebase ui sign-in
-                Intent signInIntent = new Intent(getApplicationContext(), FirebaseUIActivity.class);
-                startActivity(signInIntent);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseUser == null) {
+                    // User somehow got here without signing in... make sure they sign in
+                    findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
+                    findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
+                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+                    startActivity(startupIntent);
+                } else {
+                    activePlayer = Player.generatePlayerFromFirebaseUser(firebaseUser); // used in register activity
+
+                    findViewById(R.id.txtNotSignedIn).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.txtSignedIn).setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                dataSnapshot.child("display_name").getValue();
+
+                TextView txtUserNameDisplay = (TextView) findViewById(R.id.txtUserNameDisplay);
+                TextView txtUserEmailDisplay = (TextView) findViewById(R.id.txtUserEmailDisplay);
+                TextView txtUserPhoneDisplay = (TextView) findViewById(R.id.txtUserPhoneDisplay);
+                TextView txtUserIDDisplay = (TextView) findViewById(R.id.txtUserIDDisplay);
+
+                txtUserNameDisplay.setText(dataSnapshot.child("display_name").getValue().toString().trim());
+                txtUserEmailDisplay.setText(dataSnapshot.child("email").getValue().toString().trim());
+
+                activePlayer.setPhoneNumber(dataSnapshot.child("phone_number").getValue().toString().trim());
+                txtUserPhoneDisplay.setText(activePlayer.getPhoneNumber().toString().trim());
+
+                activePlayer.setPhoneNumber(dataSnapshot.child("user_id").getValue().toString().trim());
+                txtUserIDDisplay.setText(activePlayer.getUserId().toString().trim());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // unused
+            }
+        });
+
+        // download profile picture
+        try {
+            final File profilePictureDownload = File.createTempFile("profile_photos", userID.toString());
+
+            FileDownloadTask profilePictureDownloadTask = profilePhotoReference.getFile(profilePictureDownload);
+            profilePictureDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    imgProfilePictureField.setImageURI(Uri.fromFile(profilePictureDownload));
+                }
+            });
+
+        } catch (Exception e) {
+
+        }
+
+        Button btnSignOut = findViewById(R.id.btnSignOut);
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = database.getReference().child("Players").child(user.getUid());
+
+                databaseReference.child("status").setValue(0);
+
+                AuthUI.getInstance().signOut(MainActivity.this);
+
+                Intent signOutIntent = new Intent(MainActivity.this, StartupActivity.class);
+                startActivity(signOutIntent);
             }
         });
     }
