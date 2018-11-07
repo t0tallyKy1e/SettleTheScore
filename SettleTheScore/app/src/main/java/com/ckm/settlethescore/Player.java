@@ -23,7 +23,8 @@ public class Player {
     private String phoneNumber;
     private String userId;
 
-    private String[] friends;
+    private String[] friends; // array of user IDs
+    private String[] games; // array of game IDs
 
     // Defaults
     private final boolean defaultIsConnected = false;
