@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_gradient"
     tools:context=".StartupActivity">
 
     <ImageView
@@ -34,7 +35,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/button_outline"
+        android:shadowColor="#94000000"
+        android:shadowDy="2"
+        android:shadowRadius="4"
         android:text="@string/sign_in"
+        android:textColor="@color/fui_bgGitHub"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/txtStartupWarning"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +58,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="11dp"
         android:text="@string/startup_warning"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

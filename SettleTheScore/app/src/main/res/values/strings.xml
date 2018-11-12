@@ -7,7 +7,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-<<<<<<< HEAD
     <string name="signed_in">Signed In</string>
     <string name="not_signed_in">Not Signed In</string>
     <string name="btn_sign_out">Sign Out</string>
@@ -33,10 +32,16 @@
     <string name="register_upload_photo_label">Profile Photo: </string>
     <string name="register_inv_profile_picture_uri">uri</string>
     <string name="register_submit">Register</string>
-=======
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="dice_instructions" >Click the dice to roll</string>
+    <string name="dice_instructions">Click the dice to roll</string>
     <string name="roll_anything">1 out of anything</string>
->>>>>>> interface
+    <string name="roll">Roll</string>
+    <string name="result_colon">Result:</string>
+    <string name="title_activity_dice">dice</string>
+    <string name="title_activity_life">life</string>
+    <string name="player_one">Player 1</string>
+    <string name="player_two">Player 2</string>
+    <string name="life">Life</string>
+    <string name="opponent">Opponent</string>
+    <string name="opponent_name">Opponent Name</string>
 </resources>
