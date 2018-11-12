@@ -62,12 +62,13 @@ public class RegisterActivity extends AppCompatActivity {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 final DatabaseReference databaseReference = database.getReference().child("Players").child(user.getUid());
 
+                // add user's info to database
                 databaseReference.child("display_name").setValue(displayNameField.getText().toString().trim());
                 databaseReference.child("full_name").setValue(fullNameField.getText().toString().trim());
                 databaseReference.child("email").setValue(emailField.getText().toString().trim());
                 databaseReference.child("phone_number").setValue(phoneNumberField.getText().toString().trim());
 
-                // add image to firebase storage and save new url to user's profile
+                // add image to firebase storage, save as user's ID
                 StorageReference playerProfilePictureStorage = FirebaseStorage.getInstance().getReference("profile_pictures/" + user.getUid().toString());
                 UploadTask uploadPhoto = playerProfilePictureStorage.putFile(Uri.parse(profilePhotoUriField.getText().toString().trim()));
 
@@ -79,12 +80,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                         databaseReference.child("profile_photo").setValue(taskSnapshot.getUploadSessionUri().toString().trim());
 
-                        Toast.makeText(RegisterActivity.this, "User Profile Updated", Toast.LENGTH_SHORT);
+                        Toast.makeText(RegisterActivity.this, "User Profile Updated", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegisterActivity.this, "Error: Failed to upload photo, please try again", Toast.LENGTH_SHORT);
+                        Toast.makeText(RegisterActivity.this, "Error: Failed to upload photo, please try again", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

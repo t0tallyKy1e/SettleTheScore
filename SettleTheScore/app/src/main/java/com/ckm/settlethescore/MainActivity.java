@@ -1,6 +1,5 @@
 package com.ckm.settlethescore;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,11 +20,10 @@ import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,27 +35,23 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
-import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private FirebaseAuth firebaseAuthentication;
-    private FirebaseUser firebaseUser;
-    private StorageReference profilePhotoReference;
+        private FirebaseUser firebaseUser;
 
     private Player activePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // database reference
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // Start of default code
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -67,27 +61,37 @@ public class MainActivity extends AppCompatActivity
 //                        .setAction("Action", null).show();
 //            }
 //        });
+//            final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+//            final View headerView = navView.getHeaderView(0);
+//            final ImageView imgDrawerProfilePicture = (ImageView) headerView.findViewById(R.id.imgDrawerProfilePicture);
+//
+//            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//            fab.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+//                }
+//            });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-//
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
 
-        // firebase
-        firebaseAuthentication = FirebaseAuth.getInstance();
+        // get current firebase user and their ID
+        FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuthentication.getCurrentUser();
         final String userID = firebaseUser.getUid();
 
-
+        // get reference to user's profile picture
         final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture);
-        profilePhotoReference = FirebaseStorage.getInstance().getReference("profile_pictures/" + userID);
+        StorageReference profilePhotoReference = FirebaseStorage.getInstance().getReference("profile_pictures/" + userID);
 
+        // make sure user is valid
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
-
         firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -106,23 +110,26 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        // display user's info
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataSnapshot.child("display_name").getValue();
-
+                // get fields from layout
                 TextView txtUserNameDisplay = (TextView) findViewById(R.id.txtUserNameDisplay);
                 TextView txtUserEmailDisplay = (TextView) findViewById(R.id.txtUserEmailDisplay);
                 TextView txtUserPhoneDisplay = (TextView) findViewById(R.id.txtUserPhoneDisplay);
                 TextView txtUserIDDisplay = (TextView) findViewById(R.id.txtUserIDDisplay);
 
-                txtUserNameDisplay.setText(dataSnapshot.child("display_name").getValue().toString().trim());
-                txtUserEmailDisplay.setText(dataSnapshot.child("email").getValue().toString().trim());
-
+                // get info from database and set values in Player object
+                activePlayer.setUserId(dataSnapshot.child("user_id").getValue().toString().trim());
                 activePlayer.setPhoneNumber(dataSnapshot.child("phone_number").getValue().toString().trim());
-                txtUserPhoneDisplay.setText(activePlayer.getPhoneNumber().toString().trim());
+                activePlayer.setDisplayName(dataSnapshot.child("display_name").getValue().toString().trim());
+                activePlayer.setEmail(dataSnapshot.child("email").getValue().toString().trim());
 
-                activePlayer.setPhoneNumber(dataSnapshot.child("user_id").getValue().toString().trim());
+                // set text in fields
+                txtUserNameDisplay.setText(activePlayer.getDisplayName().toString().trim());
+                txtUserEmailDisplay.setText(activePlayer.getEmail().toString().trim());
+                txtUserPhoneDisplay.setText(activePlayer.getPhoneNumber().toString().trim());
                 txtUserIDDisplay.setText(activePlayer.getUserId().toString().trim());
             }
 
@@ -132,22 +139,24 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // download profile picture
-        try {
-            final File profilePictureDownload = File.createTempFile("profile_photos", userID.toString());
+//        // download profile picture
+//        try {
+//            final File profilePictureDownload = File.createTempFile("profile_photos", userID.toString());
+//            FileDownloadTask profilePictureDownloadTask = profilePhotoReference.getFile(profilePictureDownload);
+//
+//            profilePictureDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                    imgProfilePictureField.setImageURI(Uri.fromFile(profilePictureDownload));
+//                    imgDrawerProfilePicture.setImageURI(Uri.fromFile(profilePictureDownload));
+//                }
+//            });
+//
+//        } catch (Exception e) {
+//            Toast.makeText(MainActivity.this, "ERROR: " + e.toString(), Toast.LENGTH_SHORT).show();
+//        }
 
-            FileDownloadTask profilePictureDownloadTask = profilePhotoReference.getFile(profilePictureDownload);
-            profilePictureDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    imgProfilePictureField.setImageURI(Uri.fromFile(profilePictureDownload));
-                }
-            });
-
-        } catch (Exception e) {
-
-        }
-
+        // sign out and remove current active player
         Button btnSignOut = findViewById(R.id.btnSignOut);
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +175,8 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+
+    // everything below is default code
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
