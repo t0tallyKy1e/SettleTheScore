@@ -39,16 +39,17 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity
+public class OldMainActivityBackup extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-        private FirebaseUser firebaseUser;
+    private FirebaseUser firebaseUser;
 
     private Player activePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start of default code
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity
         FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuthentication.getCurrentUser();
         final String userID = firebaseUser.getUid();
-        activePlayer = Player.generatePlayerFromFirebaseUser(firebaseUser);
 
         // get reference to user's profile picture
         final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture);
@@ -81,22 +81,80 @@ public class MainActivity extends AppCompatActivity
                     Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
                     startActivity(startupIntent);
                 } else {
-                    activePlayer.updatePlayerFromDatabase(userID);
+                    activePlayer = Player.generatePlayerFromFirebaseUser(firebaseUser); // used in register activity
 
-                    Toast.makeText(MainActivity.this, "Signed in as " + activePlayer.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    findViewById(R.id.txtNotSignedIn).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.txtSignedIn).setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        ImageView diceGameButton = findViewById(R.id.dice_game_button);
-        diceGameButton.setOnClickListener(new View.OnClickListener() {
+        // display user's info
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                Intent diceGameIntent = new Intent(MainActivity.this, Dice.class);
-                startActivity(diceGameIntent);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // get fields from layout
+                TextView txtUserNameDisplay = (TextView) findViewById(R.id.txtUserNameDisplay);
+                TextView txtUserEmailDisplay = (TextView) findViewById(R.id.txtUserEmailDisplay);
+                TextView txtUserPhoneDisplay = (TextView) findViewById(R.id.txtUserPhoneDisplay);
+                TextView txtUserIDDisplay = (TextView) findViewById(R.id.txtUserIDDisplay);
+
+                // get info from database and set values in Player object
+                activePlayer.setUserId(dataSnapshot.child("user_id").getValue().toString().trim());
+                activePlayer.setPhoneNumber(dataSnapshot.child("phone_number").getValue().toString().trim());
+                activePlayer.setDisplayName(dataSnapshot.child("display_name").getValue().toString().trim());
+                activePlayer.setEmail(dataSnapshot.child("email").getValue().toString().trim());
+
+                // set text in fields
+                txtUserNameDisplay.setText(activePlayer.getDisplayName().toString().trim());
+                txtUserEmailDisplay.setText(activePlayer.getEmail().toString().trim());
+                txtUserPhoneDisplay.setText(activePlayer.getPhoneNumber().toString().trim());
+                txtUserIDDisplay.setText(activePlayer.getUserId().toString().trim());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // unused
             }
         });
+
+        // download profile picture
+        try {
+            final File profilePictureDownload = File.createTempFile("profile_photos", userID.toString());
+            FileDownloadTask profilePictureDownloadTask = profilePhotoReference.getFile(profilePictureDownload);
+
+            profilePictureDownloadTask.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    imgProfilePictureField.setImageURI(Uri.fromFile(profilePictureDownload));
+                }
+            });
+
+        } catch (Exception e) {
+            Toast.makeText(OldMainActivityBackup.this, "ERROR: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        // sign out and remove current active player
+        Button btnSignOut = findViewById(R.id.btnSignOut);
+        if(btnSignOut != null) {
+            btnSignOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = database.getReference().child("Players").child(user.getUid());
+
+                    databaseReference.child("status").setValue(0);
+
+                    AuthUI.getInstance().signOut(OldMainActivityBackup.this);
+
+                    Intent signOutIntent = new Intent(OldMainActivityBackup.this, StartupActivity.class);
+                    startActivity(signOutIntent);
+                }
+            });
+        }
     }
+
 
     // everything below is default code
     @Override

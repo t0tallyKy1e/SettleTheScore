@@ -25,16 +25,15 @@
             android:layout_marginStart="42dp"
             android:layout_marginLeft="42dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="42dp"
-            android:layout_marginRight="42dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/sts_logo" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/dice_game_button"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginStart="102dp"

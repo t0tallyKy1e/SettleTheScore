@@ -2,6 +2,8 @@ package com.ckm.settlethescore;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -9,6 +11,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class Player {
     private boolean isConnected;
@@ -142,7 +146,6 @@ public class Player {
         return player;
     }
 
-    // THIS DOESN"T WORK
     public void updatePlayerFromDatabase(final String userId) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
@@ -157,6 +160,8 @@ public class Player {
                 player.setFullName(dataSnapshot.child("full_name").getValue().toString());
                 player.setDisplayName(dataSnapshot.child("display_name").getValue().toString());
                 player.setEmail(dataSnapshot.child("email").getValue().toString());
+
+                Log.e("CKM", "Updated Player from database.\n" + player.toString());
             }
 
             @Override
