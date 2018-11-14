@@ -17,8 +17,6 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 public class Player {
     private boolean isConnected;
 
-    private int currentFriendIndex;
-
     private FirebaseUser firebaseUser;
 
     private String displayName;
@@ -44,7 +42,7 @@ public class Player {
     private final String[] defaultFriends = null;
 
     // Default Constructor
-    private Player() {
+    public Player() {
         isConnected = defaultIsConnected;
 
         userId = defaultUserId;
@@ -56,6 +54,11 @@ public class Player {
         email = defaultEmail;
         fullName = defaultFullName;
         phoneNumber = defaultPhoneNumber;
+    }
+
+    public Player(String user_id) {
+        userId = user_id;
+        updatePlayerFromDatabase(userId);
     }
 
     // Setters / Getters
@@ -117,9 +120,6 @@ public class Player {
         userId = id;
     }
 
-
-
-
     @Override
     public String toString() {
         return "User I.D.: " + userId + "\n" +
@@ -129,9 +129,6 @@ public class Player {
                 "Phone Number: " + phoneNumber + "\n" +
                 "Connected: " + isConnected;
     }
-
-
-
 
     public static Player generatePlayerFromFirebaseUser(FirebaseUser user) {
         Player player = new Player();
@@ -161,7 +158,7 @@ public class Player {
                 player.setDisplayName(dataSnapshot.child("display_name").getValue().toString());
                 player.setEmail(dataSnapshot.child("email").getValue().toString());
 
-                Log.e("CKM", "Updated Player from database.\n" + player.toString());
+                Log.i("CKM", "Updated Player from database.\n" + player.toString());
             }
 
             @Override
