@@ -15,11 +15,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".StartupActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +36,8 @@
             android:name=".Life"
             android:label="@string/title_activity_life"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RocPapSci"></activity>
+        <activity android:name=".RocPapSci" />
+        <activity android:name=".DrawStraw"></activity>
     </application>
 
 </manifest>

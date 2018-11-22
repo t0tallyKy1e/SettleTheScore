@@ -88,12 +88,39 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageView diceGameButton = findViewById(R.id.dice_game_button);
+        ImageView diceGameButton = findViewById(R.id.dice_game_btn);
         diceGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent diceGameIntent = new Intent(MainActivity.this, Dice.class);
                 startActivity(diceGameIntent);
+            }
+        });
+
+        ImageView lifeGameButton = findViewById(R.id.life_game_btn);
+        lifeGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent lifeGameIntent = new Intent(MainActivity.this, Life.class);
+                startActivity(lifeGameIntent);
+            }
+        });
+
+        ImageView strawsGameButton = findViewById(R.id.straw_game_btn);
+        strawsGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent strawsGameIntent = new Intent(MainActivity.this, DrawStraw.class);
+                startActivity(strawsGameIntent);
+            }
+        });
+
+        ImageView rpsGameButton = findViewById(R.id.rps_game_btn);
+        rpsGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent rpsGameIntent = new Intent(MainActivity.this, RocPapSci.class);
+                startActivity(rpsGameIntent);
             }
         });
     }
