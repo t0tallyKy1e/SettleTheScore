@@ -77,6 +77,7 @@ public class Dice extends AppCompatActivity {
 
 
         Session currentSession = new Session(Game.TYPE.DICE);
+        activePlayer.addGame(currentSession.getID());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());

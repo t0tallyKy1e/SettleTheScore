@@ -97,6 +97,7 @@ public class RocPapSci extends AppCompatActivity {
             }
  		});
 
+
  		ImageView imgPaper = (ImageView) findViewById(R.id.play_paper);
  		imgPaper.setOnClickListener(new View.OnClickListener() {
  			@Override
@@ -119,6 +120,7 @@ public class RocPapSci extends AppCompatActivity {
 			*/
  			}
  		});
+
 
  		ImageView imgScissors = (ImageView) findViewById(R.id.play_scissors);
  		imgScissors.setOnClickListener(new View.OnClickListener() {

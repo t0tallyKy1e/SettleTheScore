@@ -103,17 +103,16 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseUser == null) {
-                    // User somehow got here without signing in... make sure they sign in
-                    findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
-                    findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
-                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
-                    startActivity(startupIntent);
-                } else {
-                    activePlayer.update();
-                    activePlayer.setIsConnected(1);
-                }
-            }
+              if(firebaseUser == null) {
+                  // User somehow got here without signing in... make sure they sign in
+                  findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
+                  findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
+                  Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+                  startActivity(startupIntent);
+              } else {
+                  activePlayer.update();
+                  activePlayer.setIsConnected("1");
+              }
         });
 
         ImageView diceGameButton = findViewById(R.id.dice_game_btn);
