@@ -9,7 +9,7 @@ public class Session {
     private boolean expired; // used to remove game from database?
 
     private int currentPlayerIndex;
-    private int gameType; // Game class instead?
+    private Game.TYPE gameType; // Game class instead?
     private int maxNumberOfPlayers = 10;
 
     private String sessionID;
@@ -34,7 +34,7 @@ public class Session {
         updateDatabase();
     }
 
-    public Session(int game_type) {
+    public Session(Game.TYPE game_type) {
         gameType = game_type;
 
         currentPlayerIndex = 0;
@@ -65,7 +65,7 @@ public class Session {
     }
 
     public void updateDatabase() {
-        databaseReference.child("Game Type").setValue(gameType); // might have to save game ID
+        databaseReference.child("game_type").setValue(gameType); // might have to save game ID
 
         for(int i = 0; i < currentPlayerIndex; ++i) {
             databaseReference.child("Players").child(new Integer(i).toString().trim()).setValue(players[i].getUserId());

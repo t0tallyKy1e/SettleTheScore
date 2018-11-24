@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     activePlayer.updatePlayerFromDatabase(userID);
 
+                    Log.e("CKM", activePlayer.toString());
+
                     Toast.makeText(MainActivity.this, "Signed in as " + activePlayer.getDisplayName(), Toast.LENGTH_SHORT).show();
                 }
             }
