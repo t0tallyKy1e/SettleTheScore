@@ -72,7 +72,7 @@ public class RocPapSci extends AppCompatActivity {
         Scissor = 3; either that or match by ID
         */
 
- 		final ImageView imgRock = (ImageView) findViewById(R.id.image5);
+ 		final ImageView imgRock = (ImageView) findViewById(R.id.play_rock);
  		imgRock.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
@@ -97,7 +97,7 @@ public class RocPapSci extends AppCompatActivity {
             }
  		});
 
- 		ImageView imgPaper = (ImageView) findViewById(R.id.image6);
+ 		ImageView imgPaper = (ImageView) findViewById(R.id.play_paper);
  		imgPaper.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
@@ -120,7 +120,7 @@ public class RocPapSci extends AppCompatActivity {
  			}
  		});
 
- 		ImageView imgScissors = (ImageView) findViewById(R.id.image4);
+ 		ImageView imgScissors = (ImageView) findViewById(R.id.play_scissors);
  		imgScissors.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {

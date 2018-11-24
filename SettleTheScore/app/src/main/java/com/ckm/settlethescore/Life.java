@@ -49,7 +49,7 @@ public class Life extends AppCompatActivity {
                         } else if (id == R.id.nav_rps) {
                             Intent i = new Intent(Life.this, RocPapSci.class);
                             startActivity(i);
-                        } else if (id == R.id.nav_home){
+                        } else if (id == R.id.nav_home) {
                             Intent i = new Intent(Life.this, MainActivity.class);
                             startActivity(i);
                         }
@@ -58,7 +58,7 @@ public class Life extends AppCompatActivity {
                         return true;
                     }
                 });
-    }
+
         Button p1increment = findViewById(R.id.player_one_inc_life);
         p1increment.setOnClickListener(new View.OnClickListener() {
             @Override
