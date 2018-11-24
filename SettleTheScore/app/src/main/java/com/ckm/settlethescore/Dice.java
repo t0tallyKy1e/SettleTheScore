@@ -1,5 +1,6 @@
 package com.ckm.settlethescore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -24,6 +26,9 @@ public class Dice extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent oldIntent = getIntent();
+        Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice);
         final TextView result = findViewById(R.id.result);
@@ -32,8 +37,6 @@ public class Dice extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
-
-        // add player
 
         ImageButton imageButton = findViewById(R.id.roll_two);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +124,7 @@ public class Dice extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                databaseReference.child("dice_roll").setValue(result.getText().toString());
+                databaseReference.child("dice_roll").setValue(s.toString());
             }
 
             @Override

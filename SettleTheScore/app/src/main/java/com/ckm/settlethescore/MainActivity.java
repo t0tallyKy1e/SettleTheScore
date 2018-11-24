@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuthentication.getCurrentUser();
         final String userID = firebaseUser.getUid();
-        activePlayer = Player.generatePlayerFromFirebaseUser(firebaseUser);
+        activePlayer = new Player(userID);
 
         // get reference to user's profile picture
         final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture);
@@ -81,11 +81,8 @@ public class MainActivity extends AppCompatActivity
                     Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
                     startActivity(startupIntent);
                 } else {
-                    activePlayer.updatePlayerFromDatabase(userID);
-
-                    Log.e("CKM", activePlayer.toString());
-
-                    Toast.makeText(MainActivity.this, "Signed in as " + activePlayer.getDisplayName(), Toast.LENGTH_SHORT).show();
+                    activePlayer.update();
+                    activePlayer.setIsConnected(1);
                 }
             }
         });
@@ -95,6 +92,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent diceGameIntent = new Intent(MainActivity.this, Dice.class);
+                activePlayer.sendPlayerToNextActivity(diceGameIntent);
                 startActivity(diceGameIntent);
             }
         });

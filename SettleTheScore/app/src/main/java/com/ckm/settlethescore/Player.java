@@ -1,10 +1,12 @@
 package com.ckm.settlethescore;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class Player {
-    private boolean isConnected;
+    private int isConnected; // 0 = not connected ...... 1 = connected
 
     private FirebaseUser firebaseUser;
 
@@ -29,7 +31,7 @@ public class Player {
     private String[] games; // array of game IDs
 
     // Defaults
-    private final boolean defaultIsConnected = false;
+    private final int defaultIsConnected = 0;
 
     private final FirebaseUser defaultFirebaseUser = null;
 
@@ -58,16 +60,20 @@ public class Player {
 
     public Player(String user_id) {
         userId = user_id;
-        updatePlayerFromDatabase(userId);
+        update();
     }
 
     // Setters / Getters
-    public boolean isConnected() {
+    public int isConnected() {
         return isConnected;
     }
 
-    public void setIsConnected(boolean status) {
+    public void setIsConnected(int status) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
         isConnected = status;
+        databaseReference.child("status").setValue(status);
     }
 
     public void setFirebaseUser(FirebaseUser user) {
@@ -79,7 +85,11 @@ public class Player {
     }
 
     public void setDisplayName(String name) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
         displayName = name;
+        databaseReference.child("display_name").setValue(displayName);
     }
 
     public String getDisplayName() {
@@ -87,7 +97,12 @@ public class Player {
     }
 
     public void setEmail(String new_email) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
         email = new_email;
+
+        databaseReference.child("email").setValue(email);
     }
 
     public String getEmail() {
@@ -95,7 +110,12 @@ public class Player {
     }
 
     public void setFullName(String name) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
         fullName = name;
+
+        databaseReference.child("full_name").setValue(fullName);
     }
 
     public String getFullName() {
@@ -103,7 +123,12 @@ public class Player {
     }
 
     public void setPhoneNumber(String number) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
         phoneNumber = number;
+
+        databaseReference.child("phone_number").setValue(phoneNumber);
     }
 
     public String getPhoneNumber() {
@@ -136,29 +161,79 @@ public class Player {
         player.setEmail(user.getEmail());
         player.setDisplayName(user.getDisplayName());
         player.setFullName(user.getDisplayName());
-        player.setIsConnected(true);
+        player.setIsConnected(1);
         player.setPhoneNumber(user.getPhoneNumber());
         player.setUserId(user.getUid());
 
         return player;
     }
 
-    public void updatePlayerFromDatabase(final String userId) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public void sendPlayerToNextActivity(Intent intent) {
+        intent.putExtra("player_id", getUserId());
+        intent.putExtra("player_display_name", getDisplayName());
+        intent.putExtra("player_full_name", getFullName());
+        intent.putExtra("player_phone_number", getPhoneNumber());
+        intent.putExtra("player_email", getEmail());
+        intent.putExtra("is_connected", isConnected());
+    }
+
+    public static Player getPlayerFromLastActivity(Intent intent) {
+        Player activePlayer = new Player(intent.getStringExtra("player_id"));
+        activePlayer.setDisplayName(intent.getStringExtra("player_display_name"));
+        activePlayer.setFullName(intent.getStringExtra("player_full_name"));
+        activePlayer.setPhoneNumber(intent.getStringExtra("player_phone_number"));
+        activePlayer.setEmail(intent.getStringExtra("player_email"));
+        activePlayer.setIsConnected(1);
+
+        return activePlayer;
+    }
+
+    // wrapper for updatePlayerFromDatabase
+    public void update() {
+        updatePlayerFromDatabase(new DatabaseCallback() {
+            @Override
+            public void onCallback(String key, String value) {
+            switch(key) {
+                case "user_id":
+                    setUserId(value);
+                    break;
+                case "phone_number":
+                    setPhoneNumber(value);
+                    break;
+                case "is_connected":
+                    setIsConnected(Integer.parseInt(value));
+                    break;
+                case "full_name":
+                    setFullName(value);
+                    break;
+                case "display_name":
+                    setDisplayName(value);
+                    break;
+                case "email":
+                    setEmail(value);
+                    break;
+                default:
+                    Log.e("CKM", "Player(): error on " + value + "no case matched " + key);
+                    break;
+            }
+            }
+        });
+    }
+
+    public void updatePlayerFromDatabase(final DatabaseCallback databaseCallback) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
-        final Player player = new Player();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                player.setUserId(userId);
-                player.setPhoneNumber(dataSnapshot.child("phone_number").getValue().toString());
-                player.setIsConnected(true);
-                player.setFullName(dataSnapshot.child("full_name").getValue().toString());
-                player.setDisplayName(dataSnapshot.child("display_name").getValue().toString());
-                player.setEmail(dataSnapshot.child("email").getValue().toString());
-
-                Log.i("CKM", "Updated Player from database.\n" + player.toString());
+                databaseCallback.onCallback("user_id", userId);
+                databaseCallback.onCallback("phone_number", dataSnapshot.child("phone_number").getValue().toString());
+                databaseCallback.onCallback("is_connected", dataSnapshot.child("status").getValue().toString());
+                databaseCallback.onCallback("full_name", dataSnapshot.child("full_name").getValue().toString());
+                databaseCallback.onCallback("display_name", dataSnapshot.child("display_name").getValue().toString());
+                databaseCallback.onCallback("email", dataSnapshot.child("email").getValue().toString());
             }
 
             @Override
@@ -168,11 +243,7 @@ public class Player {
         });
     }
 
-    /*
-    *
-    * Sets all values to their Default settings
-    *
-    * */
+    // Sets all values to their Default settings
     public void signOut() {
         isConnected = defaultIsConnected;
         userId = defaultUserId;
