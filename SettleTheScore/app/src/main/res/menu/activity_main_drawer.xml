@@ -3,36 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="Home">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="@string/home" />
         </menu>
     </item>
+
+    <item android:title="@string/games">
+        <menu>
+            <item
+                android:id="@+id/nav_dice"
+                android:icon="@drawable/dices_home"
+                android:title="@string/dice" />
+            <item
+                android:id="@+id/nav_rps"
+                android:icon="@drawable/scissors"
+                android:title="@string/rps" />
+            <item
+                android:id="@+id/nav_life"
+                android:icon="@drawable/life_main"
+                android:title="@string/life_counter" />
+            <item
+                android:id="@+id/nav_straws"
+                android:icon="@drawable/straws_main"
+                android:title="@string/draw_straws" />
+        </menu>
+    </item>
+
 
 </menu>

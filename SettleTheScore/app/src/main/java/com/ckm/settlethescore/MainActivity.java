@@ -39,9 +39,8 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-        private FirebaseUser firebaseUser;
+public class MainActivity extends AppCompatActivity {
+    private FirebaseUser firebaseUser;
 
     private Player activePlayer;
 
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,6 +57,35 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        final DrawerLayout finalDrawer = drawer;
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        int id = menuItem.getItemId();
+                        if (id == R.id.nav_dice) {
+                            Intent i = new Intent(MainActivity.this, Dice.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_straws) {
+                            Intent i = new Intent(MainActivity.this, DrawStraw.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_life) {
+                            Intent i = new Intent(MainActivity.this, Life.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_rps) {
+                            Intent i = new Intent(MainActivity.this, RocPapSci.class);
+                            startActivity(i);
+                        }
+
+                        finalDrawer.closeDrawers();
+                        return true;
+                    }
+                });
+
 
         // get current firebase user and their ID
         FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
@@ -74,17 +103,16 @@ public class MainActivity extends AppCompatActivity
         firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            if(firebaseUser == null) {
-                // User somehow got here without signing in... make sure they sign in
-                findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
-                findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
-                Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
-                startActivity(startupIntent);
-            } else {
-                activePlayer.update();
-                activePlayer.setIsConnected("1");
-            }
-            }
+              if(firebaseUser == null) {
+                  // User somehow got here without signing in... make sure they sign in
+                  findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
+                  findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
+                  Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+                  startActivity(startupIntent);
+              } else {
+                  activePlayer.update();
+                  activePlayer.setIsConnected("1");
+              }
         });
 
         ImageView diceGameButton = findViewById(R.id.dice_game_btn);
@@ -145,41 +173,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent diceGameIntent = new Intent(MainActivity.this, Dice.class);
+            startActivity(diceGameIntent);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

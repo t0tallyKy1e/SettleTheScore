@@ -1,0 +1,178 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+MERGED from [com.android.support:design:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/ad9d4cb682fc7bc707c0a054fe9d1517/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/e43a8d17ed85530a78a73bc389fb9b45/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-v4:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/fb3fd9f9cbf02b7df32a42eb66940ba8/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/cberns/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/3812bdb093bca1285c9f0c3e102bb4a9/AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/2334fda7e08ffcc6d1193ff9921c7f6b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/121c129a71e7f21cf1c2f8a09a50767a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/096afe14c3972258cffef3c9d1072714/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/f8e6441ccdfba727972a612c3520fc0a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/fe39d71171d7bf3d6d79258c106244f4/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/b16dc1acb3108d1f4f798b1dc998663b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/8488fc5c887efddbd7295e539da3df07/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/8b1aaccb5c08209085fd6d6f28f110fe/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/819a4270115eaaee5e59ea1ba7559b07/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/610b8cfc3740ea1988517b70c3e020fa/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/277e97222e90fb1faf60a452398a6a44/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/577c5346925f0667d02a0f7cd2b4abb3/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/72ea9680542ac33689a2368e78b8df8a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/edc06bee00baee6d349cf3a46fb8f14e/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/5de3b12ee4d01fbbf2ee412ad9bc54df/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/99bd3644bb973e2a8af475b634c01cbb/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/d132ee26ca3e9a735600608a7878b63b/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a217c6f2d4cf70cb5e50090f722cf6eb/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/b61526ba8a51e3170dedc42b5c47a230/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/6295cc60fa14ba9b2fab0c103cbcdd5e/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/502fbe4963e40be75fbb0a455735ff0b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/779c1661f81d769f57756f6b473efdcc/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/9e9f90fae9aeff1f9e8c6be8653bdcdc/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/c570e737d08d325c45accf5cf16e8c11/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/378fa581712e346dda6c22aa263ab461/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/2a721d56225222bd0a099e40c319f497/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/379651788b094a62a2365c3f6482f886/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/1b681bee85a703d1dffcc46852eacaf8/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/bd147f31f0d22063e72bb9bace2b57d9/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+	package
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:3:3-30
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:1-24:12
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:2:11-69
+application
+ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:5:3-22:17
+MERGED from [com.android.support:design:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/ad9d4cb682fc7bc707c0a054fe9d1517/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/ad9d4cb682fc7bc707c0a054fe9d1517/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/cberns/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/3812bdb093bca1285c9f0c3e102bb4a9/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/cberns/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/3812bdb093bca1285c9f0c3e102bb4a9/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/d132ee26ca3e9a735600608a7878b63b/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/d132ee26ca3e9a735600608a7878b63b/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a217c6f2d4cf70cb5e50090f722cf6eb/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a217c6f2d4cf70cb5e50090f722cf6eb/AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/d132ee26ca3e9a735600608a7878b63b/AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:10:5-31
+	android:label
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:8:5-37
+	android:roundIcon
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:9:5-50
+	android:icon
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:7:5-39
+	android:allowBackup
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:6:5-31
+	android:theme
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:11:5-36
+activity#com.cberns.drawer.main
+ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:12:5-21:16
+	android:label
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:14:7-39
+	android:theme
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:15:7-50
+	android:name
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:13:7-27
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:16:7-20:23
+action#android.intent.action.MAIN
+ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:17:9-61
+	android:name
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:17:17-58
+category#android.intent.category.LAUNCHER
+ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:19:9-69
+	android:name
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml:19:19-66
+uses-sdk
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+MERGED from [com.android.support:design:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/ad9d4cb682fc7bc707c0a054fe9d1517/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/ad9d4cb682fc7bc707c0a054fe9d1517/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/e43a8d17ed85530a78a73bc389fb9b45/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/e43a8d17ed85530a78a73bc389fb9b45/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/fb3fd9f9cbf02b7df32a42eb66940ba8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/fb3fd9f9cbf02b7df32a42eb66940ba8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/cberns/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/3812bdb093bca1285c9f0c3e102bb4a9/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/cberns/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/3812bdb093bca1285c9f0c3e102bb4a9/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/2334fda7e08ffcc6d1193ff9921c7f6b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/2334fda7e08ffcc6d1193ff9921c7f6b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/121c129a71e7f21cf1c2f8a09a50767a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/121c129a71e7f21cf1c2f8a09a50767a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/096afe14c3972258cffef3c9d1072714/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/096afe14c3972258cffef3c9d1072714/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/f8e6441ccdfba727972a612c3520fc0a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/f8e6441ccdfba727972a612c3520fc0a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/fe39d71171d7bf3d6d79258c106244f4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/fe39d71171d7bf3d6d79258c106244f4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/b16dc1acb3108d1f4f798b1dc998663b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/b16dc1acb3108d1f4f798b1dc998663b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/8488fc5c887efddbd7295e539da3df07/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/8488fc5c887efddbd7295e539da3df07/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/8b1aaccb5c08209085fd6d6f28f110fe/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/8b1aaccb5c08209085fd6d6f28f110fe/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/819a4270115eaaee5e59ea1ba7559b07/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/819a4270115eaaee5e59ea1ba7559b07/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/610b8cfc3740ea1988517b70c3e020fa/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/610b8cfc3740ea1988517b70c3e020fa/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/277e97222e90fb1faf60a452398a6a44/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/277e97222e90fb1faf60a452398a6a44/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/577c5346925f0667d02a0f7cd2b4abb3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/577c5346925f0667d02a0f7cd2b4abb3/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/72ea9680542ac33689a2368e78b8df8a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/72ea9680542ac33689a2368e78b8df8a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/edc06bee00baee6d349cf3a46fb8f14e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/edc06bee00baee6d349cf3a46fb8f14e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/5de3b12ee4d01fbbf2ee412ad9bc54df/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/5de3b12ee4d01fbbf2ee412ad9bc54df/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/99bd3644bb973e2a8af475b634c01cbb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/99bd3644bb973e2a8af475b634c01cbb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/d132ee26ca3e9a735600608a7878b63b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/d132ee26ca3e9a735600608a7878b63b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a217c6f2d4cf70cb5e50090f722cf6eb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a217c6f2d4cf70cb5e50090f722cf6eb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/b61526ba8a51e3170dedc42b5c47a230/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/b61526ba8a51e3170dedc42b5c47a230/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/6295cc60fa14ba9b2fab0c103cbcdd5e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/6295cc60fa14ba9b2fab0c103cbcdd5e/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/502fbe4963e40be75fbb0a455735ff0b/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/502fbe4963e40be75fbb0a455735ff0b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/779c1661f81d769f57756f6b473efdcc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/779c1661f81d769f57756f6b473efdcc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/9e9f90fae9aeff1f9e8c6be8653bdcdc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/9e9f90fae9aeff1f9e8c6be8653bdcdc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/c570e737d08d325c45accf5cf16e8c11/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/c570e737d08d325c45accf5cf16e8c11/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/378fa581712e346dda6c22aa263ab461/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/378fa581712e346dda6c22aa263ab461/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/2a721d56225222bd0a099e40c319f497/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/cberns/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/2a721d56225222bd0a099e40c319f497/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/379651788b094a62a2365c3f6482f886/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/379651788b094a62a2365c3f6482f886/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/1b681bee85a703d1dffcc46852eacaf8/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/1b681bee85a703d1dffcc46852eacaf8/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/bd147f31f0d22063e72bb9bace2b57d9/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/cberns/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/bd147f31f0d22063e72bb9bace2b57d9/AndroidManifest.xml:20:5-44
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+		ADDED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/cberns/AndroidStudioProjects/SettleTheScore/Drawer/app/src/main/AndroidManifest.xml

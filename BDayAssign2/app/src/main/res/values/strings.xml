@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BDayAssign2</string>
+    <string name="my_name">Chris Berns</string>
+    <string name="b_day">Feb. 23, 1988</string>
+</resources>
