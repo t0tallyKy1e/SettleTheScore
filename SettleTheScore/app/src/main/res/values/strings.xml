@@ -11,6 +11,10 @@
     <string name="not_signed_in">Not Signed In</string>
     <string name="btn_sign_out">Sign Out</string>
 
+    <!-- Colors -->
+    <string name="light_green">#9ccc65</string>
+    <string name="light_red">#e57373</string>
+
     <!-- Startup Activity -->
     <string name="sign_in">Sign In</string>
     <string name="sts_logo_description">Settle the Score logo</string>
@@ -48,5 +52,7 @@
     <string name="opponent_name">Opponent Name</string>
 
     <!-- Life Activity -->
+
+    <!-- Rock/Paper/Scissors Activity -->
 
 </resources>
