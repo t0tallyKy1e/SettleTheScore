@@ -12,19 +12,30 @@
         <item name = "android:windowBackground">@drawable/main_gradient</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="Theme.AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="LoginTheme" parent="AppTheme">
         <item name="colorPrimary">@color/primaryDarkColor</item>
         <item name="colorPrimaryDark">@color/primaryTextColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
+        <item name="colorButtonNormal">@color/secondaryColor</item>
+        <item name="colorControlNormal">@color/primaryTextColor</item>
+        <item name="colorControlActivated">@color/primaryTextColor</item>
+        <item name="colorControlHighlight">@color/primaryTextColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryColor</item>
+        <!-- <item name="android:windowBackground">@mipmap/bg_login</item> -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorHint">@color/primaryDarkColor</item>
     </style>
 
+    <style name="FirebaseUI.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="FirebaseUI.Text.Link">
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
 </resources>

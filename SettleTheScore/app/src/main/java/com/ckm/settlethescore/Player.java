@@ -2,6 +2,8 @@ package com.ckm.settlethescore;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -10,10 +12,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
+
 public class Player {
     private boolean isConnected;
-
-    private int currentFriendIndex;
 
     private FirebaseUser firebaseUser;
 
@@ -40,7 +42,7 @@ public class Player {
     private final String[] defaultFriends = null;
 
     // Default Constructor
-    private Player() {
+    public Player() {
         isConnected = defaultIsConnected;
 
         userId = defaultUserId;
@@ -52,6 +54,11 @@ public class Player {
         email = defaultEmail;
         fullName = defaultFullName;
         phoneNumber = defaultPhoneNumber;
+    }
+
+    public Player(String user_id) {
+        userId = user_id;
+        updatePlayerFromDatabase(userId);
     }
 
     // Setters / Getters
@@ -113,9 +120,6 @@ public class Player {
         userId = id;
     }
 
-
-
-
     @Override
     public String toString() {
         return "User I.D.: " + userId + "\n" +
@@ -125,9 +129,6 @@ public class Player {
                 "Phone Number: " + phoneNumber + "\n" +
                 "Connected: " + isConnected;
     }
-
-
-
 
     public static Player generatePlayerFromFirebaseUser(FirebaseUser user) {
         Player player = new Player();
@@ -142,7 +143,6 @@ public class Player {
         return player;
     }
 
-    // THIS DOESN"T WORK
     public void updatePlayerFromDatabase(final String userId) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
@@ -157,6 +157,8 @@ public class Player {
                 player.setFullName(dataSnapshot.child("full_name").getValue().toString());
                 player.setDisplayName(dataSnapshot.child("display_name").getValue().toString());
                 player.setEmail(dataSnapshot.child("email").getValue().toString());
+
+                Log.i("CKM", "Updated Player from database.\n" + player.toString());
             }
 
             @Override
