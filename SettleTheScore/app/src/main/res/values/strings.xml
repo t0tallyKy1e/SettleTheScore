@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SettleTheScore</string>
+    <string name="app_name">Settle The Score</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -44,10 +44,13 @@
     <string name="life">Life</string>
     <string name="opponent">Opponent</string>
     <string name="opponent_name">Opponent Name</string>
-    <string name="draw_a_straw" >Draw a Straw</string>
+    <string name="draw_a_straw">Draw a Straw</string>
     <string name="time_left">Time Left:</string>
     <string name="life_counter">Life Counter</string>
     <string name="rps">Rocks Paper Scissors</string>
     <string name="dice">Roll Dice</string>
     <string name="draw_straws">Draw Straws</string>
+    <string name="logout">Logout</string>
+    <string name="games">Games</string>
+    <string name="home">Home</string>
 </resources>
