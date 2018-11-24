@@ -11,6 +11,10 @@
     <string name="not_signed_in">Not Signed In</string>
     <string name="btn_sign_out">Sign Out</string>
 
+    <!-- Colors -->
+    <string name="light_green">#9ccc65</string>
+    <string name="light_red">#e57373</string>
+
     <!-- Startup Activity -->
     <string name="sign_in">Sign In</string>
     <string name="sts_logo_description">Settle the Score logo</string>
@@ -33,6 +37,8 @@
     <string name="register_inv_profile_picture_uri">uri</string>
     <string name="register_submit">Register</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Dice Activity-->
     <string name="dice_instructions">Click the dice to roll</string>
     <string name="roll_anything">1 out of anything</string>
     <string name="roll">Roll</string>
@@ -46,11 +52,20 @@
     <string name="opponent_name">Opponent Name</string>
     <string name="draw_a_straw">Draw a Straw</string>
     <string name="time_left">Time Left:</string>
-    <string name="life_counter">Life Counter</string>
-    <string name="rps">Rocks Paper Scissors</string>
     <string name="dice">Roll Dice</string>
+
+    <!-- Life Activity -->
+    <string name="life_counter">Life Counter</string>
+
+    <!-- Rock/Paper/Scissors Activity -->
+    <string name="rps">Rocks Paper Scissors</string>
+
+    <!-- Drawing Straws Activity -->
+    <string name="draw_a_straw" >Draw a Straw</string>
+    <string name="time_left">Time Left:</string>
     <string name="draw_straws">Draw Straws</string>
     <string name="logout">Logout</string>
     <string name="games">Games</string>
     <string name="home">Home</string>
+
 </resources>
