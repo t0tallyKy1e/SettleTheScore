@@ -34,7 +34,7 @@ public class RocPapSci extends AppCompatActivity {
  			public void onClick(View v) {
                 imgRock.setBackgroundResource(R.drawable.button_outline);
  			    /*
- 			    
+
  			    we select rock
  			    if opponent.choice == rock; (tie)
  			        - dictate its a tie!
@@ -47,12 +47,12 @@ public class RocPapSci extends AppCompatActivity {
  			        - highlight green
  			        - games_elapsed += 1
  			        - user.games_won += 1
-		    
+
 		    call game-checks function
 		    */
             }
  		});
- 		
+
  		ImageView imgPaper = (ImageView) findViewById(R.id.image6);
  		imgPaper.setOnClickListener(new View.OnClickListener() {
  			@Override
@@ -70,12 +70,12 @@ public class RocPapSci extends AppCompatActivity {
  			    if opponent.choice == scissors; (loss)
  			        - highlight red
  			        - games_elapsed += 1
-			
+
 			call game-checks function
-			*/ 
+			*/
  			}
  		});
- 		
+
  		ImageView imgScissors = (ImageView) findViewById(R.id.image4);
  		imgScissors.setOnClickListener(new View.OnClickListener() {
  			@Override
@@ -93,12 +93,12 @@ public class RocPapSci extends AppCompatActivity {
 
  			    if opponent.choice == scissors; (tie)
  			        - dictate its a tie!
-			
+
 			call game-checks function
-			*/ 
+			*/
  			}
  		});
- 		
+
     }
     /*
     single instance; do you want to play again?
@@ -110,9 +110,9 @@ public class RocPapSci extends AppCompatActivity {
 
     function checks winner of game
 		- if games == rounds set
-			- if user.games_won > opponent.games_won 
+			- if user.games_won > opponent.games_won
 				- user wins
-			- else 
+			- else
 				- user loses
-    */ 
+    */
 }

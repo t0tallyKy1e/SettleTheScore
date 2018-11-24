@@ -34,6 +34,7 @@ public class Dice extends AppCompatActivity {
         final TextView result = findViewById(R.id.result);
 
         Session currentSession = new Session(Game.TYPE.DICE);
+        activePlayer.addGame(currentSession.getID());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
