@@ -257,7 +257,6 @@ public class Player {
                     setEmail(value);
                     break;
                 case "number_of_games":
-                    Log.e("CKM", value);
                     setNumberOfGames(value);
                     break;
                 case "number_of_friends":
