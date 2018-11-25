@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                         } else if (id == R.id.nav_life) {
                             Intent i = new Intent(MainActivity.this, Life.class);
                             startActivity(i);
+                        } else if (id == R.id.nav_scores) {
+                            Intent i = new Intent(MainActivity.this, ScoreBoard.class);
+                            startActivity(i);
                         } else if (id == R.id.nav_rps) {
                             Intent i = new Intent(MainActivity.this, RocPapSci.class);
                             startActivity(i);
@@ -93,28 +96,28 @@ public class MainActivity extends AppCompatActivity {
         final String userID = firebaseUser.getUid();
         activePlayer = new Player(userID);
 
-        // get reference to user's profile picture
-        final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture);
-        StorageReference profilePhotoReference = FirebaseStorage.getInstance().getReference("profile_pictures/" + userID);
-
-        // make sure user is valid
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
-        firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseUser == null) {
-                    // User somehow got here without signing in... make sure they sign in
-                    findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
-                    findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
-                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
-                    startActivity(startupIntent);
-                } else {
-                    activePlayer.update();
-                    activePlayer.setIsConnected(1);
-                }
-            }
-        });
+//        // get reference to user's profile picture
+//        final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture);
+//        StorageReference profilePhotoReference = FirebaseStorage.getInstance().getReference("profile_pictures/" + userID);
+//
+//        // make sure user is valid
+//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
+//        firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                if (firebaseUser == null) {
+//                    // User somehow got here without signing in... make sure they sign in
+//                    findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
+//                    findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
+//                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+//                    startActivity(startupIntent);
+//                } else {
+//                    activePlayer.update();
+//                    activePlayer.setIsConnected(1);
+//                }
+//            }
+//        });
 
         ImageView diceGameButton = findViewById(R.id.dice_game_btn);
         diceGameButton.setOnClickListener(new View.OnClickListener() {
