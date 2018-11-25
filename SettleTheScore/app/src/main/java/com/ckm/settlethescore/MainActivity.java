@@ -87,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
                         finalDrawer.closeDrawers();
                         return true;
                     }
-                });
+            }
+        );
 
 
         // get current firebase user and their ID
