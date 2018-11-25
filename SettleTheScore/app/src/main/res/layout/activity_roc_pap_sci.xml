@@ -6,22 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_gradient"
-    tools:context=".RocPapSci"
     android:fitsSystemWindows="true"
+    tools:context=".RocPapSci"
     tools:openDrawer="start">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/my_toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout2"

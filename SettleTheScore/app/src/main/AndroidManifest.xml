@@ -47,7 +47,7 @@
         <activity
             android:name=".ScoreBoard"
             android:label="@string/title_activity_score_board"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

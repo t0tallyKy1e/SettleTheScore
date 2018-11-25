@@ -46,7 +46,7 @@ public class ScoreBoard extends AppCompatActivity {
                         } else if (id == R.id.nav_rps) {
                             Intent i = new Intent(ScoreBoard.this, RocPapSci.class);
                             startActivity(i);
-                        } else if (id == R.id.nav_home){
+                        } else if (id == R.id.nav_home) {
                             Intent i = new Intent(ScoreBoard.this, MainActivity.class);
                             startActivity(i);
                         }
