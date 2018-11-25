@@ -2,22 +2,15 @@ package com.ckm.settlethescore;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -31,8 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Random;
-
 public class Dice extends AppCompatActivity {
 
     private FirebaseUser firebaseUser;
@@ -42,11 +33,13 @@ public class Dice extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent oldIntent = getIntent();
-        Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
+        final Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice);
         final TextView result = findViewById(R.id.result);
+
+        final EditText addPlayerField = (EditText) findViewById(R.id.add_email);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,13 +84,25 @@ public class Dice extends AppCompatActivity {
                     }
             });
 
-        FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuthentication.getCurrentUser();
-        final String userID = firebaseUser.getUid();
-        activePlayer = new Player(userID);
+        // -- Logic for creating a new game
+            // create new session
+            final Session currentSession = new Session(Game.TYPE.DICE);
+            // add session to player's games
+            activePlayer.addGame(currentSession.getID());
+            // add player to session
+            currentSession.addPlayer(activePlayer.getUserId());
+            currentSession.addHost(activePlayer.getUserId());
+        // -- end of logic for creating new game
 
-        Session currentSession = new Session(Game.TYPE.DICE);
-        activePlayer.addGame(currentSession.getID());
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int addAsFriend = 0;
+                int addToGame = 1;
+                activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, currentSession.getID());
+            }
+        });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
