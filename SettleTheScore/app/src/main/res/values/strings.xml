@@ -59,11 +59,12 @@
     <string name="rps">Rocks Paper Scissors</string>
 
     <!-- Drawing Straws Activity -->
-    <string name="draw_a_straw" >Draw a Straw</string>
+    <string name="draw_a_straw">Draw a Straw</string>
     <string name="time_left">Time Left:</string>
     <string name="draw_straws">Draw Straws</string>
     <string name="logout">Logout</string>
     <string name="games">Games</string>
     <string name="home">Home</string>
+    <string name="title_activity_score_board">ScoreBoard</string>
 
 </resources>

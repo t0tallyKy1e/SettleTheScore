@@ -43,7 +43,11 @@
         <activity
             android:name=".DrawStraw"
             android:label="@string/draw_straws"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ScoreBoard"
+            android:label="@string/title_activity_score_board"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
