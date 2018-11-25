@@ -11,14 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Life extends AppCompatActivity {
+public class ScoreBoard extends AppCompatActivity {
     private FirebaseUser firebaseUser;
 
     private Player activePlayer;
@@ -26,7 +23,7 @@ public class Life extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_life);
+        setContentView(R.layout.activity_score_board);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,19 +45,19 @@ public class Life extends AppCompatActivity {
                         Intent i = new Intent();
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
-                            i = new Intent(Life.this, Dice.class);
+                            i = new Intent(ScoreBoard.this, Dice.class);
                             startActivity(i);
                         } else if (id == R.id.nav_straws) {
-                            i = new Intent(Life.this, DrawStraw.class);
+                            i = new Intent(ScoreBoard.this, DrawStraw.class);
                             startActivity(i);
-                        } else if (id == R.id.nav_scores) {
-                            i = new Intent(Life.this, ScoreBoard.class);
+                        } else if (id == R.id.nav_life) {
+                            i = new Intent(ScoreBoard.this, Life.class);
                             startActivity(i);
                         } else if (id == R.id.nav_rps) {
-                            i = new Intent(Life.this, RocPapSci.class);
+                            i = new Intent(ScoreBoard.this, RocPapSci.class);
                             startActivity(i);
                         }else if (id == R.id.nav_home){
-                            i = new Intent(Life.this, MainActivity.class);
+                            i = new Intent(ScoreBoard.this, MainActivity.class);
                             startActivity(i);
                         }
                         activePlayer.sendPlayerToNextActivity(i);
@@ -68,7 +65,7 @@ public class Life extends AppCompatActivity {
                         finalDrawer.closeDrawers();
                         return true;
                     }
-            });
+                });
 
         // get current firebase user and their ID
         FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
@@ -76,48 +73,14 @@ public class Life extends AppCompatActivity {
         final String userID = firebaseUser.getUid();
         activePlayer = new Player(userID);
 
-        Button p1increment = findViewById(R.id.player_one_inc_life);
-        p1increment.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                EditText p1LifeValue = findViewById(R.id.player_one_life);
-                Integer health = Integer.parseInt(p1LifeValue.getText().toString().trim());
-                health = health + 1;
-                p1LifeValue.setText(health.toString());
-            }
-        });
-
-        Button p1decrement = findViewById(R.id.player_one_dec_life);
-        p1decrement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText p1LifeValue = findViewById(R.id.player_one_life);
-                Integer health = Integer.parseInt(p1LifeValue.getText().toString().trim());
-                health = health - 1;
-                p1LifeValue.setText(health.toString());
-            }
-        });
-
-        Button p2increment = findViewById(R.id.player_two_inc_life);
-        p2increment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText p2LifeValue = findViewById(R.id.player_two_life);
-                Integer health = Integer.parseInt(p2LifeValue.getText().toString().trim());
-                health = health + 1;
-                p2LifeValue.setText(health.toString());
-            }
-        });
-
-        Button p2decrement = findViewById(R.id.player_two_dec_life);
-        p2decrement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText p2LifeValue = findViewById(R.id.player_two_life);
-                Integer health = Integer.parseInt(p2LifeValue.getText().toString().trim());
-                health = health - 1;
-                p2LifeValue.setText(health.toString());
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
+
 }
