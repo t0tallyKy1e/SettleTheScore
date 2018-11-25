@@ -63,28 +63,29 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        int id = menuItem.getItemId();
-                        if (id == R.id.nav_dice) {
-                            Intent i = new Intent(MainActivity.this, Dice.class);
-                            startActivity(i);
-                        } else if (id == R.id.nav_straws) {
-                            Intent i = new Intent(MainActivity.this, DrawStraw.class);
-                            startActivity(i);
-                        } else if (id == R.id.nav_life) {
-                            Intent i = new Intent(MainActivity.this, Life.class);
-                            startActivity(i);
-                        } else if (id == R.id.nav_rps) {
-                            Intent i = new Intent(MainActivity.this, RocPapSci.class);
-                            startActivity(i);
-                        }
-
-                        finalDrawer.closeDrawers();
-                        return true;
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    int id = menuItem.getItemId();
+                    if (id == R.id.nav_dice) {
+                        Intent i = new Intent(MainActivity.this, Dice.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_straws) {
+                        Intent i = new Intent(MainActivity.this, DrawStraw.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_life) {
+                        Intent i = new Intent(MainActivity.this, Life.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_rps) {
+                        Intent i = new Intent(MainActivity.this, RocPapSci.class);
+                        startActivity(i);
                     }
-                });
+
+                    finalDrawer.closeDrawers();
+                    return true;
+                }
+            }
+        );
 
 
         // get current firebase user and their ID
@@ -103,16 +104,17 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-              if(firebaseUser == null) {
-                  // User somehow got here without signing in... make sure they sign in
-                  findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
-                  findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
-                  Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
-                  startActivity(startupIntent);
-              } else {
-                  activePlayer.update();
-                  activePlayer.setIsConnected("1");
-              }
+                if (firebaseUser == null) {
+                    // User somehow got here without signing in... make sure they sign in
+                    findViewById(R.id.txtNotSignedIn).setVisibility(View.VISIBLE);
+                    findViewById(R.id.txtSignedIn).setVisibility(View.INVISIBLE);
+                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+                    startActivity(startupIntent);
+                } else {
+                    activePlayer.update();
+                    activePlayer.setIsConnected("1");
+                }
+            }
         });
 
         ImageView diceGameButton = findViewById(R.id.dice_game_btn);

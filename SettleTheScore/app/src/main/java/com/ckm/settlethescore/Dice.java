@@ -56,28 +56,28 @@ public class Dice extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        int id = menuItem.getItemId();
-                        if (id == R.id.nav_straws) {
-                            Intent i = new Intent(Dice.this, DrawStraw.class);
-                            startActivity(i);
-                        } else if (id == R.id.nav_life) {
-                            Intent i = new Intent(Dice.this, Life.class);
-                            startActivity(i);
-                        } else if (id == R.id.nav_rps) {
-                            Intent i = new Intent(Dice.this, RocPapSci.class);
-                            startActivity(i);
-                        } else if (id == R.id.nav_home){
-                            Intent i = new Intent(Dice.this, MainActivity.class);
-                            startActivity(i);
-                        }
-
-                        finalDrawer.closeDrawers();
-                        return true;
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    int id = menuItem.getItemId();
+                    if (id == R.id.nav_straws) {
+                        Intent i = new Intent(Dice.this, DrawStraw.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_life) {
+                        Intent i = new Intent(Dice.this, Life.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_rps) {
+                        Intent i = new Intent(Dice.this, RocPapSci.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_home){
+                        Intent i = new Intent(Dice.this, MainActivity.class);
+                        startActivity(i);
                     }
-                });
+
+                    finalDrawer.closeDrawers();
+                    return true;
+                }
+            });
 
 
         Session currentSession = new Session(Game.TYPE.DICE);
