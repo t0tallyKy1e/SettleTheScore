@@ -23,6 +23,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Random;
 
 public class Dice extends AppCompatActivity {
+
+    private FirebaseUser firebaseUser;
+
+    private Player activePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,39 +61,47 @@ public class Dice extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
+        final Player finalActivePlayer = activePlayer;
         navigationView.setNavigationItemSelectedListener(
-            new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    int id = menuItem.getItemId();
-                    if (id == R.id.nav_straws) {
-                        Intent i = new Intent(Dice.this, DrawStraw.class);
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent i = new Intent();
+                        int id = menuItem.getItemId();
+                        if (id == R.id.nav_straws) {
+                            i = new Intent(Dice.this, DrawStraw.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_life) {
+                            i = new Intent(Dice.this, Life.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_scores) {
+                            i = new Intent(Dice.this, ScoreBoard.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_rps) {
+                            i = new Intent(Dice.this, RocPapSci.class);
+                            startActivity(i);
+                        }else if (id == R.id.nav_home){
+                            i = new Intent(Dice.this, MainActivity.class);
+                            startActivity(i);
+                        }
+                        finalActivePlayer.sendPlayerToNextActivity(i);
                         startActivity(i);
-                    } else if (id == R.id.nav_life) {
-                        Intent i = new Intent(Dice.this, Life.class);
-                        startActivity(i);
-                    } else if (id == R.id.nav_rps) {
-                        Intent i = new Intent(Dice.this, RocPapSci.class);
-                        startActivity(i);
-                    } else if (id == R.id.nav_scores) {
-                        Intent i = new Intent(Dice.this, ScoreBoard.class);
-                        startActivity(i);
-                    }else if (id == R.id.nav_home){
-                        Intent i = new Intent(Dice.this, MainActivity.class);
-                        startActivity(i);
+                        finalDrawer.closeDrawers();
+                        return true;
                     }
-
-                    finalDrawer.closeDrawers();
-                    return true;
-                }
             });
 
+        FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuthentication.getCurrentUser();
+        final String userID = firebaseUser.getUid();
+        activePlayer = new Player(userID);
 
         Session currentSession = new Session(Game.TYPE.DICE);
         activePlayer.addGame(currentSession.getID());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
+
 
         ImageButton imageButton = findViewById(R.id.roll_two);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +202,7 @@ public class Dice extends AppCompatActivity {
             }
         });
     }
-    
+
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
