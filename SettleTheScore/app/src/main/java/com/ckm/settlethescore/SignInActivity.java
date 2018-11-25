@@ -27,8 +27,6 @@ public class SignInActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == RC_SIGN_IN) {
-            // IdpResponse response = IdpResponse.fromResultIntent(data); // - Unused
-
             if(resultCode == RESULT_OK) {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
