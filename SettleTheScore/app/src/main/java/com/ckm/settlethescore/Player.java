@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,7 +75,7 @@ public class Player {
     public void setIsConnected(String status) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
-
+        
         isConnected = status;
         databaseReference.child("status").setValue(status);
     }
@@ -180,6 +182,8 @@ public class Player {
         tempNumber++;
         numberOfFriends = tempNumber.toString();
         databaseReference.child("Friends").child("number_of_friends").setValue(numberOfFriends);
+
+        updateCountsInDatabase();
     }
 
     public void addGame(String id) {
@@ -188,11 +192,12 @@ public class Player {
 
         games.add(id);
 
-        databaseReference.child("Games").child(numberOfGames).setValue(id);
+        databaseReference.child("Games").child(id).child("game_id").setValue(id);
         Integer tempNumber = new Integer(numberOfGames);
         tempNumber++;
         numberOfGames = tempNumber.toString();
-        databaseReference.child("Games").child("number_of_games").setValue(numberOfGames);
+
+        updateCountsInDatabase();
     }
 
     public static Player generatePlayerFromFirebaseUser(FirebaseUser user) {
@@ -260,7 +265,7 @@ public class Player {
                     setNumberOfGames(value);
                     break;
                 case "number_of_friends":
-                    setNumberOfFriends(numberOfFriends);
+                    updateCountsInDatabase();
                     break;
                 default:
                     Log.e("CKM", "Player(): error on " + value + "no case matched " + key);
@@ -293,6 +298,94 @@ public class Player {
 
             }
         });
+    }
+
+    public void addPlayerByEmail(final String email, final int type, final String sessionID) {
+        final String user_id = userId;
+        final int addAsFriend = 0;
+        final int addToGame = 1;
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if(ds.child("email").getValue().toString().equals(email)) {
+                        String friendID = ds.getKey();
+
+                        switch(type) {
+                            case addAsFriend :
+                                addFriend(friendID);
+                                Player tempPlayer = new Player(friendID);
+                                tempPlayer.update();
+                                tempPlayer.addFriend(user_id);
+                                break;
+                            case addToGame :
+                                Session session = new Session(sessionID);
+                                session.addPlayer(friendID);
+                                session.updateDatabase();
+                                break;
+                            default :
+                                break;
+                        }
+
+                        updateCountsInDatabase();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // update values for:
+    // -- number_of_friends
+    // -- number_of_games
+    public void updateCountsInDatabase() {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // -- FRIENDS
+                int sumOfPlayers = 0;
+
+                for(DataSnapshot ds : dataSnapshot.child("Friends").getChildren()) {
+                    if(!ds.getKey().equals("number_of_friends")) {
+                        sumOfPlayers++;
+                    }
+                }
+
+                databaseReference.child("Friends").child("number_of_friends").setValue(sumOfPlayers);
+
+                // -- GAMES
+                int sumOfGames = 0;
+
+                for(DataSnapshot ds : dataSnapshot.child("Games").getChildren()) {
+                    if(!ds.getKey().equals("number_of_games")) {
+                        sumOfGames++;
+                    }
+                }
+
+                databaseReference.child("Games").child("number_of_games").setValue(sumOfGames);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void printToLog(String value) {
+        Log.e("CKM", value);
     }
 
     // Sets all values to their Default settings
