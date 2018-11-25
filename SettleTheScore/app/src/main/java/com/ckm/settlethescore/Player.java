@@ -14,10 +14,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class Player {
-    private int isConnected; // 0 = not connected ...... 1 = connected
+    private String isConnected; // 0 = not connected ...... 1 = connected
 
     private FirebaseUser firebaseUser;
 
@@ -27,8 +29,11 @@ public class Player {
     private String phoneNumber;
     private String userId;
 
-    private String[] friends; // array of user IDs
-    private String[] games; // array of game IDs
+    private ArrayList friends = new ArrayList(); // list of user IDs
+    private ArrayList games = new ArrayList(); // array of game IDs
+
+    private String numberOfFriends = "0";
+    private String numberOfGames = "0";
 
     // Defaults
     private final int defaultIsConnected = 0;
@@ -41,14 +46,11 @@ public class Player {
     private final String defaultPhoneNumber = "(555) 555-5555";
     private final String defaultUserId = "-1";
 
-    private final String[] defaultFriends = null;
-
     // Default Constructor
     public Player() {
-        isConnected = defaultIsConnected;
+        isConnected = "1";
 
         userId = defaultUserId;
-        friends = defaultFriends;
 
         firebaseUser = defaultFirebaseUser;
 
@@ -64,11 +66,11 @@ public class Player {
     }
 
     // Setters / Getters
-    public int isConnected() {
+    public String isConnected() {
         return isConnected;
     }
 
-    public void setIsConnected(int status) {
+    public void setIsConnected(String status) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
 
@@ -122,6 +124,18 @@ public class Player {
         return fullName;
     }
 
+    public void setNumberOfFriends(String number) { numberOfFriends = number; }
+
+    public String getNumberOfFriends() { return numberOfFriends; }
+
+    public void setNumberOfGames(String number) {
+        numberOfGames = number;
+    }
+
+    public String getNumberOfGames() {
+        return numberOfGames;
+    }
+
     public void setPhoneNumber(String number) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
@@ -155,13 +169,39 @@ public class Player {
                 "Connected: " + isConnected;
     }
 
+    public void addFriend(String id) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
+        friends.add(id);
+
+        databaseReference.child("Friends").child(numberOfFriends).setValue(id);
+        Integer tempNumber = new Integer(numberOfFriends);
+        tempNumber++;
+        numberOfFriends = tempNumber.toString();
+        databaseReference.child("Friends").child("number_of_friends").setValue(numberOfFriends);
+    }
+
+    public void addGame(String id) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userId);
+
+        games.add(id);
+
+        databaseReference.child("Games").child(numberOfGames).setValue(id);
+        Integer tempNumber = new Integer(numberOfGames);
+        tempNumber++;
+        numberOfGames = tempNumber.toString();
+        databaseReference.child("Games").child("number_of_games").setValue(numberOfGames);
+    }
+
     public static Player generatePlayerFromFirebaseUser(FirebaseUser user) {
         Player player = new Player();
         player.setFirebaseUser(user);
         player.setEmail(user.getEmail());
         player.setDisplayName(user.getDisplayName());
         player.setFullName(user.getDisplayName());
-        player.setIsConnected(1);
+        player.setIsConnected("1");
         player.setPhoneNumber(user.getPhoneNumber());
         player.setUserId(user.getUid());
 
@@ -175,6 +215,8 @@ public class Player {
         intent.putExtra("player_phone_number", getPhoneNumber());
         intent.putExtra("player_email", getEmail());
         intent.putExtra("is_connected", isConnected());
+        intent.putExtra("number_of_games", numberOfGames);
+        intent.putExtra("number_of_friends", numberOfFriends);
     }
 
     public static Player getPlayerFromLastActivity(Intent intent) {
@@ -183,7 +225,9 @@ public class Player {
         activePlayer.setFullName(intent.getStringExtra("player_full_name"));
         activePlayer.setPhoneNumber(intent.getStringExtra("player_phone_number"));
         activePlayer.setEmail(intent.getStringExtra("player_email"));
-        activePlayer.setIsConnected(1);
+        activePlayer.setIsConnected(intent.getStringExtra("is_connected"));
+        activePlayer.setNumberOfGames(intent.getStringExtra("number_of_games"));
+        activePlayer.setNumberOfFriends(intent.getStringExtra("number_of_friends"));
 
         return activePlayer;
     }
@@ -201,7 +245,7 @@ public class Player {
                     setPhoneNumber(value);
                     break;
                 case "is_connected":
-                    setIsConnected(Integer.parseInt(value));
+                    setIsConnected(value);
                     break;
                 case "full_name":
                     setFullName(value);
@@ -211,6 +255,12 @@ public class Player {
                     break;
                 case "email":
                     setEmail(value);
+                    break;
+                case "number_of_games":
+                    setNumberOfGames(value);
+                    break;
+                case "number_of_friends":
+                    setNumberOfFriends(numberOfFriends);
                     break;
                 default:
                     Log.e("CKM", "Player(): error on " + value + "no case matched " + key);
@@ -234,6 +284,8 @@ public class Player {
                 databaseCallback.onCallback("full_name", dataSnapshot.child("full_name").getValue().toString());
                 databaseCallback.onCallback("display_name", dataSnapshot.child("display_name").getValue().toString());
                 databaseCallback.onCallback("email", dataSnapshot.child("email").getValue().toString());
+                databaseCallback.onCallback("number_of_games", dataSnapshot.child("Games").child("number_of_games").getValue().toString());
+                databaseCallback.onCallback("number_of_friends", dataSnapshot.child("Friends").child("number_of_friends").getValue().toString());
             }
 
             @Override
@@ -245,13 +297,15 @@ public class Player {
 
     // Sets all values to their Default settings
     public void signOut() {
-        isConnected = defaultIsConnected;
+        isConnected = "0";
         userId = defaultUserId;
-        friends = defaultFriends;
+        friends = new ArrayList();
         firebaseUser = defaultFirebaseUser;
         displayName = defaultDisplayName;
         email = defaultEmail;
         fullName = defaultFullName;
         phoneNumber = defaultPhoneNumber;
+        numberOfFriends = "0";
+        numberOfGames = "0";
     }
 }

@@ -30,14 +30,20 @@
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".Dice"
-            android:label="@string/title_activity_dice"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/dice"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Life"
-            android:label="@string/title_activity_life"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RocPapSci" />
-        <activity android:name=".DrawStraw"></activity>
+            android:label="@string/life_counter"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RocPapSci"
+            android:label="@string/rps"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".DrawStraw"
+            android:label="@string/draw_straws"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

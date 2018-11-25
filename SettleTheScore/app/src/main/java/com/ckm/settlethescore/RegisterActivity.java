@@ -67,6 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
                 databaseReference.child("full_name").setValue(fullNameField.getText().toString().trim());
                 databaseReference.child("email").setValue(emailField.getText().toString().trim());
                 databaseReference.child("phone_number").setValue(phoneNumberField.getText().toString().trim());
+                databaseReference.child("Games").child("number_of_games").setValue(0);
+                databaseReference.child("Friends").child("number_of_friends").setValue(0);
 
                 // add image to firebase storage, save as user's ID
                 StorageReference playerProfilePictureStorage = FirebaseStorage.getInstance().getReference("profile_pictures/" + user.getUid().toString());

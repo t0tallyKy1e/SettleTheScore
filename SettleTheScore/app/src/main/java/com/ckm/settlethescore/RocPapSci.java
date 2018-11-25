@@ -1,5 +1,13 @@
 package com.ckm.settlethescore;
 
+import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,14 +39,14 @@ void RPS_WinLoss(Players host, Players guest) {
 				}
 				if (guest.choice == choice.SCISSOR) {
 					host.status = status.WIN;
-					guest.status = status.LOSS;	
+					guest.status = status.LOSS;
 				}
 				break;
 
 			case PAPER:
 				if (guest.choice == choice.ROCK) {
 					host.status = status.WIN;
-					guest.status = status.LOSS;	
+					guest.status = status.LOSS;
 				}
 				if (guest.choice == choice.SCISSOR) {
 					host.status = status.LOSS;
@@ -53,7 +61,7 @@ void RPS_WinLoss(Players host, Players guest) {
 				}
 				if (guest.choice == choice.PAPER) {
 					host.status = status.WIN;
-					guest.status = status.LOSS;	
+					guest.status = status.LOSS;
 				}
 				break;
 	} }
@@ -68,6 +76,42 @@ public class RocPapSci extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roc_pap_sci);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        final DrawerLayout finalDrawer = drawer;
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        int id = menuItem.getItemId();
+                        if (id == R.id.nav_dice) {
+                            Intent i = new Intent(RocPapSci.this, Dice.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_straws) {
+                            Intent i = new Intent(RocPapSci.this, DrawStraw.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_life) {
+                            Intent i = new Intent(RocPapSci.this, Life.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_home){
+                            Intent i = new Intent(RocPapSci.this, MainActivity.class);
+                            startActivity(i);
+                        }
+
+                        finalDrawer.closeDrawers();
+                        return true;
+                    }
+                });
         Session currentSession = new Session(Game.TYPE.ROCK_PAP_SCI);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
@@ -77,7 +121,7 @@ public class RocPapSci extends AppCompatActivity {
         dictate invited of game as guest
         */
 
- 		final ImageView imgRock = (ImageView) findViewById(R.id.imageView5);
+ 		final ImageView imgRock = (ImageView) findViewById(R.id.play_rock);
  		imgRock.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
@@ -103,7 +147,7 @@ public class RocPapSci extends AppCompatActivity {
             }
  		});
  		
- 		ImageView imgPaper = (ImageView) findViewById(R.id.imageView6);
+ 		ImageView imgPaper = (ImageView) findViewById(R.id.play_paper);
  		imgPaper.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
@@ -120,13 +164,14 @@ public class RocPapSci extends AppCompatActivity {
  			    if opponent.choice == scissors; (loss)
  			        - highlight red
  			        - games_elapsed += 1
-			
+
 			call game-checks function
-			*/ 
+			*/
  			}
  		});
- 		
- 		ImageView imgScissors = (ImageView) findViewById(R.id.imageView4);
+
+
+ 		ImageView imgScissors = (ImageView) findViewById(R.id.play_scissors);
  		imgScissors.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
@@ -143,12 +188,12 @@ public class RocPapSci extends AppCompatActivity {
 
  			    if opponent.choice == scissors; (tie)
  			        - dictate its a tie!
-			
+
 			call game-checks function
-			*/ 
+			*/
  			}
  		});
- 		
+
     }
     /*
     single instance; do you want to play again?
@@ -160,9 +205,9 @@ public class RocPapSci extends AppCompatActivity {
 
     function checks winner of game
 		- if games == rounds set
-			- if user.games_won > opponent.games_won 
+			- if user.games_won > opponent.games_won
 				- user wins
-			- else 
+			- else
 				- user loses
-    */ 
+    */
 }

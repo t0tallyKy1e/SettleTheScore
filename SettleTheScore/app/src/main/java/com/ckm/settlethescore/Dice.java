@@ -3,10 +3,16 @@ package com.ckm.settlethescore;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,8 +23,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -33,7 +42,46 @@ public class Dice extends AppCompatActivity {
         setContentView(R.layout.activity_dice);
         final TextView result = findViewById(R.id.result);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        final DrawerLayout finalDrawer = drawer;
+        navigationView.setNavigationItemSelectedListener(
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    int id = menuItem.getItemId();
+                    if (id == R.id.nav_straws) {
+                        Intent i = new Intent(Dice.this, DrawStraw.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_life) {
+                        Intent i = new Intent(Dice.this, Life.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_rps) {
+                        Intent i = new Intent(Dice.this, RocPapSci.class);
+                        startActivity(i);
+                    } else if (id == R.id.nav_home){
+                        Intent i = new Intent(Dice.this, MainActivity.class);
+                        startActivity(i);
+                    }
+
+                    finalDrawer.closeDrawers();
+                    return true;
+                }
+            });
+
+
         Session currentSession = new Session(Game.TYPE.DICE);
+        activePlayer.addGame(currentSession.getID());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
@@ -44,7 +92,7 @@ public class Dice extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 Integer value = (int)(Math.random() * 2) + 1;
-                result.setText(value.toString());
+                databaseReference.child("dice_roll").setValue(value);
             }
 
         });
@@ -54,7 +102,7 @@ public class Dice extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Integer value = (int)(Math.random() * 4) + 1;
-                result.setText(value.toString());
+                databaseReference.child("dice_roll").setValue(value);
             }
         });
 
@@ -63,7 +111,7 @@ public class Dice extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Integer value = (int)(Math.random() * 6) + 1;
-                result.setText(value.toString());
+                databaseReference.child("dice_roll").setValue(value);
             }
         });
 
@@ -72,7 +120,7 @@ public class Dice extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Integer value = (int)(Math.random() * 8) + 1;
-                result.setText(value.toString());
+                databaseReference.child("dice_roll").setValue(value);
             }
         });
 
@@ -81,7 +129,7 @@ public class Dice extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Integer value = (int)(Math.random() * 10) + 1;
-                result.setText(value.toString());
+                databaseReference.child("dice_roll").setValue(value);
             }
         });
 
@@ -90,7 +138,7 @@ public class Dice extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Integer value = (int)(Math.random() * 12) + 1;
-                result.setText(value.toString());
+                databaseReference.child("dice_roll").setValue(value);
             }
         });
 
@@ -99,7 +147,7 @@ public class Dice extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Integer value = (int)(Math.random() * 20) + 1;
-                result.setText(value.toString());
+                databaseReference.child("dice_roll").setValue(value);
             }
         });
 
@@ -111,27 +159,50 @@ public class Dice extends AppCompatActivity {
                 if(n_edit != null){
                     Integer n = Integer.parseInt(n_edit.getText().toString());
                     Integer value = (int)(Math.random() * n) + 1;
-                    result.setText(value.toString());
+                    databaseReference.child("dice_roll").setValue(value);
                 }
             }
         });
 
-        result.addTextChangedListener(new TextWatcher() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Object dbObject = dataSnapshot.child("dice_roll").getValue();
+                String dbValue = "";
 
+                if(dbObject != null) {
+                    dbValue = dbObject.toString();
+                }
+
+                if(!dbValue.equals("")) {
+                    result.setText(dbValue);
+                }
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                databaseReference.child("dice_roll").setValue(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
     }
-
+    
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            Intent diceGameIntent = new Intent(Dice.this, Dice.class);
+//            startActivity(diceGameIntent);
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }
