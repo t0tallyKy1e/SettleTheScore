@@ -66,5 +66,6 @@
     <string name="games">Games</string>
     <string name="home">Home</string>
     <string name="title_activity_score_board">ScoreBoard</string>
+    <string name="score_board">Score Board</string>
 
 </resources>

@@ -103,7 +103,10 @@ public class RocPapSci extends AppCompatActivity {
                         } else if (id == R.id.nav_life) {
                             Intent i = new Intent(RocPapSci.this, Life.class);
                             startActivity(i);
-                        } else if (id == R.id.nav_home){
+                        } else if (id == R.id.nav_scores) {
+                            Intent i = new Intent(RocPapSci.this, ScoreBoard.class);
+                            startActivity(i);
+                        }else if (id == R.id.nav_home){
                             Intent i = new Intent(RocPapSci.this, MainActivity.class);
                             startActivity(i);
                         }
@@ -195,6 +198,18 @@ public class RocPapSci extends AppCompatActivity {
  		});
 
     }
+
+    public void changeGameState(Integer status){
+        switch (status){
+            case 0:
+                break;
+            case 1:
+                break;
+            default:
+                break;
+        }
+    }
+
     /*
     single instance; do you want to play again?
         - popup play_again.xml

@@ -66,24 +66,29 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent i = new Intent();
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
-                            Intent i = new Intent(MainActivity.this, Dice.class);
+                            i = new Intent(MainActivity.this, Dice.class);
                             startActivity(i);
                         } else if (id == R.id.nav_straws) {
-                            Intent i = new Intent(MainActivity.this, DrawStraw.class);
+                            i = new Intent(MainActivity.this, DrawStraw.class);
                             startActivity(i);
                         } else if (id == R.id.nav_life) {
-                            Intent i = new Intent(MainActivity.this, Life.class);
+                            i = new Intent(MainActivity.this, Life.class);
                             startActivity(i);
                         } else if (id == R.id.nav_scores) {
-                            Intent i = new Intent(MainActivity.this, ScoreBoard.class);
+                            i = new Intent(MainActivity.this, ScoreBoard.class);
                             startActivity(i);
                         } else if (id == R.id.nav_rps) {
-                            Intent i = new Intent(MainActivity.this, RocPapSci.class);
+                            i = new Intent(MainActivity.this, RocPapSci.class);
+                            startActivity(i);
+                        }else if (id == R.id.nav_home){
+                            i = new Intent(MainActivity.this, MainActivity.class);
                             startActivity(i);
                         }
-
+                        activePlayer.sendPlayerToNextActivity(i);
+                        startActivity(i);
                         finalDrawer.closeDrawers();
                         return true;
                     }

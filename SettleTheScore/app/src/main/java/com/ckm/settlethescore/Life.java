@@ -15,7 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Life extends AppCompatActivity {
+    private FirebaseUser firebaseUser;
+
+    private Player activePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +45,36 @@ public class Life extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent i = new Intent();
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
-                            Intent i = new Intent(Life.this, Dice.class);
+                            i = new Intent(Life.this, Dice.class);
                             startActivity(i);
                         } else if (id == R.id.nav_straws) {
-                            Intent i = new Intent(Life.this, DrawStraw.class);
+                            i = new Intent(Life.this, DrawStraw.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_scores) {
+                            i = new Intent(Life.this, ScoreBoard.class);
                             startActivity(i);
                         } else if (id == R.id.nav_rps) {
-                            Intent i = new Intent(Life.this, RocPapSci.class);
+                            i = new Intent(Life.this, RocPapSci.class);
                             startActivity(i);
-                        } else if (id == R.id.nav_home) {
-                            Intent i = new Intent(Life.this, MainActivity.class);
+                        }else if (id == R.id.nav_home){
+                            i = new Intent(Life.this, MainActivity.class);
                             startActivity(i);
                         }
-
+                        activePlayer.sendPlayerToNextActivity(i);
+                        startActivity(i);
                         finalDrawer.closeDrawers();
                         return true;
                     }
-                });
+            });
+
+        // get current firebase user and their ID
+        FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuthentication.getCurrentUser();
+        final String userID = firebaseUser.getUid();
+        activePlayer = new Player(userID);
 
         Button p1increment = findViewById(R.id.player_one_inc_life);
         p1increment.setOnClickListener(new View.OnClickListener() {

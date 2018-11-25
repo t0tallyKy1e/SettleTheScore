@@ -9,7 +9,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class DrawStraw extends AppCompatActivity {
+    private FirebaseUser firebaseUser;
+
+    private Player activePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +39,34 @@ public class DrawStraw extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent i = new Intent();
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
-                            Intent i = new Intent(DrawStraw.this, Dice.class);
+                            i = new Intent(DrawStraw.this, Dice.class);
                             startActivity(i);
                         } else if (id == R.id.nav_life) {
-                            Intent i = new Intent(DrawStraw.this, Life.class);
+                            i = new Intent(DrawStraw.this, Life.class);
+                            startActivity(i);
+                        } else if (id == R.id.nav_scores) {
+                            i = new Intent(DrawStraw.this, ScoreBoard.class);
                             startActivity(i);
                         } else if (id == R.id.nav_rps) {
-                            Intent i = new Intent(DrawStraw.this, RocPapSci.class);
+                            i = new Intent(DrawStraw.this, RocPapSci.class);
                             startActivity(i);
-                        } else if (id == R.id.nav_home){
-                            Intent i = new Intent(DrawStraw.this, MainActivity.class);
+                        }else if (id == R.id.nav_home){
+                            i = new Intent(DrawStraw.this, MainActivity.class);
                             startActivity(i);
                         }
-
+                        activePlayer.sendPlayerToNextActivity(i);
+                        startActivity(i);
                         finalDrawer.closeDrawers();
                         return true;
                     }
-                });
+            });
+        // get current firebase user and their ID
+        FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuthentication.getCurrentUser();
+        final String userID = firebaseUser.getUid();
+        activePlayer = new Player(userID);
     }
 }
