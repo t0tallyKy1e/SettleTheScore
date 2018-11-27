@@ -23,8 +23,7 @@
             android:padding="10dp"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-            app:layout_constraintTop_toBottomOf="@+id/their_choice"
-            app:srcCompat="@drawable/rock" />
+            app:layout_constraintTop_toBottomOf="@+id/their_choice" />
 
         <ImageView
             android:id="@+id/their_choice"
@@ -37,8 +36,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:srcCompat="@drawable/scissors" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"

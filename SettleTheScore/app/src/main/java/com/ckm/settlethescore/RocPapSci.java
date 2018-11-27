@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 
+import com.firebase.ui.auth.data.model.Resource;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -119,6 +120,7 @@ public class RocPapSci extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
 
+
         /*
         dictate creator of the game as host
         dictate invited of game as guest
@@ -199,15 +201,62 @@ public class RocPapSci extends AppCompatActivity {
 
     }
 
-    public void changeGameState(Integer status){
+    public void changeGameState(Integer status) {
+        ImageView myChoice = findViewById(R.id.my_choice);
+        ImageView theirChoice = findViewById(R.id.their_choice);
+
         switch (status){
+            case -1:
+                myChoice.setBackground(getResources().getDrawable(R.drawable.lose_btn_outline));
+                theirChoice.setBackground(getResources().getDrawable(R.drawable.win_btn_outline));
+                break;
             case 0:
+                myChoice.setBackground(getResources().getDrawable(R.drawable.button_outline));
+                theirChoice.setBackground(getResources().getDrawable(R.drawable.button_outline));
                 break;
             case 1:
+                myChoice.setBackground(getResources().getDrawable(R.drawable.win_btn_outline));
+                theirChoice.setBackground(getResources().getDrawable(R.drawable.lose_btn_outline));
                 break;
             default:
                 break;
         }
+    }
+
+    public void myChoice(Integer choice){
+        ImageView myChoice = findViewById(R.id.my_choice);
+        switch(choice){
+            case 1:
+                myChoice.setImageResource(R.drawable.rock);
+                break;
+            case 2:
+                myChoice.setImageResource(R.drawable.paper);
+                break;
+            case 3:
+                myChoice.setImageResource(R.drawable.scissors);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void theirChoice(Integer choice){
+        ImageView theirChoice = (ImageView) findViewById(R.id.their_choice);
+        switch(choice){
+            case 1:
+                theirChoice.setImageResource(R.drawable.rock);
+                break;
+            case 2:
+                theirChoice.setImageResource(R.drawable.paper);
+                break;
+            case 3:
+                theirChoice.setImageResource(R.drawable.scissors);
+                break;
+            default:
+                break;
+        }
+
     }
 
     /*

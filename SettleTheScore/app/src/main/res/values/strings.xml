@@ -21,7 +21,7 @@
     <string name="startup_warning">* If you do not already have an account, one will automatically be created for you and then you will have to fill in some additional information *</string>
 
     <!-- Sign In Activity -->
-    <string name="sign_in_title">Sign In</string>
+    <string name="sign_in_title">Signing In</string>
 
     <!-- Register Activity -->
     <string name="register_title">Additional Info</string>
