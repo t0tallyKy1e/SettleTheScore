@@ -159,6 +159,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(rpsGameIntent);
             }
         });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent nextIntent = new Intent(MainActivity.this, Dice.class);
+                activePlayer.sendPlayerToNextActivity(nextIntent);
+                Session.sendPreviousSessionToActivity(nextIntent, "-LSMRlRcZyXsZG88D_Mp");
+                startActivity(nextIntent);
+            }
+        });
     }
 
     // everything below is default code

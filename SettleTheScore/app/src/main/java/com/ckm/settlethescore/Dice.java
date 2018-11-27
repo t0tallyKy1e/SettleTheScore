@@ -84,15 +84,21 @@ public class Dice extends AppCompatActivity {
                     }
             });
 
-        // -- Logic for creating a new game
             // create new session
-            final Session currentSession = new Session(Game.TYPE.DICE);
+            Session currentSession = new Session();
+
+            currentSession = Session.getSessionFromLastActivity(oldIntent);
+            currentSession.gameType = Game.TYPE.DICE;
+
             // add session to player's games
             activePlayer.addGame(currentSession.getID());
             // add player to session
             currentSession.addPlayer(activePlayer.getUserId());
             currentSession.addHost(activePlayer.getUserId());
-        // -- end of logic for creating new game
+            currentSession.updateDatabase();
+
+
+        final Session finalCurrentSession = currentSession;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,12 +106,12 @@ public class Dice extends AppCompatActivity {
             public void onClick(View view) {
                 int addAsFriend = 0;
                 int addToGame = 1;
-                activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, currentSession.getID());
+                activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, finalCurrentSession.getID());
             }
         });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
+        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(finalCurrentSession.getID());
 
 
         ImageButton imageButton = findViewById(R.id.roll_two);

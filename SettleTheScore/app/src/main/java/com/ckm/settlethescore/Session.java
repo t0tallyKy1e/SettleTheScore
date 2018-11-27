@@ -1,5 +1,6 @@
 package com.ckm.settlethescore;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -16,29 +17,18 @@ public class Session {
     private boolean expired; // used to remove game from database?
 
     private String currentPlayerIndex;
-    private Game.TYPE gameType;
+    public Game.TYPE gameType;
     private Game.STATE gameState;
     private int maxNumberOfPlayers = 10;
 
     private String sessionID;
+    private String hostID;
     private ArrayList<String> players;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
     public Session() {
-        // gameType not defined
-        // --- gameType must be specified later
 
-        currentPlayerIndex = "0";
-        players = players = new ArrayList<String>();
-
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference().child("Sessions");
-        sessionID = databaseReference.push().getKey().toString().trim();
-        databaseReference = databaseReference.child(sessionID);
-
-        // push all info to DB
-        updateDatabase();
     }
 
     public Session(Game.TYPE game_type) {
@@ -72,19 +62,37 @@ public class Session {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currentPlayerIndex = dataSnapshot.child("Players").child("number_of_players").getValue().toString();
+                Object type = dataSnapshot.child("game_type").getValue();
+
+                if(type == null) {
+                    type = new String();
+                }
 
                 int number_of_players = new Integer(currentPlayerIndex + 1);
-                for(int i = 0; i < number_of_players; i++) {
+                for (int i = 0; i < number_of_players; i++) {
                     Object tempPlayerIDObject = dataSnapshot.child("Players").child(new Integer(i).toString()).getValue();
-                    if(tempPlayerIDObject != null) {
+                    if (tempPlayerIDObject != null) {
                         String tempPlayerID = tempPlayerIDObject.toString();
-                        if(!tempPlayerID.equals(null)) {
+                        if (!tempPlayerID.equals(null)) {
                             players.add(i, tempPlayerID);
                         }
                     }
                 }
 
-                gameType = Game.TYPE.valueOf(dataSnapshot.child("game_type").getValue().toString());
+                if (type.equals("DICE")) {
+                    gameType = Game.TYPE.DICE;
+                } else if (type.equals("LIFE")) {
+                    gameType = Game.TYPE.LIFE;
+                } else if (type.equals("ROC_PAP_SCI")) {
+                    gameType = Game.TYPE.ROCK_PAP_SCI;
+                } else if (type.equals("STRAWS")) {
+                    gameType = Game.TYPE.STRAWS;
+                } else if(type.equals(null)) {
+                    Log.e("CKM", "ERROR WHEN GETTING GAME TYPE FROM DATABASE.");
+                }
+
+                // if(!dataSnapshot.child("host").getValue().equals(null))
+                // add host_id
 
                 updateDatabase();
             }
@@ -139,6 +147,8 @@ public class Session {
                 }
 
                 databaseReference.child("Players").child("number_of_players").setValue(sumOfPlayers);
+
+                databaseReference.child("game_type").setValue(gameType);
             }
 
             @Override
@@ -146,6 +156,22 @@ public class Session {
 
             }
         });
+    }
+
+    public static void sendPreviousSessionToActivity(Intent intent, String session_id) {
+        intent.putExtra("session_id", session_id);
+    }
+
+    public static Session getSessionFromLastActivity(Intent intent) {
+        Session currentSession = new Session();
+
+        if(intent.getStringExtra("session_id") != null) {
+            currentSession = new Session(intent.getStringExtra("session_id"));
+        } else {
+            currentSession = null;
+        }
+
+        return currentSession;
     }
 }
 
