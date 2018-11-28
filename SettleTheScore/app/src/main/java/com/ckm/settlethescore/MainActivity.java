@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(MainActivity.this, MainActivity.class);
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
                             i = new Intent(MainActivity.this, Dice.class);
@@ -189,6 +189,8 @@ public class MainActivity extends AppCompatActivity {
 //                // nada
 //            }
 //        });
+
+
     }
 
     // everything below is default code
