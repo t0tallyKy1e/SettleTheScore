@@ -25,6 +25,9 @@ public class Life extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent oldIntent = getIntent();
+        final Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life);
 
@@ -41,40 +44,42 @@ public class Life extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
+        final Player finalActivePlayer = activePlayer;
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Intent i = new Intent();
                         int id = menuItem.getItemId();
+                        boolean shouldStayOnCurrentActivity = false;
                         if (id == R.id.nav_dice) {
                             i = new Intent(Life.this, Dice.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_straws) {
                             i = new Intent(Life.this, DrawStraw.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_scores) {
                             i = new Intent(Life.this, ScoreBoard.class);
-                            startActivity(i);
+                        } else if (id == R.id.nav_home){
+                            i = new Intent(Life.this, MainActivity.class);
                         } else if (id == R.id.nav_rps) {
                             i = new Intent(Life.this, RocPapSci.class);
-                            startActivity(i);
-                        }else if (id == R.id.nav_home){
-                            i = new Intent(Life.this, MainActivity.class);
+                        } else {
+                            // clicked on self
+                            shouldStayOnCurrentActivity = true;
+                        }
+                        if(!shouldStayOnCurrentActivity) {
+                            finalActivePlayer.sendPlayerToNextActivity(i);
                             startActivity(i);
                         }
-                        activePlayer.sendPlayerToNextActivity(i);
-                        startActivity(i);
+
                         finalDrawer.closeDrawers();
                         return true;
                     }
-            });
+                });
 
         // get current firebase user and their ID
         FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuthentication.getCurrentUser();
         final String userID = firebaseUser.getUid();
-        activePlayer = new Player(userID);
 
         Button p1increment = findViewById(R.id.player_one_inc_life);
         p1increment.setOnClickListener(new View.OnClickListener() {

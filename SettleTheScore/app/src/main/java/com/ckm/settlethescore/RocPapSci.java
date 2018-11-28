@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RocPapSci extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent oldIntent = getIntent();
+        final Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roc_pap_sci);
 
@@ -39,25 +43,30 @@ public class RocPapSci extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
+        final Player finalActivePlayer = activePlayer;
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent i = new Intent();
                         int id = menuItem.getItemId();
-                        if (id == R.id.nav_dice) {
-                            Intent i = new Intent(RocPapSci.this, Dice.class);
-                            startActivity(i);
-                        } else if (id == R.id.nav_straws) {
-                            Intent i = new Intent(RocPapSci.this, DrawStraw.class);
-                            startActivity(i);
+                        boolean shouldStayOnCurrentActivity = false;
+                        if (id == R.id.nav_straws) {
+                            i = new Intent(RocPapSci.this, DrawStraw.class);
                         } else if (id == R.id.nav_life) {
-                            Intent i = new Intent(RocPapSci.this, Life.class);
-                            startActivity(i);
+                            i = new Intent(RocPapSci.this, Life.class);
                         } else if (id == R.id.nav_scores) {
-                            Intent i = new Intent(RocPapSci.this, ScoreBoard.class);
-                            startActivity(i);
-                        }else if (id == R.id.nav_home){
-                            Intent i = new Intent(RocPapSci.this, MainActivity.class);
+                            i = new Intent(RocPapSci.this, ScoreBoard.class);
+                        } else if (id == R.id.nav_home){
+                            i = new Intent(RocPapSci.this, MainActivity.class);
+                        } else if (id == R.id.nav_dice) {
+                            i = new Intent(RocPapSci.this, Dice.class);
+                        } else {
+                            // clicked on self
+                            shouldStayOnCurrentActivity = true;
+                        }
+                        if(!shouldStayOnCurrentActivity) {
+                            finalActivePlayer.sendPlayerToNextActivity(i);
                             startActivity(i);
                         }
 
@@ -65,6 +74,7 @@ public class RocPapSci extends AppCompatActivity {
                         return true;
                     }
                 });
+
         Session currentSession = new Session(Game.TYPE.ROCK_PAP_SCI);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());

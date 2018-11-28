@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent lifeGameIntent = new Intent(MainActivity.this, Life.class);
+                activePlayer.sendPlayerToNextActivity(lifeGameIntent);
                 startActivity(lifeGameIntent);
             }
         });
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent strawsGameIntent = new Intent(MainActivity.this, DrawStraw.class);
+                activePlayer.sendPlayerToNextActivity(strawsGameIntent);
                 startActivity(strawsGameIntent);
             }
         });
@@ -157,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent rpsGameIntent = new Intent(MainActivity.this, RocPapSci.class);
+                activePlayer.sendPlayerToNextActivity(rpsGameIntent);
                 startActivity(rpsGameIntent);
             }
         });
@@ -165,10 +168,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent nextIntent = new Intent(MainActivity.this, Dice.class);
-                activePlayer.sendPlayerToNextActivity(nextIntent);
-                Session.sendPreviousSessionToActivity(nextIntent, "-LSMRlRcZyXsZG88D_Mp");
-                startActivity(nextIntent);
+                // test out opening a previous session
+//                Intent nextIntent = new Intent(MainActivity.this, Dice.class);
+//                activePlayer.sendPlayerToNextActivity(nextIntent);
+//                Session.sendPreviousSessionToActivity(nextIntent, "-LSMRlRcZyXsZG88D_Mp");
+//                startActivity(nextIntent);
             }
         });
 
