@@ -1,5 +1,6 @@
 package com.ckm.settlethescore;
 
+import java.util.ArrayList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -170,6 +171,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(nextIntent);
             }
         });
+
+//        // test of getting list of all games
+//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        final DatabaseReference databaseReference = database.getReference().child("Sessions");
+//
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    // change value of field to -> ds.getValue().toString();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // nada
+//            }
+//        });
     }
 
     // everything below is default code

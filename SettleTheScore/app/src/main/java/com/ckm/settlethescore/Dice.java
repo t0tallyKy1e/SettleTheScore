@@ -88,7 +88,12 @@ public class Dice extends AppCompatActivity {
             Session currentSession = new Session();
 
             currentSession = Session.getSessionFromLastActivity(oldIntent);
-            currentSession.gameType = Game.TYPE.DICE;
+
+            if(currentSession == null) {
+                currentSession = new Session(Game.TYPE.DICE);
+            } else {
+                currentSession.gameType = Game.TYPE.DICE;
+            }
 
             // add session to player's games
             activePlayer.addGame(currentSession.getID());
