@@ -4,10 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ckm.settlethescore.ScoresFragment.OnListFragmentInteractionListener;
 import com.ckm.settlethescore.dummy.DummyContent.DummyItem;
+import com.ckm.settlethescore.ScoreBoard;
 
 import java.util.List;
 
@@ -18,10 +20,10 @@ import java.util.List;
  */
 public class MyScoresRecyclerViewAdapter extends RecyclerView.Adapter<MyScoresRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<ScoreData.ScoreItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyScoresRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyScoresRecyclerViewAdapter(List<ScoreData.ScoreItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,10 +38,21 @@ public class MyScoresRecyclerViewAdapter extends RecyclerView.Adapter<MyScoresRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-        holder.mGameStatus.setText("112");
-        holder.mGameType.setText("112");
+        holder.mIdView.setText(mValues.get(position).score);
+        holder.mGameStatus.setText(mValues.get(position).gameStatus);
+
+        switch(mValues.get(position).count % 3){
+            case 0:
+                holder.mGameType.setImageResource(R.drawable.scissors);
+                break;
+            case 1:
+                holder.mGameType.setImageResource(R.drawable.dices_home);
+                break;
+            case 2:
+                holder.mGameType.setImageResource(R.drawable.life_main);
+                break;
+        }
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,23 +74,21 @@ public class MyScoresRecyclerViewAdapter extends RecyclerView.Adapter<MyScoresRe
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
         public final TextView mGameStatus;
-        public final TextView mGameType;
-        public DummyItem mItem;
+        public final ImageView mGameType;
+        public ScoreData.ScoreItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
             mGameStatus = (TextView) view.findViewById(R.id.game_status);
-            mGameType = (TextView) view.findViewById(R.id.game_type);
+            mGameType = (ImageView) view.findViewById(R.id.game_type);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mGameStatus.getText() + "'";
         }
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,23 +43,18 @@ public class ScoreBoard extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(ScoreBoard.this, ScoreBoard.class);
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
                             i = new Intent(ScoreBoard.this, Dice.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_straws) {
                             i = new Intent(ScoreBoard.this, DrawStraw.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_life) {
                             i = new Intent(ScoreBoard.this, Life.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_rps) {
                             i = new Intent(ScoreBoard.this, RocPapSci.class);
-                            startActivity(i);
                         }else if (id == R.id.nav_home){
                             i = new Intent(ScoreBoard.this, MainActivity.class);
-                            startActivity(i);
                         }
                         activePlayer.sendPlayerToNextActivity(i);
                         startActivity(i);
@@ -81,6 +77,7 @@ public class ScoreBoard extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
     }
 
 }

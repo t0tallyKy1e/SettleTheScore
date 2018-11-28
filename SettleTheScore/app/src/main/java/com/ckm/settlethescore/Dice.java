@@ -40,12 +40,12 @@ public class Dice extends AppCompatActivity {
         setContentView(R.layout.activity_dice);
         final TextView result = findViewById(R.id.result);
 
-        final EditText addPlayerField = (EditText) findViewById(R.id.add_email);
+        final EditText addPlayerField = findViewById(R.id.add_email);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -60,7 +60,7 @@ public class Dice extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(Dice.this, Dice.class);
                         int id = menuItem.getItemId();
                         boolean shouldStayOnCurrentActivity = false;
                         if (id == R.id.nav_straws) {
@@ -77,6 +77,7 @@ public class Dice extends AppCompatActivity {
                             // clicked on self
                             shouldStayOnCurrentActivity = true;
                         }
+                      
                         if(!shouldStayOnCurrentActivity) {
                             finalActivePlayer.sendPlayerToNextActivity(i);
                             startActivity(i);
