@@ -134,10 +134,6 @@ public class RocPapSci extends AppCompatActivity {
                         return true;
                     }
                 });
-                  
-        Session currentSession = new Session(Game.TYPE.ROCK_PAP_SCI);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
 
         final Session currentSession = new Session(Game.TYPE.ROCK_PAP_SCI);
 
