@@ -45,23 +45,18 @@ public class Life extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(Life.this, Life.class);
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
                             i = new Intent(Life.this, Dice.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_straws) {
                             i = new Intent(Life.this, DrawStraw.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_scores) {
                             i = new Intent(Life.this, ScoreBoard.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_rps) {
                             i = new Intent(Life.this, RocPapSci.class);
-                            startActivity(i);
-                        }else if (id == R.id.nav_home){
+                        } else if (id == R.id.nav_home){
                             i = new Intent(Life.this, MainActivity.class);
-                            startActivity(i);
                         }
                         activePlayer.sendPlayerToNextActivity(i);
                         startActivity(i);

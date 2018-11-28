@@ -39,12 +39,12 @@ public class Dice extends AppCompatActivity {
         setContentView(R.layout.activity_dice);
         final TextView result = findViewById(R.id.result);
 
-        final EditText addPlayerField = (EditText) findViewById(R.id.add_email);
+        final EditText addPlayerField = findViewById(R.id.add_email);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -59,23 +59,18 @@ public class Dice extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(Dice.this, Dice.class);
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_straws) {
                             i = new Intent(Dice.this, DrawStraw.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_life) {
                             i = new Intent(Dice.this, Life.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_scores) {
                             i = new Intent(Dice.this, ScoreBoard.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_rps) {
                             i = new Intent(Dice.this, RocPapSci.class);
-                            startActivity(i);
                         }else if (id == R.id.nav_home){
                             i = new Intent(Dice.this, MainActivity.class);
-                            startActivity(i);
                         }
                         finalActivePlayer.sendPlayerToNextActivity(i);
                         startActivity(i);
@@ -84,15 +79,26 @@ public class Dice extends AppCompatActivity {
                     }
             });
 
-        // -- Logic for creating a new game
             // create new session
-            final Session currentSession = new Session(Game.TYPE.DICE);
+            Session currentSession = new Session();
+
+            currentSession = Session.getSessionFromLastActivity(oldIntent);
+
+            if(currentSession == null) {
+                currentSession = new Session(Game.TYPE.DICE);
+            } else {
+                currentSession.gameType = Game.TYPE.DICE;
+            }
+
             // add session to player's games
             activePlayer.addGame(currentSession.getID());
             // add player to session
             currentSession.addPlayer(activePlayer.getUserId());
             currentSession.addHost(activePlayer.getUserId());
-        // -- end of logic for creating new game
+            currentSession.updateDatabase();
+
+
+        final Session finalCurrentSession = currentSession;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,12 +106,12 @@ public class Dice extends AppCompatActivity {
             public void onClick(View view) {
                 int addAsFriend = 0;
                 int addToGame = 1;
-                activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, currentSession.getID());
+                activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, finalCurrentSession.getID());
             }
         });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
+        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(finalCurrentSession.getID());
 
 
         ImageButton imageButton = findViewById(R.id.roll_two);

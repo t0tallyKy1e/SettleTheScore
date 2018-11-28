@@ -1,5 +1,6 @@
 package com.ckm.settlethescore;
 
+import java.util.ArrayList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(MainActivity.this, MainActivity.class);
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
                             i = new Intent(MainActivity.this, Dice.class);
@@ -159,6 +160,37 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(rpsGameIntent);
             }
         });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent nextIntent = new Intent(MainActivity.this, Dice.class);
+                activePlayer.sendPlayerToNextActivity(nextIntent);
+                Session.sendPreviousSessionToActivity(nextIntent, "-LSMRlRcZyXsZG88D_Mp");
+                startActivity(nextIntent);
+            }
+        });
+
+//        // test of getting list of all games
+//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        final DatabaseReference databaseReference = database.getReference().child("Sessions");
+//
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    // change value of field to -> ds.getValue().toString();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // nada
+//            }
+//        });
+
+
     }
 
     // everything below is default code

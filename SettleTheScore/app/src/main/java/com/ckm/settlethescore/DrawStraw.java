@@ -39,23 +39,18 @@ public class DrawStraw extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent();
+                        Intent i = new Intent(DrawStraw.this, DrawStraw.class);
                         int id = menuItem.getItemId();
                         if (id == R.id.nav_dice) {
                             i = new Intent(DrawStraw.this, Dice.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_life) {
                             i = new Intent(DrawStraw.this, Life.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_scores) {
                             i = new Intent(DrawStraw.this, ScoreBoard.class);
-                            startActivity(i);
                         } else if (id == R.id.nav_rps) {
                             i = new Intent(DrawStraw.this, RocPapSci.class);
-                            startActivity(i);
                         }else if (id == R.id.nav_home){
                             i = new Intent(DrawStraw.this, MainActivity.class);
-                            startActivity(i);
                         }
                         activePlayer.sendPlayerToNextActivity(i);
                         startActivity(i);
