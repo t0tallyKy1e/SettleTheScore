@@ -10,10 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ckm.settlethescore.dummy.DummyContent;
-import com.ckm.settlethescore.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.ckm.settlethescore.ScoreData;
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +66,7 @@ public class ScoresFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyScoresRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyScoresRecyclerViewAdapter(ScoreData.ITEMS, mListener));
         }
         return view;
     }
@@ -104,6 +101,6 @@ public class ScoresFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(ScoreData.ScoreItem item);
     }
 }

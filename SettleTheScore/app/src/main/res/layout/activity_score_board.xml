@@ -14,7 +14,7 @@ tools:openDrawer="start">
     android:layout_height="match_parent">
 
     <fragment
-        android:id="@+id/fragment"
+        android:id="@+id/scores_fragment"
         android:name="com.ckm.settlethescore.ScoresFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

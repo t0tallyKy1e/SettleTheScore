@@ -38,7 +38,7 @@ public class DummyContent {
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
+        return new DummyItem(String.valueOf(position), "Player " + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
@@ -57,11 +57,15 @@ public class DummyContent {
         public final String id;
         public final String content;
         public final String details;
+        public final String gameStatus;
+        public final String score;
 
         public DummyItem(String id, String content, String details) {
             this.id = id;
-            this.content = content;
+            this.content = "Player 1";
             this.details = details;
+            this.gameStatus = "In Progress";
+            this.score = "Kyle D. rolled a 36";
         }
 
         @Override
