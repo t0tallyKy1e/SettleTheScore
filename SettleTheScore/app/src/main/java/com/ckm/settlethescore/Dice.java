@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -61,23 +62,31 @@ public class Dice extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Intent i = new Intent(Dice.this, Dice.class);
                         int id = menuItem.getItemId();
+                        boolean shouldStayOnCurrentActivity = false;
                         if (id == R.id.nav_straws) {
                             i = new Intent(Dice.this, DrawStraw.class);
                         } else if (id == R.id.nav_life) {
                             i = new Intent(Dice.this, Life.class);
                         } else if (id == R.id.nav_scores) {
                             i = new Intent(Dice.this, ScoreBoard.class);
+                        } else if (id == R.id.nav_home){
+                            i = new Intent(Dice.this, MainActivity.class);
                         } else if (id == R.id.nav_rps) {
                             i = new Intent(Dice.this, RocPapSci.class);
-                        }else if (id == R.id.nav_home){
-                            i = new Intent(Dice.this, MainActivity.class);
+                        } else {
+                            // clicked on self
+                            shouldStayOnCurrentActivity = true;
                         }
-                        finalActivePlayer.sendPlayerToNextActivity(i);
-                        startActivity(i);
+                      
+                        if(!shouldStayOnCurrentActivity) {
+                            finalActivePlayer.sendPlayerToNextActivity(i);
+                            startActivity(i);
+                        }
+
                         finalDrawer.closeDrawers();
                         return true;
                     }
-            });
+                });
 
             // create new session
             Session currentSession = new Session();

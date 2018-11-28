@@ -364,6 +364,7 @@ public class Player {
                 }
 
                 databaseReference.child("Friends").child("number_of_friends").setValue(sumOfPlayers);
+                numberOfFriends = new Integer(sumOfPlayers).toString();
 
                 // -- GAMES
                 int sumOfGames = 0;
@@ -375,6 +376,7 @@ public class Player {
                 }
 
                 databaseReference.child("Games").child("number_of_games").setValue(sumOfGames);
+                numberOfGames = new Integer(sumOfGames).toString();
             }
 
             @Override
