@@ -27,7 +27,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/sts_logo" />
+            app:srcCompat="@drawable/sts_logo"
+            android:contentDescription="TODO" />
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -65,7 +66,8 @@
                         android:scaleType="fitXY"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/life_main" />
+                        app:srcCompat="@drawable/life_main"
+                        android:contentDescription="TODO" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -84,7 +86,8 @@
                         android:scaleType="fitXY"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/scissors" />
+                        app:srcCompat="@drawable/scissors"
+                        android:contentDescription="TODO" />
 
                     <TextView
                         android:id="@+id/textView19"
@@ -113,7 +116,8 @@
                         android:scaleType="fitXY"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/straws_main" />
+                        app:srcCompat="@drawable/straws_main"
+                        android:contentDescription="TODO" />
 
                     <TextView
                         android:id="@+id/textView16"
@@ -147,7 +151,8 @@
                         android:scaleType="fitXY"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/dices_home" />
+                        app:srcCompat="@drawable/dices_home"
+                        android:contentDescription="TODO" />
 
                     <TextView
                         android:id="@+id/textView18"

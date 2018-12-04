@@ -29,7 +29,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.697"
-            app:srcCompat="@drawable/red_straw" />
+            app:srcCompat="@drawable/red_straw"
+            android:contentDescription="TODO" />
 
         <ImageButton
             android:id="@+id/straw_two"
@@ -43,7 +44,8 @@
             app:layout_constraintStart_toEndOf="@+id/straw_one"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.695"
-            app:srcCompat="@drawable/purple_straw" />
+            app:srcCompat="@drawable/purple_straw"
+            android:contentDescription="TODO" />
 
         <ImageButton
             android:id="@+id/straw_three"
@@ -56,7 +58,8 @@
             app:layout_constraintStart_toEndOf="@+id/straw_two"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.695"
-            app:srcCompat="@drawable/orj_straw" />
+            app:srcCompat="@drawable/orj_straw"
+            android:contentDescription="TODO" />
 
         <ImageButton
             android:id="@+id/straw_four"
@@ -70,7 +73,8 @@
             app:layout_constraintStart_toEndOf="@+id/straw_three"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.695"
-            app:srcCompat="@drawable/teal_straw" />
+            app:srcCompat="@drawable/teal_straw"
+            android:contentDescription="TODO" />
 
         <ImageButton
             android:id="@+id/straw_five"
@@ -83,7 +87,8 @@
             app:layout_constraintStart_toEndOf="@+id/straw_four"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.695"
-            app:srcCompat="@drawable/green_straw" />
+            app:srcCompat="@drawable/green_straw"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/textView9"
@@ -153,7 +158,8 @@
             android:scaleType="fitXY"
             app:layout_constraintStart_toEndOf="@+id/textView13"
             app:layout_constraintTop_toBottomOf="@+id/textView9"
-            app:srcCompat="@drawable/teal_straw" />
+            app:srcCompat="@drawable/teal_straw"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@+id/imageView16"
@@ -165,7 +171,8 @@
             android:scaleType="fitXY"
             app:layout_constraintEnd_toStartOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/textView9"
-            app:srcCompat="@drawable/purple_straw" />
+            app:srcCompat="@drawable/purple_straw"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@+id/imageView17"
@@ -176,7 +183,8 @@
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toEndOf="@+id/textView11"
             app:layout_constraintTop_toBottomOf="@+id/imageView15"
-            app:srcCompat="@android:drawable/ic_menu_help" />
+            app:srcCompat="@android:drawable/ic_menu_help"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@+id/imageView18"
@@ -187,7 +195,8 @@
             android:layout_marginRight="8dp"
             app:layout_constraintEnd_toStartOf="@+id/textView10"
             app:layout_constraintTop_toBottomOf="@+id/imageView15"
-            app:srcCompat="@android:drawable/ic_menu_help" />
+            app:srcCompat="@android:drawable/ic_menu_help"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/textView14"

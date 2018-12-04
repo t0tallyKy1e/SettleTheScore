@@ -49,7 +49,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/roll_four"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/roll_four" />
+                app:layout_constraintTop_toTopOf="@+id/roll_four"
+                android:contentDescription="TODO" />
 
             <ImageButton
                 android:id="@+id/roll_four"
@@ -65,7 +66,8 @@
                 android:src="@drawable/four_sided"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:contentDescription="TODO" />
 
             <ImageButton
                 android:id="@+id/roll_six"
@@ -80,7 +82,8 @@
                 android:src="@drawable/six_sided"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/roll_four"
-                app:layout_constraintTop_toTopOf="@+id/roll_four" />
+                app:layout_constraintTop_toTopOf="@+id/roll_four"
+                android:contentDescription="TODO" />
 
             <ImageButton
                 android:id="@+id/roll_eight"
@@ -97,7 +100,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/roll_ten"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/roll_two" />
+                app:layout_constraintTop_toBottomOf="@+id/roll_two"
+                android:contentDescription="TODO" />
 
             <ImageButton
                 android:id="@+id/roll_ten"
@@ -113,7 +117,8 @@
                 android:src="@drawable/ten_sided"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/roll_four" />
+                app:layout_constraintTop_toBottomOf="@+id/roll_four"
+                android:contentDescription="TODO" />
 
             <ImageButton
                 android:id="@+id/roll_twelve"
@@ -130,7 +135,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.722"
                 app:layout_constraintStart_toEndOf="@+id/roll_ten"
-                app:layout_constraintTop_toBottomOf="@+id/roll_six" />
+                app:layout_constraintTop_toBottomOf="@+id/roll_six"
+                android:contentDescription="TODO" />
 
             <ImageButton
                 android:id="@+id/roll_twenty"
@@ -143,7 +149,8 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/twent_sided"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/roll_ten" />
+                app:layout_constraintTop_toBottomOf="@+id/roll_ten"
+                android:contentDescription="TODO" />
 
             <EditText
                 android:id="@+id/n_text_edit"

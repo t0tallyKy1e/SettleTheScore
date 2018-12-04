@@ -197,7 +197,8 @@
         android:src="@drawable/default_profile_picture"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegisterEmailField" />
+        app:layout_constraintTop_toBottomOf="@+id/txtRegisterEmailField"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/txtProfilePictureUri"
