@@ -38,6 +38,7 @@ public class DrawStraw extends AppCompatActivity {
     int max_number_of_players = 4;
     int number_of_straws = 5;
     int current_number_of_players = 0;
+    int next_open_player_slot = 1;
 
     String players[] = new String[max_number_of_players]; // player IDs
     String player_choices[] = new String[max_number_of_players]; // straw number chosen
@@ -103,36 +104,36 @@ public class DrawStraw extends AppCompatActivity {
         TextView txtView = navigationView.getHeaderView(0).findViewById(R.id.txtDrawerUserName);
         txtView.setText(activePlayer.getDisplayName());
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent i = new Intent(DrawStraw.this, DrawStraw.class);
-                        int id = menuItem.getItemId();
-                        boolean shouldStayOnCurrentActivity = false;
-                        if (id == R.id.nav_dice) {
-                            i = new Intent(DrawStraw.this, Dice.class);
-                        } else if (id == R.id.nav_life) {
-                            i = new Intent(DrawStraw.this, Life.class);
-                        } else if (id == R.id.nav_scores) {
-                            i = new Intent(DrawStraw.this, ScoreBoard.class);
-                        } else if (id == R.id.nav_home){
-                            i = new Intent(DrawStraw.this, MainActivity.class);
-                        } else if (id == R.id.nav_rps) {
-                            i = new Intent(DrawStraw.this, RocPapSci.class);
-                        } else {
-                            // clicked on self
-                            shouldStayOnCurrentActivity = true;
-                        }
-                      
-                        if(!shouldStayOnCurrentActivity) {
-                            finalActivePlayer.sendPlayerToNextActivity(i);
-                            startActivity(i);
-                        }
-
-                        finalDrawer.closeDrawers();
-                        return true;
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    Intent i = new Intent(DrawStraw.this, DrawStraw.class);
+                    int id = menuItem.getItemId();
+                    boolean shouldStayOnCurrentActivity = false;
+                    if (id == R.id.nav_dice) {
+                        i = new Intent(DrawStraw.this, Dice.class);
+                    } else if (id == R.id.nav_life) {
+                        i = new Intent(DrawStraw.this, Life.class);
+                    } else if (id == R.id.nav_scores) {
+                        i = new Intent(DrawStraw.this, ScoreBoard.class);
+                    } else if (id == R.id.nav_home){
+                        i = new Intent(DrawStraw.this, MainActivity.class);
+                    } else if (id == R.id.nav_rps) {
+                        i = new Intent(DrawStraw.this, RocPapSci.class);
+                    } else {
+                        // clicked on self
+                        shouldStayOnCurrentActivity = true;
                     }
-                });
+
+                    if(!shouldStayOnCurrentActivity) {
+                        finalActivePlayer.sendPlayerToNextActivity(i);
+                        startActivity(i);
+                    }
+
+                    finalDrawer.closeDrawers();
+                    return true;
+                }
+            });
 
         // typical session info needed for each game
             // create new session
@@ -210,9 +211,9 @@ public class DrawStraw extends AppCompatActivity {
                     if(isGameComplete()) {
                         displayResults();
                         databaseReference.removeEventListener(this);
+                    } else {
+                        updateDatabase();
                     }
-
-                    updateDatabase();
                 }
 
                 @Override
@@ -240,7 +241,8 @@ public class DrawStraw extends AppCompatActivity {
                             activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, currentSession.getID());
                             players[i] = getPlayerIDByEmail(addPlayerField.getText().toString());
                             addedPlayer = true;
-                            current_number_of_players++;
+                            current_number_of_players = i + 1;
+                            next_open_player_slot = current_number_of_players + 1;
 
                             if(i == number_of_players) {
                                 is_full = "true";
@@ -334,7 +336,6 @@ public class DrawStraw extends AppCompatActivity {
         int lowestScoringPlayer = -1;
         int lowestScore = Integer.parseInt(player_choices[0]);
 
-
         for(int i = 0; i < number_of_players; i++) {
             int currentPlayerStrawLength = Integer.parseInt(player_choices[i]);
 
@@ -406,7 +407,7 @@ public class DrawStraw extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(session.getID());
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // host
@@ -512,8 +513,6 @@ public class DrawStraw extends AppCompatActivity {
     public boolean isGameComplete() {
         boolean result = false;
 
-        loadFromDatabase();
-
         if(number_of_straws_chosen == number_of_players) {
             is_complete = "true";
             updateDatabase();
@@ -609,6 +608,9 @@ public class DrawStraw extends AppCompatActivity {
 
                     case "number_of_straws_chosen" :
                         number_of_straws_chosen = Integer.parseInt(value);
+                        if(isGameComplete()) {
+                            displayResults();
+                        }
                         break;
 
                     case "loser" :
@@ -682,11 +684,19 @@ public class DrawStraw extends AppCompatActivity {
             }
 
         // players
+            int player_count = 0;
+
             for(int i = 0; i < players.length; i++) {
                 if(!players[i].equals("NULL")) {
                     databaseReference.child("player" + Integer.toString(i+1)).setValue(players[i]);
+                    player_count++;
                 }
             }
+
+            next_open_player_slot = player_count + 1;
+
+        // next open player slot
+            databaseReference.child("next_open_player_slot").setValue(Integer.toString(next_open_player_slot));
 
         // player choices
             for(int i = 0; i < player_choices.length; i++) {
@@ -735,7 +745,7 @@ public class DrawStraw extends AppCompatActivity {
             }
 
         // score
-            if(!score.equals("NULL")) {
+            if(!score.equals("NULL") && !score.contains("loses")) {
                 databaseReference.child("score").setValue(score);
             }
     }

@@ -110,6 +110,7 @@ public class Session {
 
     public void addHost(String playerID) {
         databaseReference.child("host").setValue(playerID);
+        hostID = playerID;
     }
 
     public void addPlayer(String playerID) {
