@@ -112,14 +112,14 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseUser == null) {
-                    // User somehow got here without signing in... make sure they sign in
-                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
-                    startActivity(startupIntent);
-                } else {
-                    activePlayer.update();
-                    activePlayer.setIsConnected("1");
-                }
+            if (firebaseUser == null) {
+                // User somehow got here without signing in... make sure they sign in
+                Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+                startActivity(startupIntent);
+            } else {
+                activePlayer.update();
+                activePlayer.setIsConnected("1");
+            }
             }
         });
 
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent strawsGameIntent = new Intent(MainActivity.this, DrawStraw.class);
                 activePlayer.sendPlayerToNextActivity(strawsGameIntent);
-                // Session.sendPreviousSessionToActivity(strawsGameIntent, "-LSvu004EKNKD9nFHAdR");
+                Session.sendPreviousSessionToActivity(strawsGameIntent, "-LSzGAptMEjgUucO9xxj");
                 startActivity(strawsGameIntent);
             }
         });

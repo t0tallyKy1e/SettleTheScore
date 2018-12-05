@@ -229,19 +229,26 @@ public class DrawStraw extends AppCompatActivity {
                 addPlayerLabel.setVisibility(View.INVISIBLE);
             }
 
-
         // reload databse when data is updated
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(current_player_number != "0") {
+                        if(player_choices[Integer.parseInt(current_player_number) - 1] != "NULL") {
+                            removeStrawListeners();
+                        }
+                    }
+
                     loadFromDatabase();
 
                     if(isGameComplete()) {
                         displayResults();
                         databaseReference.removeEventListener(this);
                     }
+
+                    updateDatabase();
                 }
 
                 @Override
@@ -320,13 +327,13 @@ public class DrawStraw extends AppCompatActivity {
         TextView gameResult = findViewById(R.id.game_result);
 
         int lowestScoringPlayer = -1;
-        int lowestScore = -1;
+        int lowestScore = Integer.parseInt(player_choices[0]);
 
 
         for(int i = 0; i < number_of_players; i++) {
             int currentPlayerStrawLength = Integer.parseInt(player_choices[i]);
 
-            if(currentPlayerStrawLength < lowestScore) {
+            if(currentPlayerStrawLength <= lowestScore) {
                 lowestScoringPlayer = i + 1;
                 lowestScore = currentPlayerStrawLength;
             }
@@ -483,7 +490,7 @@ public class DrawStraw extends AppCompatActivity {
         databaseReference.child("straw5_chosen").setValue("false");
 
         // number of straws chosen
-        databaseReference.child("number_of_straws_chosen").setValue("false");
+        databaseReference.child("number_of_straws_chosen").setValue("NULL");
 
         // loser
         databaseReference.child("loser").setValue("NULL");
@@ -493,7 +500,7 @@ public class DrawStraw extends AppCompatActivity {
         databaseReference.child("is_complete").setValue("false");
 
         //score
-        databaseReference.child("score").setValue(score);
+        databaseReference.child("score").setValue("NULL");
 
     }
 
@@ -665,19 +672,23 @@ public class DrawStraw extends AppCompatActivity {
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(session.getID());
 
         // host
-            databaseReference.child("host").setValue(host);
+            if(host != "NULL") {
+                databaseReference.child("host").setValue(host);
+            }
 
         // players
-            databaseReference.child("player1").setValue(players[0]);
-            databaseReference.child("player2").setValue(players[1]);
-            databaseReference.child("player3").setValue(players[2]);
-            databaseReference.child("player4").setValue(players[3]);
+            for(int i = 0; i < players.length; i++) {
+                if(players[i] != "NULL") {
+                    databaseReference.child("player" + Integer.toString(i+1)).setValue(players[i]);
+                }
+            }
 
         // player choices
-            databaseReference.child("player1_choice").setValue(player_choices[0]);
-            databaseReference.child("player2_choice").setValue(player_choices[1]);
-            databaseReference.child("player3_choice").setValue(player_choices[2]);
-            databaseReference.child("player4_choice").setValue(player_choices[3]);
+            for(int i = 0; i < player_choices.length; i++) {
+                if(player_choices[i] != "NULL") {
+                    databaseReference.child("player" + Integer.toString(i+1) + "_choice").setValue(player_choices[i]);
+                }
+            }
 
         // straw chosen status
             for(int i = 0; i < number_of_players; i++) {
@@ -686,11 +697,11 @@ public class DrawStraw extends AppCompatActivity {
                 }
             }
 
-            databaseReference.child("straw1_chosen").setValue(straw_chosen[0]);
-            databaseReference.child("straw2_chosen").setValue(straw_chosen[1]);
-            databaseReference.child("straw3_chosen").setValue(straw_chosen[2]);
-            databaseReference.child("straw4_chosen").setValue(straw_chosen[3]);
-            databaseReference.child("straw5_chosen").setValue(straw_chosen[4]);
+            for(int i = 0; i < straw_chosen.length; i++) {
+                if(straw_chosen[i] != "false") {
+                    databaseReference.child("straw" + Integer.toString(i + 1) + "_chosen").setValue(straw_chosen[i]);
+                }
+            }
 
         // number of straws chosen
             number_of_straws_chosen = 0;
@@ -700,17 +711,28 @@ public class DrawStraw extends AppCompatActivity {
                 }
             }
 
-            databaseReference.child("number_of_straws_chosen").setValue(number_of_straws_chosen);
+            if(Integer.toString(number_of_straws) != "NULL") {
+                databaseReference.child("number_of_straws_chosen").setValue(number_of_straws_chosen);
+            }
 
         // loser
-            databaseReference.child("loser").setValue(loser);
+            if(loser != "NULL") {
+                databaseReference.child("loser").setValue(loser);
+            }
 
         // statuses
-            databaseReference.child("is_full").setValue(is_full);
-            databaseReference.child("is_complete").setValue(is_complete);
+            if(is_full != "false") {
+                databaseReference.child("is_full").setValue(is_full);
+            }
+
+            if(is_complete != "false") {
+                databaseReference.child("is_complete").setValue(is_complete);
+            }
 
         // score
-            databaseReference.child("score").setValue(score);
+            if(score != "NULL") {
+                databaseReference.child("score").setValue(score);
+            }
     }
 
     public void updateVisuals() {
