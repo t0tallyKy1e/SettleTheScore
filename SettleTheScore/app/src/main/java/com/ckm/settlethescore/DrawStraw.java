@@ -32,7 +32,7 @@ import java.util.Random;
 public class DrawStraw extends AppCompatActivity {
     private Player activePlayer;
     Session currentSession;
-    String current_player_number = "0";
+    String current_player_number = "0"; // THIS PIECE OF SHIT ISN'T WORKING... IDK WHEN TO UPDATE IT
 
     int number_of_players = 2;
     int max_number_of_players = 4;
