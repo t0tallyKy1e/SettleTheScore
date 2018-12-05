@@ -47,7 +47,7 @@ public class RocPapSci extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent oldIntent = getIntent();
-        final Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
+        activePlayer = Player.getPlayerFromLastActivity(oldIntent);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roc_pap_sci);
@@ -69,6 +69,9 @@ public class RocPapSci extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
         final Player finalActivePlayer = activePlayer;
+
+        TextView txtView = navigationView.getHeaderView(0).findViewById(R.id.txtDrawerUserName);
+        txtView.setText(activePlayer.getDisplayName());
       
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -140,6 +143,8 @@ public class RocPapSci extends AppCompatActivity {
                         if(!addedPlayer) {
                             Toast.makeText(RocPapSci.this, "Player not added to game... Game might be full", Toast.LENGTH_LONG).show();
                         }
+                        TextView txtV  = findViewById(R.id.add_email);
+                        txtV.setText("");
                     }
         });
 
