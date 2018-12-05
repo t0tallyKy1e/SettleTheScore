@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent strawsGameIntent = new Intent(MainActivity.this, DrawStraw.class);
                 activePlayer.sendPlayerToNextActivity(strawsGameIntent);
-                Session.sendPreviousSessionToActivity(strawsGameIntent, "-LSzGAptMEjgUucO9xxj");
+                // Session.sendPreviousSessionToActivity(strawsGameIntent, "-LSzGAptMEjgUucO9xxj");
                 startActivity(strawsGameIntent);
             }
         });

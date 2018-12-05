@@ -65,9 +65,6 @@ public class DrawStraw extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_straw);
 
-        final EditText addPlayerField = findViewById(R.id.add_email);
-        final TextView addPlayerLabel = findViewById(R.id.add_email_label);
-
         straws[0] = findViewById(R.id.straw_one);
         straws[1] = findViewById(R.id.straw_two);
         straws[2] = findViewById(R.id.straw_three);
@@ -85,7 +82,7 @@ public class DrawStraw extends AppCompatActivity {
         }
 
         for(int i = 0; i < straws.length; i++) {
-            straw_chosen[i] = "NULL";
+            straw_chosen[i] = "false";
             straw_lengths[i] = "NULL";
         }
 
@@ -174,7 +171,7 @@ public class DrawStraw extends AppCompatActivity {
 
         // check if current game was successfully loaded
             if(currentSession == null) {
-                Log.e("LOAD", "unsuccessful");
+                Log.e("NEW GAME STARTED", "");
                 currentSession = new Session(Game.TYPE.STRAWS);
                 initialPushToDatabase();
                 currentSession.addHost(activePlayer.getUserId());
@@ -185,58 +182,25 @@ public class DrawStraw extends AppCompatActivity {
                 current_number_of_players++;
                 updateDatabase();
             } else {
+                Log.e("LOADING GAME...", "");
                 loadFromDatabase();
-                printCurrent();
             }
 
         // add straw click listeners
             for(int i = 0; i < straws.length; i++) {
                 addStrawListener(straws[i], i);
             }
-        // check if current player is the host
-            if(activePlayer.getUserId() == host) {
-                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int addToGame = 1;
-                        boolean addedPlayer = false;
 
-                        for(int i = 0; i < players.length && !addedPlayer; i++) {
-                            if(players[i] == "NULL") {
-                                activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, currentSession.getID());
-                                players[i] = getPlayerIDByEmail(addPlayerField.getText().toString());
-                                addedPlayer = true;
-                                current_number_of_players++;
+        addFabButtonListener();
 
-                                if(i == number_of_players) {
-                                    is_full = "true";
-                                }
-
-                                Toast.makeText(DrawStraw.this, "Player added to game", Toast.LENGTH_LONG).show();
-                            }
-                        }
-
-                        if(!addedPlayer) {
-                            Toast.makeText(DrawStraw.this, "Player not added to game... Game might be full", Toast.LENGTH_LONG).show();
-                        }
-
-                        updateDatabase();
-                    }
-                });
-            } else {
-                addPlayerField.setVisibility(View.INVISIBLE);
-                addPlayerLabel.setVisibility(View.INVISIBLE);
-            }
-
-        // reload databse when data is updated
+        // reload database when data is updated
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(current_player_number != "0") {
-                        if(player_choices[Integer.parseInt(current_player_number) - 1] != "NULL") {
+                    if(!current_player_number.equals("0")) {
+                        if(!player_choices[Integer.parseInt(current_player_number) - 1].equals("NULL")) {
                             removeStrawListeners();
                         }
                     }
@@ -258,6 +222,47 @@ public class DrawStraw extends AppCompatActivity {
             });
     }
 
+    public void addFabButtonListener() {
+        final EditText addPlayerField = findViewById(R.id.add_email);
+        final TextView addPlayerLabel = findViewById(R.id.add_email_label);
+
+        // check if current player is the host
+        if(activePlayer.getUserId() == host) {
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int addToGame = 1;
+                    boolean addedPlayer = false;
+
+                    for(int i = 0; i < players.length && !addedPlayer; i++) {
+                        if(players[i].equals("NULL")) {
+                            activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, currentSession.getID());
+                            players[i] = getPlayerIDByEmail(addPlayerField.getText().toString());
+                            addedPlayer = true;
+                            current_number_of_players++;
+
+                            if(i == number_of_players) {
+                                is_full = "true";
+                            }
+
+                            Toast.makeText(DrawStraw.this, "Player added to game", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    if(!addedPlayer) {
+                        Toast.makeText(DrawStraw.this, "Player not added to game... Game might be full", Toast.LENGTH_LONG).show();
+                    }
+
+                    updateDatabase();
+                }
+            });
+        } else {
+            addPlayerField.setVisibility(View.INVISIBLE);
+            addPlayerLabel.setVisibility(View.INVISIBLE);
+        }
+    }
+
     public void addStrawListener(ImageView straw, int number) {
         final int n = number + 1;
         final Session session = currentSession;
@@ -266,7 +271,7 @@ public class DrawStraw extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // make sure player has a number to work with
-                    if(current_player_number == "0") {
+                    if(current_player_number.equals("0")) {
                         boolean playerFound = false;
                         currentSession.gameType = Game.TYPE.STRAWS;
                         for(int i = 0; i < players.length && !playerFound; i++) {
@@ -280,7 +285,7 @@ public class DrawStraw extends AppCompatActivity {
                             boolean addedPlayer = false;
 
                             for(int i = 0; i < players.length && !addedPlayer; i++) {
-                                if(players[i] == "NULL") {
+                                if(players[i].equals("NULL")) {
                                     current_number_of_players++;
 
                                     if(i == number_of_players) {
@@ -672,33 +677,33 @@ public class DrawStraw extends AppCompatActivity {
         final DatabaseReference databaseReference = database.getReference().child("Sessions").child(session.getID());
 
         // host
-            if(host != "NULL") {
+            if(!host.equals("NULL")) {
                 databaseReference.child("host").setValue(host);
             }
 
         // players
             for(int i = 0; i < players.length; i++) {
-                if(players[i] != "NULL") {
+                if(!players[i].equals("NULL")) {
                     databaseReference.child("player" + Integer.toString(i+1)).setValue(players[i]);
                 }
             }
 
         // player choices
             for(int i = 0; i < player_choices.length; i++) {
-                if(player_choices[i] != "NULL") {
+                if(!player_choices[i].equals("NULL")) {
                     databaseReference.child("player" + Integer.toString(i+1) + "_choice").setValue(player_choices[i]);
                 }
             }
 
         // straw chosen status
             for(int i = 0; i < number_of_players; i++) {
-                if(player_choices[i] != "NULL") {
+                if(!player_choices[i].equals("NULL")) {
                     straw_chosen[Integer.parseInt(player_choices[i]) - 1] = "true";
                 }
             }
 
             for(int i = 0; i < straw_chosen.length; i++) {
-                if(straw_chosen[i] != "false") {
+                if(!straw_chosen[i].equals("false")) {
                     databaseReference.child("straw" + Integer.toString(i + 1) + "_chosen").setValue(straw_chosen[i]);
                 }
             }
@@ -706,38 +711,38 @@ public class DrawStraw extends AppCompatActivity {
         // number of straws chosen
             number_of_straws_chosen = 0;
             for(int i = 0; i < straw_chosen.length; i++) {
-                if(straw_chosen[i] != "NULL") {
+                if(!straw_chosen[i].equals("false")) {
                     number_of_straws_chosen++;
                 }
             }
 
-            if(Integer.toString(number_of_straws) != "NULL") {
+            if(!Integer.toString(number_of_straws).equals("NULL")) {
                 databaseReference.child("number_of_straws_chosen").setValue(number_of_straws_chosen);
             }
 
         // loser
-            if(loser != "NULL") {
+            if(!loser.equals("NULL")) {
                 databaseReference.child("loser").setValue(loser);
             }
 
         // statuses
-            if(is_full != "false") {
+            if(!is_full.equals("false")) {
                 databaseReference.child("is_full").setValue(is_full);
             }
 
-            if(is_complete != "false") {
+            if(!is_complete.equals("false")) {
                 databaseReference.child("is_complete").setValue(is_complete);
             }
 
         // score
-            if(score != "NULL") {
+            if(!score.equals("NULL")) {
                 databaseReference.child("score").setValue(score);
             }
     }
 
     public void updateVisuals() {
         for(int i = 0; i < straws.length; i++) {
-            if(straw_chosen[i] != "NULL") {
+            if(!straw_chosen[i].equals("false")) {
                 straws[i].setVisibility(View.INVISIBLE);
             }
         }
