@@ -46,40 +46,26 @@ public class MyScoresRecyclerViewAdapter extends RecyclerView.Adapter<MyScoresRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Random rand = new Random(System.currentTimeMillis());
         holder.mItem = mValues.get(position);
-        switch(mValues.get(position).game_type){
-            case "ROCK_PAP_SCI":
-                holder.mGameType.setImageResource(R.drawable.scissors);
-                holder.mGameStatus.setText(sampleRPSScores[rand.nextInt(sampleRPSScores.length)]);
-                break;
-            case "DICE":
-                holder.mGameType.setImageResource(R.drawable.dices_home);
-                holder.mGameStatus.setText(sampleDiceScores[rand.nextInt(sampleDiceScores.length)]);
-                break;
-            case "LIFE":
-                holder.mGameType.setImageResource(R.drawable.life_main);
-                holder.mGameStatus.setText(sampleLifeScores[rand.nextInt(sampleLifeScores.length)]);
-                break;
-            default:
-                holder.mGameType.setImageResource(R.drawable.life_main);
-                break;
+        if(mValues.get(position).game_type != null){
+            switch(mValues.get(position).game_type){
+                case "ROCK_PAP_SCI":
+                    holder.mGameType.setImageResource(R.drawable.scissors);
+                    holder.mGameStatus.setText(sampleRPSScores[rand.nextInt(sampleRPSScores.length)]);
+                    break;
+                case "DICE":
+                    holder.mGameType.setImageResource(R.drawable.dices_home);
+                    holder.mGameStatus.setText(sampleDiceScores[rand.nextInt(sampleDiceScores.length)]);
+                    break;
+                case "LIFE":
+                    holder.mGameType.setImageResource(R.drawable.life_main);
+                    holder.mGameStatus.setText(sampleLifeScores[rand.nextInt(sampleLifeScores.length)]);
+                    break;
+                default:
+                    holder.mGameType.setImageResource(R.drawable.life_main);
+                    break;
+            }
         }
 
-        // This is supposed to fire off a new INtent when clicked but it is not working
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(v.getContext(), RocPapSci.class);
-//                v.getContext().startActivity(intent);
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                    Intent intent = new Intent(holder.mView.getContext(), RocPapSci.class);
-//                    holder.mView.getContext().startActivity(intent);
-//                }
-//            }
-//        });
     }
 
     @Override
