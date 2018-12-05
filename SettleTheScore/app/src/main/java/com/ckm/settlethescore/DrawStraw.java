@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +40,8 @@ public class DrawStraw extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
         final Player finalActivePlayer = activePlayer;
+        TextView txtView = navigationView.getHeaderView(0).findViewById(R.id.txtDrawerUserName);
+        txtView.setText(activePlayer.getDisplayName());
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

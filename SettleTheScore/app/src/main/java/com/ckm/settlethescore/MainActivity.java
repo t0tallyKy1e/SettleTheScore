@@ -1,12 +1,8 @@
 package com.ckm.settlethescore;
 
-import java.util.ArrayList;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,29 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
-
-import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
@@ -50,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -103,26 +85,25 @@ public class MainActivity extends AppCompatActivity {
         final String userID = firebaseUser.getUid();
         activePlayer = new Player(userID);
 
-//        // get reference to user's profile picture
-//        final ImageView imgProfilePictureField = (ImageView) findViewById(R.id.imgProfilePicture); // needs to reference nav_view
-//        StorageReference profilePhotoReference = FirebaseStorage.getInstance().getReference("profile_pictures/" + userID);
-//
-//        // make sure user is valid
-//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
-//        firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                if (firebaseUser == null) {
-//                    // User somehow got here without signing in... make sure they sign in
-//                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
-//                    startActivity(startupIntent);
-//                } else {
-//                    activePlayer.update();
-//                    activePlayer.setIsConnected(1);
-//                }
-//            }
-//        });
+        TextView txtView = navigationView.getHeaderView(0).findViewById(R.id.txtDrawerUserName);
+        txtView.setText(firebaseUser.getDisplayName());
+
+        // make sure user is valid
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Players").child(userID);
+        firebaseAuthentication.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseUser == null) {
+                    // User somehow got here without signing in... make sure they sign in
+                    Intent startupIntent = new Intent(getApplicationContext(), StartupActivity.class);
+                    startActivity(startupIntent);
+                } else {
+                    activePlayer.update();
+                    activePlayer.setIsConnected("1");
+                }
+            }
+        });
 
         ImageView diceGameButton = findViewById(R.id.dice_game_btn);
         diceGameButton.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     // everything below is default code
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -227,5 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }

@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -17,8 +16,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,14 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Dice extends AppCompatActivity {
 
-    private FirebaseUser firebaseUser;
-
     private Player activePlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent oldIntent = getIntent();
-        final Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
+        activePlayer = Player.getPlayerFromLastActivity(oldIntent);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice);
@@ -56,6 +51,9 @@ public class Dice extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
         final Player finalActivePlayer = activePlayer;
+        TextView txtView = navigationView.getHeaderView(0).findViewById(R.id.txtDrawerUserName);
+        txtView.setText(activePlayer.getDisplayName());
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

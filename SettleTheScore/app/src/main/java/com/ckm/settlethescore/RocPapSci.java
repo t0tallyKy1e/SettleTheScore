@@ -40,7 +40,7 @@ public class RocPapSci extends AppCompatActivity {
 
     boolean is_clicked = false;
     private Player activePlayer;
-    
+
     String host = "NULL";
     String friendID = "NULL";
 
@@ -115,7 +115,7 @@ public class RocPapSci extends AppCompatActivity {
         	currentSession.addHost(activePlayer.getUserId());
             host = activePlayer.getUserId();
             activePlayer.addGame(currentSession.getID());
-        } 
+        }
 
         currentSession.addPlayer(activePlayer.getUserId());
         currentSession.updateDatabase();
@@ -217,13 +217,13 @@ public class RocPapSci extends AppCompatActivity {
                 }
             }
         });
-		
+
 
     	databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 /*
-                get host 
+                get host
                 */
                 Object dbObject = dataSnapshot.child("host").getValue();
                 if (dbObject != null) {
@@ -236,7 +236,7 @@ public class RocPapSci extends AppCompatActivity {
             }
 	        });
     	}
-		
+
         /*
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
