@@ -114,6 +114,8 @@ public class Dice extends AppCompatActivity {
                 int addAsFriend = 0;
                 int addToGame = 1;
                 activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, finalCurrentSession.getID());
+                TextView txtV  = findViewById(R.id.add_email);
+                txtV.setText("");
             }
         });
 

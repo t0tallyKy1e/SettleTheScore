@@ -146,16 +146,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // test out opening a previous session
-//                Intent nextIntent = new Intent(MainActivity.this, Dice.class);
-//                activePlayer.sendPlayerToNextActivity(nextIntent);
-//                Session.sendPreviousSessionToActivity(nextIntent, "-LSMRlRcZyXsZG88D_Mp");
-//                startActivity(nextIntent);
-            }
-        });
+        fab.setVisibility(View.INVISIBLE);
 
 //        // test of getting list of all games
 //        final FirebaseDatabase database = FirebaseDatabase.getInstance();

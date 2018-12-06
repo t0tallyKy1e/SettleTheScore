@@ -1,5 +1,7 @@
 package com.ckm.settlethescore;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,23 @@ import android.widget.TextView;
 import com.ckm.settlethescore.ScoresFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
+import java.util.Random;
 
 public class MyScoresRecyclerViewAdapter extends RecyclerView.Adapter<MyScoresRecyclerViewAdapter.ViewHolder> {
 
     private final List<ScoreData.ScoreItem> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private Context context;
+    private static String[] sampleDiceScores = {"Marvin rolled a 20 out of 20",
+            "Chris rolled a 5 out of 100",
+            "Kyle rolled a 4 out of 5 "};
+    private static String[] sampleLifeScores = {"Chris: 20 life, Kyle: 18 life",
+            "Marvin: 2 life, Kyle: 18 life",
+            "Kyle: 20 life, Marvin: 8 life",
+            "Chris: 6 life, Marvin: 15 life"};
+    private static String[] sampleRPSScores = {"Kyle Won: Paper beats Rock",
+            "Chris Won: Rock beats Scissors",
+            "Marvin Won: Scissors beats paper" };
 
     public MyScoresRecyclerViewAdapter(List<ScoreData.ScoreItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -30,33 +44,28 @@ public class MyScoresRecyclerViewAdapter extends RecyclerView.Adapter<MyScoresRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Random rand = new Random(System.currentTimeMillis());
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).score);
-        holder.mGameStatus.setText(mValues.get(position).gameStatus);
-
-        switch(mValues.get(position).count % 3){
-            case 0:
-                holder.mGameType.setImageResource(R.drawable.scissors);
-                break;
-            case 1:
-                holder.mGameType.setImageResource(R.drawable.dices_home);
-                break;
-            case 2:
-                holder.mGameType.setImageResource(R.drawable.life_main);
-                break;
+        if(mValues.get(position).game_type != null){
+            switch(mValues.get(position).game_type){
+                case "ROCK_PAP_SCI":
+                    holder.mGameType.setImageResource(R.drawable.scissors);
+                    holder.mGameStatus.setText(sampleRPSScores[rand.nextInt(sampleRPSScores.length)]);
+                    break;
+                case "DICE":
+                    holder.mGameType.setImageResource(R.drawable.dices_home);
+                    holder.mGameStatus.setText(sampleDiceScores[rand.nextInt(sampleDiceScores.length)]);
+                    break;
+                case "LIFE":
+                    holder.mGameType.setImageResource(R.drawable.life_main);
+                    holder.mGameStatus.setText(sampleLifeScores[rand.nextInt(sampleLifeScores.length)]);
+                    break;
+                default:
+                    holder.mGameType.setImageResource(R.drawable.life_main);
+                    break;
+            }
         }
 
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
     }
 
     @Override
@@ -73,12 +82,17 @@ public class MyScoresRecyclerViewAdapter extends RecyclerView.Adapter<MyScoresRe
 
         public ViewHolder(View view) {
             super(view);
+            context = view.getContext();
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mGameStatus = (TextView) view.findViewById(R.id.game_status);
             mGameType = (ImageView) view.findViewById(R.id.game_type);
         }
 
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), RocPapSci.class);
+            context.startActivity(intent);
+        }
         @Override
         public String toString() {
             return super.toString() + " '" + mGameStatus.getText() + "'";

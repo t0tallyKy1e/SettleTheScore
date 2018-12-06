@@ -2,6 +2,7 @@ package com.ckm.settlethescore;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -76,6 +77,8 @@ public class Life extends AppCompatActivity {
                         return true;
                     }
                 });
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 
         // get current firebase user and their ID
         FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();

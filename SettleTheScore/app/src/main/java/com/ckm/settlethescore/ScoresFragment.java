@@ -11,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ckm.settlethescore.ScoreData;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ScoresFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private FirebaseUser firebaseUser;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -25,7 +28,6 @@ public class ScoresFragment extends Fragment {
     public ScoresFragment() {
     }
 
-    @SuppressWarnings("unused")
     public static ScoresFragment newInstance(int columnCount) {
         ScoresFragment fragment = new ScoresFragment();
         Bundle args = new Bundle();
@@ -37,6 +39,10 @@ public class ScoresFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseAuth firebaseAuthentication = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuthentication.getCurrentUser();
+        final String userID = firebaseUser.getUid();
+
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -46,6 +52,7 @@ public class ScoresFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_scores_list, container, false);
 
         // Set the adapter

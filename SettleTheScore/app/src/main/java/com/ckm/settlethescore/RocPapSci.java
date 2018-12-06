@@ -53,7 +53,7 @@ public class RocPapSci extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent oldIntent = getIntent();
-        final Player activePlayer = Player.getPlayerFromLastActivity(oldIntent);
+        activePlayer = Player.getPlayerFromLastActivity(oldIntent);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roc_pap_sci);
