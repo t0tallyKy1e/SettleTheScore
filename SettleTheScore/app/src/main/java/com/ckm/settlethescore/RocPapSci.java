@@ -27,10 +27,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.firebase.ui.auth.data.model.Resource;
 
+import static java.sql.Types.NULL;
+
 public class RocPapSci extends AppCompatActivity {
 
     enum Choices {ROCK, PAPER, SCISSOR}
     enum Status {LOSS, TIE, WIN}
+    Session currentSession;
     /*
     public class Players {
         Choices choice;
@@ -43,6 +46,9 @@ public class RocPapSci extends AppCompatActivity {
 
     String host = "NULL";
     String friendID = "NULL";
+
+    String player_1_choice = "NULL";
+    String player_2_choice = "NULL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +75,8 @@ public class RocPapSci extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         final DrawerLayout finalDrawer = drawer;
         final Player finalActivePlayer = activePlayer;
-      
+
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -103,7 +110,6 @@ public class RocPapSci extends AppCompatActivity {
 
         // create new session
 
-        Session currentSession = null;
         currentSession = Session.getSessionFromLastActivity(oldIntent);
 
 //        if(currentSession != null) {
@@ -115,37 +121,48 @@ public class RocPapSci extends AppCompatActivity {
         	currentSession.addHost(activePlayer.getUserId());
             host = activePlayer.getUserId();
             activePlayer.addGame(currentSession.getID());
+            loadFromDatabase();
         }
 
         currentSession.addPlayer(activePlayer.getUserId());
         currentSession.updateDatabase();
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
+
+        //init player 1 and 2 choices.
+        databaseReference.child("player_1_choice").setValue("NULL");
+        databaseReference.child("player_2_choice").setValue("NULL");
 
         final Session finalCurrentSession = currentSession;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
+
             @Override
             public void onClick(View view) {
-                        int addToGame = 1;
-                        boolean addedPlayer = false;
+                int addToGame = 1;
+                boolean addedPlayer = false;
 
-                        if(friendID == "NULL") {
-                            activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, finalCurrentSession.getID());
-                         	friendID = getPlayerIDByEmail(addPlayerField.getText().toString());
-                            addedPlayer = true;
+                if(friendID == "NULL") {
+                    activePlayer.addPlayerByEmail(addPlayerField.getText().toString(), addToGame, finalCurrentSession.getID());
+                    friendID = getPlayerIDByEmail(addPlayerField.getText().toString());
+                    addedPlayer = true;
 
-                            Toast.makeText(RocPapSci.this, "Player added to game", Toast.LENGTH_LONG).show();
-                        }
-                        if(!addedPlayer) {
-                            Toast.makeText(RocPapSci.this, "Player not added to game... Game might be full", Toast.LENGTH_LONG).show();
-                        }
-                    }
+                    Toast.makeText(RocPapSci.this, "Player added to game", Toast.LENGTH_LONG).show();
+                    theirChoice(Choices.ROCK);
+                    databaseReference.child("player_2_choice").setValue("ROCK");
+                    player_2_choice = "ROCK";
+                    updateDatabase();
+                    RPS_Calculate();
+                }
+                if(!addedPlayer) {
+                    Toast.makeText(RocPapSci.this, "Player not added to game... Game might be full", Toast.LENGTH_LONG).show();
+                }
+            }
         });
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(currentSession.getID());
 
         final ImageView imgRock = (ImageView) findViewById(R.id.play_rock);
         imgRock.setOnClickListener(new View.OnClickListener() {
@@ -154,9 +171,11 @@ public class RocPapSci extends AppCompatActivity {
                 if (is_clicked == false) {
 	                imgRock.setBackgroundResource(R.drawable.button_outline);
 	                is_clicked = true;
-	                if (activePlayer.getUserId().equals(databaseReference.child("host").getKey())) {
+	                if (activePlayer.getUserId().equals(host)) {
                         databaseReference.child("player_1_choice").setValue("ROCK");
+                        player_1_choice = "ROCK"; // theoretically updateDatabase should update the code with database values but it doesnt.
                         myChoice(Choices.ROCK);
+                        RPS_Calculate();
                     }
                     else {
                     	databaseReference.child("player_2_choice").setValue("ROCK");
@@ -178,9 +197,11 @@ public class RocPapSci extends AppCompatActivity {
                 if (is_clicked == false) {
 	                imgPaper.setBackgroundResource(R.drawable.button_outline);
 	                is_clicked = true;
-	                if (activePlayer.getUserId().equals(databaseReference.child("host"))){
+	                if (activePlayer.getUserId().equals(host)){
 	                	databaseReference.child("player_1_choice").setValue("PAPER");
+	                	player_1_choice = "PAPER"; // theoretically updateDatabase should update the code with database values but it doesnt.
 	                	myChoice(Choices.PAPER);
+	                	RPS_Calculate();
 	                }
 	                else {
 	                	databaseReference.child("player_2_choice").setValue("PAPER");
@@ -202,9 +223,11 @@ public class RocPapSci extends AppCompatActivity {
                 if (is_clicked == false) {
 	                imgScissors.setBackgroundResource(R.drawable.button_outline);
 	                is_clicked = true;
-	                if (activePlayer.getUserId().equals(databaseReference.child("host"))){
+	                if (activePlayer.getUserId().equals(host)){
 						databaseReference.child("player_1_choice").setValue("SCISSOR");
+						player_1_choice = "SCISSOR"; // theoretically updateDatabase should update the code with database values but it doesnt.
 						myChoice(Choices.SCISSOR);
+						RPS_Calculate();
 	                }
 	                else {
 	                	databaseReference.child("player_2_choice").setValue("SCISSOR");
@@ -260,44 +283,42 @@ public class RocPapSci extends AppCompatActivity {
         });
         */
 
-//    public void RPS_Calculate() {
-//    	Integer loss = -1;
-//    	Integer tie = 0;
-//    	Integer win = 1;
-//    	//if (databaseReference.child("player_1_choice") == databaseReference.child("player_2_choice")) :
-//        if (host.choice == guest.choice) {
-//            changeGameState(tie);
-//        } else {
-//        	//switch (databaseReference.child("player_1_choice"))
-//            switch (host.choice) {
-//                case ROCK:
-//                    if (guest.choice == Choices.PAPER) {
-//                    	changeGameState(loss);
-//                    }
-//                    else if (guest.choice == Choices.SCISSOR) {
-//                        changeGameState(win);
-//                    }
-//                    break;
-//
-//                case PAPER:
-//                    if (guest.choice == Choices.SCISSOR) {
-//                        changeGameState(loss);
-//                    }
-//                    else if (guest.choice == Choices.ROCK) {
-//                        changeGameState(win);
-//                    }
-//                    break;
-//
-//                case SCISSOR:
-//                    if (guest.choice == Choices.ROCK) {
-//                        changeGameState(loss);
-//                    }
-//                    else if (guest.choice == Choices.PAPER) {
-//                        changeGameState(win);
-//                    }
-//                    break;
-//            } }
-//    }
+    public void RPS_Calculate() {
+    	int loss = -1;
+    	int tie = 0;
+    	int win = 1;
+        if (player_1_choice.equals(player_2_choice)) {
+            changeGameState(tie);
+        } else {
+            switch (player_1_choice) {
+                case "ROCK":
+                    if (player_2_choice.equals("PAPER")) {
+                    	changeGameState(loss);
+                    }
+                    else if (player_2_choice.equals("SCISSOR")) {
+                        changeGameState(win);
+                    }
+                    break;
+
+                case "PAPER":
+                    if (player_2_choice.equals("SCISSOR")) {
+                        changeGameState(loss);
+                    }
+                    else if (player_2_choice.equals("ROCK")) {
+                        changeGameState(win);
+                    }
+                    break;
+
+                case "SCISSOR":
+                    if (player_2_choice.equals("ROCK")) {
+                        changeGameState(loss);
+                    }
+                    else if (player_2_choice.equals("PAPER")) {
+                        changeGameState(win);
+                    }
+                    break;
+            } }
+    }
 
     public String getPlayerIDByEmail(final String email) {
         String id = "";
@@ -338,7 +359,7 @@ public class RocPapSci extends AppCompatActivity {
     }
 
     //function takes a specific status. status dictates who wins/who loses.
-    public void changeGameState(Integer status) {
+    public void changeGameState(int status) {
         ImageView myChoice = findViewById(R.id.my_choice);
         ImageView theirChoice = findViewById(R.id.their_choice);
 
@@ -348,8 +369,8 @@ public class RocPapSci extends AppCompatActivity {
                 theirChoice.setBackground(getResources().getDrawable(R.drawable.win_btn_outline));
                 break;
             case 0: // tie
-                myChoice.setBackground(getResources().getDrawable(R.drawable.button_outline));
-                theirChoice.setBackground(getResources().getDrawable(R.drawable.button_outline));
+                myChoice.setBackground(getResources().getDrawable(R.drawable.tie_btn_outline));
+                theirChoice.setBackground(getResources().getDrawable(R.drawable.tie_btn_outline));
                 break;
             case 1: // i win, they lose
                 myChoice.setBackground(getResources().getDrawable(R.drawable.win_btn_outline));
@@ -376,7 +397,6 @@ public class RocPapSci extends AppCompatActivity {
             default:
                 break;
         }
-
     }
 
     //function takes a choice, sets the the top box with the choice of opponent
@@ -395,7 +415,65 @@ public class RocPapSci extends AppCompatActivity {
             default:
                 break;
         }
+    }
 
+    // not to be used alone... call loadFromDatabase() instead
+	public void getValuesFromDatabase(final DatabaseCallback dbCallback){
+		final Session session = currentSession;
+		FirebaseDatabase database = FirebaseDatabase.getInstance();
+		final DatabaseReference databaseReference = database.getReference().child("Sessions").child(session.getID());
+
+		databaseReference.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				// save value of "host" from database to "host" (which is a custom key added to the callback that holds the new value)
+					dbCallback.onCallback("host", dataSnapshot.child("host").getValue().toString());
+					dbCallback.onCallback("player_1_choice", dataSnapshot.child("player_1_choice").getValue().toString());
+                    dbCallback.onCallback("player_2_choice", dataSnapshot.child("player_2_choice").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+	}
+
+	public void loadFromDatabase() {
+		getValuesFromDatabase(new DatabaseCallback() {
+			@Override
+			public void onCallback(String key, String value) {
+				switch(key) {
+					case "host" :
+						host = value;
+						break;
+                    case "player_1_choice":
+                        player_1_choice = value;
+                        break;
+                    case "player_2_choice":
+                        player_2_choice = value;
+                        break;
+					default:
+						break;
+				}
+			}
+		});
+	}
+    public void updateDatabase() {
+        final Session session = currentSession;
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference().child("Sessions").child(session.getID());
+
+        // host
+        if(!host.equals("NULL")) { // "NULL" is the default value stored in intialPushToDatabase()
+            databaseReference.child("host").setValue(host);
+        }
+        if(!player_1_choice.equals("NULL")) { // "NULL" is the default value stored in intialPushToDatabase()
+            databaseReference.child("player_1_choice").setValue(player_1_choice);
+        }
+        if(!player_2_choice.equals("NULL")) { // "NULL" is the default value stored in intialPushToDatabase()
+            databaseReference.child("player_2_choice").setValue(player_2_choice);
+        }
     }
 
 }
