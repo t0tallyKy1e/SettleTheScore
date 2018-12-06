@@ -34,7 +34,7 @@ public class DrawStraw extends AppCompatActivity {
     Session currentSession;
     String current_player_number = "0"; // THIS PIECE OF SHIT ISN'T WORKING... IDK WHEN TO UPDATE IT
 
-    int number_of_players = 2;
+    int number_of_players = 4;
     int max_number_of_players = 4;
     int number_of_straws = 5;
     int current_number_of_players = 0;
@@ -165,6 +165,30 @@ public class DrawStraw extends AppCompatActivity {
                 int temp_value = Integer.parseInt(default_lengths[random_index]);
                 default_lengths[random_index] = default_lengths[max_value];
                 default_lengths[max_value] = new Integer(temp_value).toString();
+
+                // lower maximum possible value for random index
+                max_value--;
+            }
+
+            max_value = 4;
+            // get straws for each player
+            for(int i = 1; i < players.length; i++) {
+                // get random index
+                int random_index;
+                if(max_value > 0) {
+                    Random rand = new Random();
+                    random_index = rand.nextInt(max_value);
+                } else {
+                    random_index = 0;
+                }
+
+                // set current straw length to random index's value
+                players[i] = straw_lengths[random_index];
+
+                // swap random index and last index
+                int temp_value = Integer.parseInt(straw_lengths[random_index]);
+                straw_lengths[random_index] = straw_lengths[max_value];
+                straw_lengths[max_value] = new Integer(temp_value).toString();
 
                 // lower maximum possible value for random index
                 max_value--;
@@ -477,9 +501,9 @@ public class DrawStraw extends AppCompatActivity {
 
         // player choices
         databaseReference.child("player1_choice").setValue("NULL");
-        databaseReference.child("player2_choice").setValue("NULL");
-        databaseReference.child("player3_choice").setValue("NULL");
-        databaseReference.child("player4_choice").setValue("NULL");
+        databaseReference.child("player2_choice").setValue("5");
+        databaseReference.child("player3_choice").setValue("2");
+        databaseReference.child("player4_choice").setValue("3");
 
         // straw lengths
         databaseReference.child("straw1_length").setValue(straw_lengths[0]);
@@ -490,13 +514,22 @@ public class DrawStraw extends AppCompatActivity {
 
         // straw chosen status
         databaseReference.child("straw1_chosen").setValue("false");
-        databaseReference.child("straw2_chosen").setValue("false");
-        databaseReference.child("straw3_chosen").setValue("false");
+        databaseReference.child("straw2_chosen").setValue("true");
+        databaseReference.child("straw3_chosen").setValue("true");
         databaseReference.child("straw4_chosen").setValue("false");
-        databaseReference.child("straw5_chosen").setValue("false");
+        databaseReference.child("straw5_chosen").setValue("true");
 
         // number of straws chosen
-        databaseReference.child("number_of_straws_chosen").setValue("NULL");
+            number_of_straws_chosen = 0;
+            for(int i = 0; i < straw_chosen.length; i++) {
+                if(!straw_chosen[i].equals("false")) {
+                    number_of_straws_chosen++;
+                }
+            }
+
+            if(!Integer.toString(number_of_straws).equals("NULL")) {
+                databaseReference.child("number_of_straws_chosen").setValue(number_of_straws_chosen);
+            }
 
         // loser
         databaseReference.child("loser").setValue("NULL");
